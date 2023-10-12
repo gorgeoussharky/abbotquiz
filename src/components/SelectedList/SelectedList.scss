@@ -1,0 +1,33 @@
+.selected-list {
+    &__list {
+        display: grid;
+        gap: 12px;
+      }
+    
+      &__item {
+        position: relative;
+        border-radius: 20px;
+        background: #f0f0f0;
+        display: flex;
+        padding: 10px 20px;
+        overflow: hidden;
+        color: #343a40;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 125%;
+    
+        &-remove {
+          position: absolute;
+          width: 16px;
+          height: 16px;
+          right: 12px;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          cursor: pointer;
+        }
+      }
+}
