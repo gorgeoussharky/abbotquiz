@@ -1,22 +1,23 @@
-import { Combobox } from '../Form/Combobox/Combobox';
-import { PopularList } from '../PopularList/PopularList';
+import { Combobox } from '../../form/Combobox/Combobox';
+import { PopularList } from '../../PopularList/PopularList';
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import {
   selectSelectedSymptoms,
-  addSelected,
-  removeSelected,
-  clearSelected,
+  addSelectedSymptom,
+  removeSelectedSymptom,
+  clearSelectedSymptoms,
   selectSymptomsDB,
-} from '../../features/symptoms/symptomsSlice';
+} from '../../../features/symptoms/symptomsSlice';
 import { Option } from '../../../types/interfaces';
-import { SelectedList } from '../SelectedList/SelectedList';
+import { SelectedList } from '../../SelectedList/SelectedList';
 
 interface Props {
   onNext: () => void;
+  onBack: () => void;
 }
 
-const SymptomsBlock = ({onNext}: Props) => {
+const SymptomsBlock = ({onNext, onBack}: Props) => {
   const selectedSymptoms = useAppSelector(selectSelectedSymptoms);
   const db = useAppSelector(selectSymptomsDB);
 
@@ -27,7 +28,7 @@ const SymptomsBlock = ({onNext}: Props) => {
 
     if (!dbItem) return;
 
-    dispatch(addSelected(dbItem));
+    dispatch(addSelectedSymptom(dbItem));
   };
 
   const handleSymptomRemove = (item: Option) => {
@@ -35,14 +36,14 @@ const SymptomsBlock = ({onNext}: Props) => {
 
     if (!dbItem) return;
 
-    dispatch(removeSelected(dbItem));
+    dispatch(removeSelectedSymptom(dbItem));
   }
 
   return (
     <div className="quiz-block">
       <div className="quiz-block__wrap quiz-block__wrap--columns">
         <div className="quiz-block__column">
-          <button className="quiz-block__back">Назад</button>
+          <button className="quiz-block__back" onClick={onBack} >Назад</button>
 
           <div className="quiz-block__head">
             <div className="quiz-block__title">жалобы пациента</div>
@@ -79,7 +80,7 @@ const SymptomsBlock = ({onNext}: Props) => {
             {Boolean(selectedSymptoms.length) && (
               <button
                 className="quiz-block__clear"
-                onClick={() => dispatch(clearSelected())}
+                onClick={() => dispatch(clearSelectedSymptoms())}
               >
                 Сбросить все
               </button>
@@ -93,7 +94,6 @@ const SymptomsBlock = ({onNext}: Props) => {
               }
             })} />
 
-          
 
           <div className="quiz-block__foot">
             {Boolean(selectedSymptoms.length) && (

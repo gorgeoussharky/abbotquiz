@@ -18,7 +18,7 @@ const Input = ({ label, value, placeholder, type, className, onInput, onFocus, o
 
   return (
     <div className={`input ${className || ''}`}>
-      <div  className={`input__group ${type === 'search' && 'input__group--search' }`}>
+      <div className={`input__group ${type === 'search' && 'input__group--search' }`}>
           <label htmlFor={id} className="input__label">{label}</label>
           <input
             id={id}

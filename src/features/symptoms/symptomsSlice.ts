@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DBEntry } from '../../../types/interfaces';
+import { DBEntry } from '../../types/interfaces';
 import { RootState } from '../../app/store';
 
 import db from '../../data/db.json'
@@ -18,23 +18,23 @@ export const symptomsSlice = createSlice({
   name: 'symptoms',
   initialState,
   reducers: {
-    addSelected: (state, action: PayloadAction<DBEntry>) => {
+    addSelectedSymptom: (state, action: PayloadAction<DBEntry>) => {
       const inArray = state.selected.some(el => el.title === action.payload.title)
 
       if (inArray) return
 
       state.selected.push(action.payload)
     },
-    removeSelected: (state, action: PayloadAction<DBEntry>) => {
+    removeSelectedSymptom: (state, action: PayloadAction<DBEntry>) => {
         state.selected = state.selected.filter(el => el.title !== action.payload.title)
     },
-    clearSelected: (state) => {
+    clearSelectedSymptoms: (state) => {
       state.selected = []
     }
   },
 });
 
-export const { addSelected, removeSelected, clearSelected } = symptomsSlice.actions;
+export const { addSelectedSymptom, removeSelectedSymptom, clearSelectedSymptoms } = symptomsSlice.actions;
 
 
 export const selectSelectedSymptoms = (state: RootState) => state.symptoms.selected;

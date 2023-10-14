@@ -12,13 +12,20 @@ export interface DBEntry {
     showOnFront: boolean
 }
 
+export interface RecommendationCard {
+  title: string
+  link?: string
+  linkLabel?: string
+  icon?: string
+}
+
 export interface Option {
     label: string
-    value: string
+    value: string | number
   }
 
   export interface QuestionEntry {
     title: string
-    options: string[]
-    values: string[]
+    options: Option[]
+    value?: Option
   }

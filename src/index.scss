@@ -471,13 +471,20 @@ button {
     margin: 0 -40px;
     height: 100%;
     flex-grow: 1;
+    margin-bottom: 40px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
   }
 
   &__head {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    margin-bottom: 40px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   &__column {
@@ -485,6 +492,10 @@ button {
     display: flex;
     flex-direction: column;
     height: 100%;
+
+    @media (max-width: 768px) {
+      margin-bottom: 20px;
+    }
 
     &:nth-of-type(even) {
       border-left: 1px solid #d9d9d9;
@@ -499,6 +510,7 @@ button {
     font-weight: 400;
     line-height: 150%;
     display: flex;
+    margin-bottom: 12px;
     padding-left: 20px;
 
     &::before {
@@ -525,6 +537,7 @@ button {
     font-weight: 700;
     line-height: 133%;
     text-transform: uppercase;
+    margin-bottom: 12px;
   }
 
   &__text {
@@ -534,6 +547,11 @@ button {
     line-height: 125%;
     margin-bottom: 40px;
 
+    span {
+      color: #009cde;
+      font-weight: 700;
+    }
+
     @media screen and (max-width: 768px) {
       font-size: 16px;
     }
@@ -541,6 +559,15 @@ button {
 
   &__foot {
     margin-top: auto;
+    display: flex;
+
+    &--end {
+      justify-content: flex-end;
+    }
+
+    &--center {
+      justify-content: center;
+    }
   }
 
   &__clear {
@@ -553,7 +580,12 @@ button {
     display: flex;
   }
 
-
+  &__list {
+    font-size: 20px;
+    margin: 0;
+    margin-bottom: 12px;
+    padding-left: 20px;
+  }
 
   &__btn {
     position: relative;
@@ -570,7 +602,18 @@ button {
     align-items: center;
     justify-content: center;
     max-width: 250px;
-    margin-left: auto;
     width:100%;
+    gap: 16px;
+
+    &--full {
+      max-width: 100%;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    &--light {
+      background: transparent;
+    color: var(--main-color)
+    }
   }
 }

@@ -1,0 +1,35 @@
+.questions-block {
+    &__list {
+        display: grid;
+        gap: 40px;
+
+        @media (max-width: 768px) {
+            gap: 20px;
+          }
+    }
+}
+
+.question-item {
+    &__title {
+        position: relative;
+        color: #343a40;
+        font-size: 20px;
+        display: flex;
+        font-weight: 700;
+        line-height: 125%;
+        margin-bottom: 8px;
+        gap: 8px;
+
+        
+    @media (max-width: 768px) {
+        font-size: 16px;
+        padding-left: 15px;
+      }
+    }
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+}

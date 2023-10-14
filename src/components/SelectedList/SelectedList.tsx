@@ -1,4 +1,4 @@
-import { Option } from '../../../types/interfaces'
+import { Option } from '../../types/interfaces'
 
 import './SelectedList.scss'
 

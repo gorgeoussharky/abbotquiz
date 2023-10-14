@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { QuestionEntry } from '../../../types/interfaces';
+import { Option, QuestionEntry } from '../../types/interfaces';
 import { RootState } from '../../app/store';
 
 import questions from '../../data/gerdQ.json';
 
-export interface SymptomsState {
+export interface QuestionsState {
   questions: QuestionEntry[];
 }
 
-const initialState: SymptomsState = {
+const initialState: QuestionsState = {
   questions: questions.map((el) => {
     return {
       ...el,
-      values: [],
+      value: undefined,
     };
   }),
 };
@@ -21,21 +21,31 @@ export const questionsSlice = createSlice({
   name: 'questions',
   initialState,
   reducers: {
-    setAnswer: (state, action: PayloadAction<QuestionEntry>) => {
-        const questionsClone = structuredClone(state.questions)
-        const question = questionsClone.find(el => el.title === action.payload.title)
 
-        if (!question) return 
+    setAnswer: (
+      state,
+      action: PayloadAction<{ title: string; option: Option }>
+    ) => {
+      const questionIndex = state.questions.findIndex(
+        (el) => el.title === action.payload.title
+      );
 
-        state.questions = questionsClone
+      state.questions[questionIndex].value = action.payload.option;
+    },
+
+    resetAnswers: (state) => {
+      state.questions = questions.map((el) => {
+        return {
+          ...el,
+          value: undefined,
+        };
+      });
     },
   },
 });
 
-export const { setAnswer } =
-questionsSlice.actions;
+export const { setAnswer, resetAnswers } = questionsSlice.actions;
 
-export const selectQuestions = (state: RootState) =>
-  state.questions.questions;
+export const selectQuestions = (state: RootState) => state.questions.questions;
 
 export default questionsSlice.reducer;

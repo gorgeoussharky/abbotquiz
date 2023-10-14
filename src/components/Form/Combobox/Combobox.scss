@@ -1,38 +1,6 @@
 .combobox {
   position: relative;
 
-  &__dropdown {
-    position: absolute;
-    top: 40px;
-    right: 0;
-    width: 100%;
-    max-height: 250px;
-    border-radius: 0px 0px 20px 20px;
-    border: 1px solid #009cde;
-    border-top: none;
-    background: #fff;
-    padding: 8px 4px 8px 0;
-    overflow-y: scroll;
-    z-index: 15;
-    opacity: 0;
-    pointer-events: none;
-
-    &::-webkit-scrollbar {
-      width: 4px;
-      background-color: transparent !important;
-      -webkit-transition: all 0.4s;
-      transition: all 0.4s;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      width: 4px;
-      background: rgba(0, 156, 222, 0.2) !important;
-      border-radius: 8px;
-      -webkit-transition: all 0.4s;
-      transition: all 0.4s;
-    }
-  }
-
   &__list {
     width: 100%;
     max-height: 250px;

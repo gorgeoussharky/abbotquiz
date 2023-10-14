@@ -3,7 +3,7 @@ import { Input } from '../Input/Input';
 
 import './Combobox.scss';
 import { Dropdown } from '../../Dropdown/Dropdown';
-import { Option } from '../../../../types/interfaces';
+import { Option } from '../../../types/interfaces';
 
 interface Props {
     list: Option[]
@@ -19,7 +19,7 @@ const Combobox = ({list, onSelect}: Props) => {
   const suggestions = () => {
     if (!query.length) return []
 
-    return list.filter((el) => el.label.includes(query));
+    return list.filter((el) => el.label.toLowerCase().includes(query.toLowerCase()));
   };
 
   return (
