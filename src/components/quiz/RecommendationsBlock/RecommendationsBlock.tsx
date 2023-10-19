@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../app/hooks';
-import { selectSelectedSymptoms } from '../../../features/symptoms/symptomsSlice';
+import { selectSelectedSymptoms } from '../../../store/symptomsSlice';
 import { Recommendations } from '../../Recommendations/Recommendations';
 
 interface Props {

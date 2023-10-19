@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { SymptomsBlock } from '../components/quiz/SymptomsBlock/SymptomsBlock';
 import { SourcesList } from '../components/SourcesList/SourcesList';
-import { QuestionsBlock } from '../components/quiz/QuestionsBlock/QuestionsBlock';
+import { GerdQ } from '../components/quiz/GerdQ/GerdQ';
 import { DiagnosisBlock } from '../components/quiz/DiagnosisBlock/DiagnosisBlock';
 import { RecommendationsBlock } from '../components/quiz/RecommendationsBlock/RecommendationsBlock';
 import { useAppSelector } from '../app/hooks';
-import { selectSelectedSymptoms } from '../features/symptoms/symptomsSlice';
+import { selectSelectedSymptoms } from '../store/symptomsSlice';
 import { useNavigate } from 'react-router-dom';
 
 const totalSteps = 3;
@@ -13,6 +13,7 @@ const totalSteps = 3;
 const First = () => {
   const [step, setStep] = useState(1);
   const [block, setBlock] = useState('symptoms');
+  const [prevBlock, setPrevBlock] = useState<string[]>([])
 
   const navigate = useNavigate();
   const selectedSymptoms = useAppSelector(selectSelectedSymptoms);
@@ -33,6 +34,8 @@ const First = () => {
   };
 
   const handleNext = () => {
+    setPrevBlock(prevBlock.concat(block));
+
     switch (block) {
       case 'questions':
         setStep(3);
@@ -62,23 +65,17 @@ const First = () => {
   };
 
   const handleBack = () => {
-    switch (block) {
-      case 'questions':
-        setStep(1);
-        setBlock('symptoms');
-        return;
-      case 'diagnosis':
-        setStep(2);
-        setBlock('questions');
-        return;
-      case 'recommendations':
-        setStep(1);
-        setBlock('symptoms');
-        return;
-      case 'symptoms':
-        navigate('/');
-        return;
+    if (block === 'symptoms') {
+      navigate('/')
+      return
     }
+
+    
+    if (prevBlock.length > 0) {
+      setBlock(prevBlock[prevBlock.length - 1]);
+      setPrevBlock(prevBlock.slice(0, -1));
+    }
+   
   };
 
   const QuizBlock = () => {
@@ -86,7 +83,7 @@ const First = () => {
       case 'symptoms':
         return <SymptomsBlock onBack={handleBack} onNext={handleNext} />;
       case 'questions':
-        return <QuestionsBlock onBack={handleBack} onNext={handleNext} />;
+        return <GerdQ onBack={handleBack} onNext={handleNext} />;
       case 'diagnosis':
         return <DiagnosisBlock onBack={handleBack}  />;
       case 'recommendations':

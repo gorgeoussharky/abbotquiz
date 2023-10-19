@@ -10,25 +10,6 @@
     }
 
     &__item {
-        font-size: 20px;
-        padding-left: 20px;
-        position: relative;
-
-        &::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            position: absolute;
-            left: 0;
-            top: 14px;
-            border-radius: 50%;
-            background-color: #343A40;
-        }
-            
-        span {
-            color: #8C8C8C;
-            font-size: 14px;
-            display: block;
-        }
+        
     }
 }

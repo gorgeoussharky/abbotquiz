@@ -12,7 +12,7 @@ const SelectedList = ({list, onRemove}: Props) => {
         <div className="selected-list">
             <div className="selected-list__list">
                 {list.map((el) => (
-                  <div key={el.value} className="selected-list__item">
+                  <div key={el.label} className="selected-list__item">
                     {el.label}
                     <button
                       className="selected-list__item-remove"

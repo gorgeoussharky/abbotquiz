@@ -29,7 +29,7 @@ const Combobox = ({list, onSelect}: Props) => {
         type="search"
         label="Поиск симптомов"
         value={query}
-        onInput={setQuery}
+        onInput={(val) => setQuery(val as string)}
         onFocus={() => setShowDropdown(true)}
         onBlur={() => setShowDropdown(true)}
       />

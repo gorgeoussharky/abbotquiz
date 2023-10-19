@@ -1,133 +1,151 @@
-import { useAppSelector, useAppDispatch, useIsMobile } from '../../../app/hooks';
-import { selectQuestions } from '../../../features/questions/questionsSlice';
-import { RadioLabel } from '../../form/RadioLabel/RadioLabel';
-import { setAnswer } from '../../../features/questions/questionsSlice';
-import './QuestionsBlock.scss';
-import { Combobox } from '../../form/Combobox/Combobox';
-import { Select } from '../../form/Select/Select';
+import { Examination, Option } from '../../../types/interfaces';
+import { RadioLabel } from '../../form/RadioLabel';
+import { Checkbox } from '../../form/Сheckbox/Checkbox';
+import { BackLink, Button, Foot, Heading, Subheading } from '../../elements';
+import styled from 'styled-components';
+import { RadioList } from '../../form/RadioList';
 
 interface Props {
-  onNext: () => void
-  onBack: () => void
+  title: string;
+  questions: Examination['questions'];
+  children?: JSX.Element | JSX.Element[];
+  onChange?: (val: Option, title: string) => void;
+  onBack?: () => void;
+  onNext?: () => void;
 }
 
-const QuestionsBlock = ({ onNext, onBack }: Props) => {
-  const questions = useAppSelector(selectQuestions);
+const QuestionHeading = styled.div`
+  font-size: 20px;
+  margin-bottom: 12px;
+  font-weight: 700;
+`
 
-  const isMobile = useIsMobile();
-  const dispatch = useAppDispatch();
+const QuestionsList = styled.div`
+  display: grid;
+  gap: 32px;
+  margin-bottom: 40px;
+`;
 
-  const questionsNumbered = () => {
-    return questions.map((question, key) => {
-      return {
-        ...question,
-        number: key + 1,
-      };
-    });
-  };
+const RadioListWrap = styled.div`
+  display: grid;
+  gap: 12px;
+`
 
+const RadioLabelsWrap = styled.div<{$cols: number}>`
+  display: grid;
+  gap: 12px;
+  grid-template-columns: ${props => `repeat(${props.$cols}, 1fr)`};
+  align-items: stretch;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const NextBtn = styled(Button)`
+  margin-top: 32px;
+`;
+
+const QuestionsBlock = ({
+  title,
+  questions,
+  children,
+  onBack,
+  onChange,
+  onNext,
+}: Props) => {
   const isBtnActive = () => {
-    return !questions.some((el) => !el.value);
+    return questions!.every((el) => typeof el.value?.value !== 'undefined');
   };
+
+  const calcCols = (count: number) => {
+    console.log(count)
+    if (count >= 6) {
+        return 1
+    }
+
+    if (count >= 4) {
+      return 2
+    }
+
+
+    return 4
+  }
 
   return (
     <div className="quiz-block">
-      <button className="quiz-block__back" onClick={onBack}>Назад</button>
+      <BackLink onClick={onBack}>Назад</BackLink>
 
-      <div className="quiz-block__head">
-        <div className="quiz-block__title">ТЕСТ GERD Q</div>
-      </div>
+      <Heading>{title}</Heading>
 
-      <div className="quiz-block__text">За последнюю неделю:</div>
+      <QuestionsList>
+        {questions?.map((question) => (
+          <div key={question.title}>
+            {question.type === 'radio' && (
+              <>
+                <QuestionHeading>{question?.title}</QuestionHeading>
+                <RadioLabelsWrap $cols={calcCols(question.options?.length || 3)}>
+                  {question?.options?.map((option) => (
+                    <RadioLabel
+                      key={option.label + question.title}
+                      name={question.title}
+                      checked={option.value === question.value?.value}
+                      value={option.value}
+                      label={option.label}
+                      onChange={() =>
+                        onChange && onChange(option, question.title)
+                      }
+                    />
+                  ))}
+                </RadioLabelsWrap>
+              </>
+            )}
 
-      <div className="quiz-block__wrap quiz-block__wrap--columns">
-        <div className="quiz-block__column">
-          <div className="quiz-block__questions-block questions-block">
-            <div className="questions-block__list">
-              {questionsNumbered()
-                .slice(0, Math.floor(questions.length / 2))
-                .map((el) => (
-                  <div className="quiz-block__questions-item questions-item">
-                    <div className="question-item__title">
-                      <span>{el.number}.</span> {el.title}
-                    </div>
-                    {!isMobile ? (
-                      <div className="question-item__list">
-                        {el.options.map((option) => (
-                          <RadioLabel
-                            key={el.title + option}
-                            name={el.title}
-                            value={option.value}
-                            label={option.label}
-                            checked={el.value?.value === option.value}
-                            onChange={() =>
-                              dispatch(setAnswer({ title: el.title, option }))
-                            }
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <Select
-                      label='Выберите ответ'
-                      onSelect={(option) => dispatch(setAnswer({ title: el.title, option }))}
-                      value={el.value?.label || ''}
-                      options={el.options}
-                      />
-                    )}
-                  </div>
-                ))}
-            </div>
+            {question.type === 'checkbox' && (
+              <Checkbox
+                label={question.title}
+                value={question.title}
+                checked={Boolean(question.value?.value)}
+                onChange={(checked) =>
+                  onChange &&
+                  onChange(
+                    { label: question.title, value: checked },
+                    question.title
+                  )
+                }
+              />
+            )}
+
+            {question.type === 'radioList' && (
+              <RadioListWrap>
+              {question?.options?.map((option) => (
+                <RadioList
+                  key={option.label + question.title}
+                  name={question.title}
+                  checked={option.value === question.value?.value}
+                  value={option.value}
+                  label={option.label}
+                  onChange={() => onChange && onChange(option, question.title)}
+                />
+              ))}
+              </RadioListWrap>
+            )}
+
+            {question.warning &&
+              question.warning.condition === question.value?.value && (
+                <div className="quiz-block__warning">
+                  {question.warning.text}
+                </div>
+              )}
           </div>
-        </div>
+        ))}
+      </QuestionsList>
 
-        <div className="quiz-block__column">
-          <div className="quiz-block__questions-block questions-block">
-            <div className="questions-block__list">
-              {questionsNumbered()
-                .slice(Math.floor(questions.length / 2))
-                .map((el) => (
-                  <div className="quiz-block__questions-item questions-item">
-                    <div className="question-item__title">
-                      <span>{el.number}.</span> {el.title}
-                    </div>
+      {children}
 
-                    {!isMobile ? (
-                      <div className="question-item__list">
-                        {el.options.map((option) => (
-                          <RadioLabel
-                            key={el.title + option}
-                            name={el.title}
-                            value={option.value}
-                            label={option.label}
-                            checked={el.value?.value === option.value}
-                            onChange={() =>
-                              dispatch(setAnswer({ title: el.title, option }))
-                            }
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <Select
-                      label='Выберите ответ'
-                      onSelect={(option) => dispatch(setAnswer({ title: el.title, option }))}
-                      value={el.value?.label || ''}
-                      options={el.options}
-                      />
-                    )}
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="quiz-block__foot quiz-block__foot--center">
-        {isBtnActive() && (
-          <button className="quiz-block__btn" onClick={onNext}>
-            Продолжить
-          </button>
-        )}
-      </div>
+      <Foot $align="flex-end">
+        {isBtnActive() && <NextBtn onClick={onNext}>Продолжить</NextBtn>}
+      </Foot>
     </div>
   );
 };

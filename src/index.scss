@@ -321,6 +321,8 @@ template {
 }
 
 :root {
+  --accent: #009CDE;
+  
   --primary-main: #009cde;
   --main-color: #009cde;
   --primary-main-rgb: 0, 156, 222;
@@ -540,6 +542,14 @@ button {
     margin-bottom: 12px;
   }
 
+  &__subtitle {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 25px;
+    margin-bottom: 20px;
+  }
+
   &__text {
     color: #343a40;
     font-size: 20px;
@@ -570,6 +580,21 @@ button {
     }
   }
 
+  &__btns {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-items: stretch;
+
+    .radio-label__wrap, .radio-label__label {
+      height: 100%;
+    }
+
+    &--two {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
   &__clear {
     position: relative;
     color: #009cde;
@@ -585,6 +610,16 @@ button {
     margin: 0;
     margin-bottom: 12px;
     padding-left: 20px;
+    display: grid;
+    
+    &--cols {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__mini-title {
+    font-size: 17px;
+    margin-bottom: 12px;
   }
 
   &__btn {
@@ -604,6 +639,7 @@ button {
     max-width: 250px;
     width:100%;
     gap: 16px;
+    text-decoration: none;
 
     &--full {
       max-width: 100%;
@@ -614,6 +650,37 @@ button {
     &--light {
       background: transparent;
     color: var(--main-color)
+    }
+  }
+
+  &__checkbox-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  &__grid-list {
+    display: grid;
+    gap: 32px;
+  }
+
+  &__warning {
+      font-size: 20px;
+      line-height: 25px;
+      padding-left: 28px;
+      color: #d50032;
+      position: relative;
+      margin-top: 20px;
+
+      &::before  {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        left: 0;
+        width: 20px;
+        height: 20px;
+        background-image: url("data:image/svg+xml,%0A%3Csvg width='20' height='21' viewBox='0 0 20 21' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='system icon'%3E%3Cpath id='Vector' d='M10.0026 18.8346C14.6051 18.8346 18.3359 15.1038 18.3359 10.5013C18.3359 5.8988 14.6051 2.16797 10.0026 2.16797C5.4001 2.16797 1.66927 5.8988 1.66927 10.5013C1.66927 15.1038 5.4001 18.8346 10.0026 18.8346ZM10.8359 9.66797V14.668H9.16927V9.66797H10.8359ZM10.8359 6.33464V8.0013H9.16927V6.33464H10.8359Z' fill='%23D50032'/%3E%3C/g%3E%3C/svg%3E%0A");
     }
   }
 }

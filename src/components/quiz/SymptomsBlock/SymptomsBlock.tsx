@@ -8,7 +8,7 @@ import {
   removeSelectedSymptom,
   clearSelectedSymptoms,
   selectSymptomsDB,
-} from '../../../features/symptoms/symptomsSlice';
+} from '../../../store/symptomsSlice';
 import { Option } from '../../../types/interfaces';
 import { SelectedList } from '../../SelectedList/SelectedList';
 

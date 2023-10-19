@@ -1,0 +1,117 @@
+import { CardsList } from '../../../CardsList';
+import { BackLink, ButtonLink, Foot, Item, List } from '../../../../elements';
+import { DiagnosisCard, DiagnosisHeading } from '../elements';
+import {
+  drugs,
+  lifestyle,
+  surgical,
+} from '../../../../../data/recommendations';
+import styled from 'styled-components';
+import { DosageList } from '../../../../DosageList/DosageList';
+
+interface Props {
+  onBack: () => void;
+}
+
+const DrugsList = styled(List)`
+  padding-left: 16px;
+  margin-top: 8px;
+  max-width: 460px;
+`;
+
+const Gpod = ({ onBack }: Props) => {
+  const ipp = [
+    {
+      title: 'Рабепразол',
+      dosage: '20мг 1 раз в сутки',
+    },
+    {
+      title: 'Лансопразол',
+      dosage: '60 мг 1 раз в сутки',
+    },
+    {
+      title: 'Омепразол',
+      dosage: '20 мг 1 раз в сутки',
+    },
+    {
+      title: 'Пантопразол',
+      dosage: '40 мг 1 раз в сутки',
+    },
+    {
+      title: 'Эзомепразол',
+      dosage: '40 мг 1 раз в сутки',
+    },
+    {
+      title: 'Декслансопразол',
+      dosage: '60 мг 1 раз в сутки',
+    },
+  ];
+
+  const pyro = [
+    {
+      title: 'Итоприда гидрохлорид',
+      dosage: '50 мг 3 раза в сутки',
+    },
+  ];
+
+  const diagnosisLifestyle = () => {
+    return {
+      ...lifestyle,
+      link: undefined,
+      list: [
+        'Тщательное пережевывание пищи',
+        'Контроль позиции тела при приеме пищи',
+        'Исключение газированных напитков и др.',
+      ],
+    };
+  };
+
+  const diagnosisSurgical = () => {
+    return {
+      ...surgical,
+      text: 'Фундопликация',
+    };
+  };
+
+  const diagnosisDrugs = () => {
+    return {
+      ...drugs,
+      children: (
+        <DrugsList style={{ paddingLeft: 16, marginTop: 8 }}>
+          <Item>
+            <DosageList list={ipp} title="ИПП на выбор" />
+          </Item>
+
+          <Item>
+            <DosageList cols={1} list={pyro} title="Прокинетик" />
+          </Item>
+        </DrugsList>
+      ),
+    };
+  };
+
+  return (
+    <div className="quiz-block">
+      <BackLink onClick={onBack}>Назад</BackLink>
+
+      <DiagnosisHeading>Вероятный диагноз</DiagnosisHeading>
+
+      <DiagnosisCard>
+        <div>Грыжа пищеводного отверстия диафрагмы (ГПОД)</div>
+        Код по МКБ 44.9
+      </DiagnosisCard>
+
+      <DiagnosisHeading>Возможные рекомендации</DiagnosisHeading>
+
+      <CardsList
+        list={[diagnosisLifestyle(), diagnosisDrugs(), diagnosisSurgical()]}
+      />
+
+      <Foot $align="flex-end">
+        <ButtonLink to="/">Закончить прием</ButtonLink>
+      </Foot>
+    </div>
+  );
+};
+
+export { Gpod };
