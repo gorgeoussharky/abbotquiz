@@ -6,7 +6,7 @@ interface Props {
   item: RecommendationCardType;
 }
 
-const Wrap = styled.li`
+const Wrap = styled.li<{$hasIcon: boolean}>`
   position: relative;
   border-radius: 4px;
   border: 1px solid #009cde;
@@ -14,8 +14,17 @@ const Wrap = styled.li`
   padding: 16px;
   display: grid;
   align-items: center;
-  grid-template-columns: auto 40px;
+
   gap: 12px;
+
+  ${props => props.$hasIcon && `
+      grid-template-columns: auto 40px;
+  `}
+
+  @media (max-width: 768px) {
+    padding: 12px;
+    gap: 24px;
+  }
 `;
 
 const ItemTitle = styled.div`
@@ -25,6 +34,10 @@ const ItemTitle = styled.div`
   font-weight: 700;
   line-height: 116%;
 
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+
   span {
     color: var(--accent);
   }
@@ -32,12 +45,22 @@ const ItemTitle = styled.div`
 
 const ItemText = styled.div`
   font-size: 20px;
+
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const ItemList = styled(List)`
   padding-left: 16px;
   margin-top: 8px;
   margin-bottom: 0;
+  
+  @media (max-width: 768px) {
+    padding-left: 10px;
+  }
+
 `
 
 const ItemLink = styled.a<{ $arrow?: boolean }>`
@@ -49,6 +72,10 @@ const ItemLink = styled.a<{ $arrow?: boolean }>`
   gap: 8px;
   display: flex;
   align-items: center;
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 
   ${(props) =>
     props.$arrow &&
@@ -67,7 +94,7 @@ const ItemLink = styled.a<{ $arrow?: boolean }>`
 
 const RecommendationCard = ({ item }: Props) => {
   return (
-    <Wrap key={item.title}>
+    <Wrap key={item.title} $hasIcon={Boolean(item.icon?.length)}>
       <div>
         <ItemTitle dangerouslySetInnerHTML={{ __html: item.title }} />
         {item.text && (

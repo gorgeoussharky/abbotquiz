@@ -48,3 +48,13 @@ export interface Option {
   value: string | number | boolean;
 }
 
+export interface InteractionDBEntry {
+  id?: number
+  name: string
+  recommendations?: string
+  description?: string
+  risk?: string
+  level?: string
+  tactik?: string
+  mainMed?: string
+}

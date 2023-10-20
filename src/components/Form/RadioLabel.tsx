@@ -24,16 +24,33 @@ const Control = styled.input`
   }
 `;
 
-const Label = styled.label`
+const Label = styled.label<{ $longText: boolean }>`
   border-radius: 40px;
   border: 1px solid #d9d9d9;
   background: #fff;
-  padding: 14px 40px;
+  padding: 14px 30px;
   display: block;
   cursor: pointer;
   font-size: 16px;
   transition: 500ms;
   height: 100%;
+
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+
+  ${(props) =>
+    props.$longText &&
+    `
+      @media (max-width: 768px) {
+        text-align: left;
+        
+        br {
+          display: none;
+        }
+  }
+  
+  `}
 
   &:hover {
     border: 1px solid #009cde;
@@ -65,6 +82,7 @@ const RadioLabel = ({
       <Label
         htmlFor={id}
         dangerouslySetInnerHTML={{ __html: label.toString() }}
+        $longText={label.toString().length > 20}
       ></Label>
     </div>
   );

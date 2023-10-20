@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Input } from '../form/Input/Input';
+import { Input } from '../form/Input';
 
 const InputX = styled(Input)`
   margin-bottom: 12px;
@@ -43,6 +43,11 @@ const Toggler = styled.button`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+      font-size: 16px;
+      margin-top: 24px;
+  } 
 `;
 
 const Content = styled.div`
@@ -50,13 +55,22 @@ const Content = styled.div`
   border-radius: 4px;
   border: 1px solid var(--accent);
   margin-top: 12px;
+
+  @media (max-width: 768px) {
+    margin-top: 24px;
+  }
 `;
 
 const Title = styled.div`
   font-size: 20px;
   font-weight: 700;
-
   margin-bottom: 16px;
+
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
 `;
 
 const CalcIndexSymptom = () => {

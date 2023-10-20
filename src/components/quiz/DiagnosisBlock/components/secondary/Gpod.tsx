@@ -1,5 +1,5 @@
 import { CardsList } from '../../../CardsList';
-import { BackLink, ButtonLink, Foot, Item, List } from '../../../../elements';
+import { BackLink, ButtonLink, Foot, Item, List, QuizWrap } from '../../../../elements';
 import { DiagnosisCard, DiagnosisHeading } from '../elements';
 import {
   drugs,
@@ -7,7 +7,7 @@ import {
   surgical,
 } from '../../../../../data/recommendations';
 import styled from 'styled-components';
-import { DosageList } from '../../../../DosageList/DosageList';
+import { DosageList } from '../../../../DosageList';
 
 interface Props {
   onBack: () => void;
@@ -18,6 +18,14 @@ const DrugsList = styled(List)`
   margin-top: 8px;
   max-width: 460px;
 `;
+
+const DrugsDosageList = styled(DosageList)`
+  @media (max-width: 768px) {
+    ul {
+      grid-template-columns: 1fr;
+    }
+  }
+`
 
 const Gpod = ({ onBack }: Props) => {
   const ipp = [
@@ -77,13 +85,13 @@ const Gpod = ({ onBack }: Props) => {
     return {
       ...drugs,
       children: (
-        <DrugsList style={{ paddingLeft: 16, marginTop: 8 }}>
+        <DrugsList>
           <Item>
-            <DosageList list={ipp} title="ИПП на выбор" />
+            <DrugsDosageList list={ipp} title="ИПП на выбор" />
           </Item>
 
           <Item>
-            <DosageList cols={1} list={pyro} title="Прокинетик" />
+            <DrugsDosageList cols={1} list={pyro} title="Прокинетик" />
           </Item>
         </DrugsList>
       ),
@@ -91,7 +99,7 @@ const Gpod = ({ onBack }: Props) => {
   };
 
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <BackLink onClick={onBack}>Назад</BackLink>
 
       <DiagnosisHeading>Вероятный диагноз</DiagnosisHeading>
@@ -110,7 +118,7 @@ const Gpod = ({ onBack }: Props) => {
       <Foot $align="flex-end">
         <ButtonLink to="/">Закончить прием</ButtonLink>
       </Foot>
-    </div>
+    </QuizWrap>
   );
 };
 

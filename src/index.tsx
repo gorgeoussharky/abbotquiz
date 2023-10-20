@@ -5,15 +5,16 @@ import { store } from './app/store';
 import { BrowserRouter } from "react-router-dom";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './index.scss';
+import { GlobalStyle } from './components/globalStyles';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename='/quiz/'>
+    <BrowserRouter basename='/cdss'>
       <Provider store={store}>
+        <GlobalStyle />
         <App />
       </Provider>
     </BrowserRouter>

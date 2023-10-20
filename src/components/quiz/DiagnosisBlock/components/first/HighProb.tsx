@@ -1,5 +1,3 @@
-import { DiagnosisProbability } from "../../../DiagnosisProbability/DiagnosisProbability";
-
 import {
   egds,
   manometry,
@@ -10,9 +8,10 @@ import { useAppSelector } from "../../../../../app/hooks";
 import { selectSelectedSymptoms } from "../../../../../store/symptomsSlice";
 import { Examination } from "../../../../../types/interfaces";
 import { CardsList } from "../../../CardsList";
-import { BackLink, ButtonLink, Column, ColumnsWrap, Foot, Heading, Item, List, Text } from "../../../../elements";
-import { DosageList } from "../../../../DosageList/DosageList";
+import { BackLink, ButtonLink, Column, ColumnsWrap, Foot, Heading, Item, List, QuizWrap, Text } from "../../../../elements";
+import { DosageList } from "../../../../DosageList";
 import { schedule } from "../../../../../data/recommendations";
+import { DiagnosisCard } from "../elements";
 
 interface Props {
   points: number
@@ -77,7 +76,7 @@ const HighProb = ({ onBack, points }: Props) => {
 
     extraesophagealCount.forEach((symptom) => {
       exams.push({
-        title: `Учитывая наличие у пациента <span>${symptom.title}</span>, с целью исключения сопутствующей патологии, рекомендуется направить пациента на консультацию к следующему специалисту: <span>${symptom.doctors}</span>`,
+        title: `Учитывая наличие у пациента <span>${symptom.group}</span>, с целью исключения сопутствующей патологии, рекомендуется направить пациента на консультацию к следующему специалисту: <span>${symptom.doctors}</span>`,
         icon: doctorIcon,
       });
     });
@@ -149,7 +148,7 @@ const HighProb = ({ onBack, points }: Props) => {
   };
 
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <ColumnsWrap>
         <Column >
           <BackLink onClick={onBack}>
@@ -157,7 +156,15 @@ const HighProb = ({ onBack, points }: Props) => {
           </BackLink>
 
           <Heading>Предварительный диагноз</Heading>
-          <DiagnosisProbability percent={probablity()} />
+
+          <DiagnosisCard>
+            <div style={{maxWidth: '60%'}}>Вероятность диагноза ГЭРБ</div>
+            <var>{probablity()}%</var>
+            Код по МКБ 21.0
+          </DiagnosisCard>
+
+
+          
 
 
           <Heading>
@@ -207,7 +214,7 @@ const HighProb = ({ onBack, points }: Props) => {
 
           <Text>
             При выборе препарата из класса ИПП рекомендуется отдавать предпочтение{' '}
-            <span>рабепразолу</span>, т.к. у препарата есть:
+            <a href="https://abbottpro.ru/academy/preparation/pariet-20" rel="noreferrer" target='_blank'>рабепразолу</a>, т.к. у препарата есть:
           </Text>
 
           <List>
@@ -221,7 +228,7 @@ const HighProb = ({ onBack, points }: Props) => {
 
           <CardsList notifications={secondaryNotifications()} />
 
-          <ButtonLink to="/" $large>
+          <ButtonLink  to="/interactions" $large>
             <svg
               width="25"
               height="24"
@@ -232,16 +239,16 @@ const HighProb = ({ onBack, points }: Props) => {
               <path
                 d="M10.5 17C14.366 17 17.5 13.866 17.5 10C17.5 6.13401 14.366 3 10.5 3C6.63401 3 3.5 6.13401 3.5 10C3.5 13.866 6.63401 17 10.5 17Z"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M21.5 21L15.5 15"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             Проверить межлекарственные взаимодействия
@@ -254,7 +261,7 @@ const HighProb = ({ onBack, points }: Props) => {
           </Foot>
         </Column>
       </ColumnsWrap>
-    </div>
+    </QuizWrap>
   );
 }
 

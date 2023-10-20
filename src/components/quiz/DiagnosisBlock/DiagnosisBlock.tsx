@@ -1,15 +1,22 @@
 import { useLocation } from 'react-router-dom';
-
-import './DiagnosisBlock.scss';
 import { FirstDiagnosis } from './components/FirstDiagnosis';
 import { SecondaryDiagnosis } from './components/SecondaryDiagnosis';
-
+import { ControlDiagnosis } from './components/ControlDiagnosis';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../../../app/hooks';
+import { setHasLastDiagnosis } from '../../../store/utilsSlice';
 interface Props {
   onBack: () => void;
 }
 
 const DiagnosisBlock = ({ onBack }: Props) => {
   const location = useLocation();
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    // Для возврана на диагноз с межлека
+    dispatch(setHasLastDiagnosis(true))
+  }, [])
 
   if (location.pathname === '/first') {
     return <FirstDiagnosis onBack={onBack} />;
@@ -17,6 +24,10 @@ const DiagnosisBlock = ({ onBack }: Props) => {
 
   if (location.pathname === '/secondary') {
     return <SecondaryDiagnosis onBack={onBack} />;
+  }
+
+  if (location.pathname === '/control') {
+    return <ControlDiagnosis onBack={onBack} />;
   }
 
   return <></>

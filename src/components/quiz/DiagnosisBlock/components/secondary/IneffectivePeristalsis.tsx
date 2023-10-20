@@ -1,5 +1,5 @@
 import { CardsList } from '../../../CardsList';
-import { BackLink, ButtonLink, Foot } from '../../../../elements';
+import { BackLink, ButtonLink, Foot, QuizWrap } from '../../../../elements';
 import { DiagnosisCard, DiagnosisHeading } from '../elements';
 import { complex, consultations, drugs, food, lifestyle, lowPeristalic, surgical, visit } from '../../../../../data/recommendations';
 
@@ -22,7 +22,7 @@ const IneffectivePeristalsis = ({ onBack }: Props) => {
       };
 
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <BackLink onClick={onBack}>Назад</BackLink>
 
       <DiagnosisHeading>Вероятный диагноз</DiagnosisHeading>
@@ -39,7 +39,7 @@ const IneffectivePeristalsis = ({ onBack }: Props) => {
       <Foot $align="flex-end">
         <ButtonLink to="/">Закончить прием</ButtonLink>
       </Foot>
-    </div>
+    </QuizWrap>
   );
 };
 

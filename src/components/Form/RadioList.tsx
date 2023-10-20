@@ -23,24 +23,30 @@ const Control = styled.input`
 
       span {
         &::before {
-            background-color: #fff;
+          background-color: #fff;
         }
       }
     }
   }
 `;
 
-const Label = styled.label<{$cols: number}>`
-    border-radius: 4px;
+const Label = styled.label<{ $cols: number }>`
+  border-radius: 4px;
   border: 1px solid #d9d9d9;
   background: #fff;
   padding: 20px 40px;
   display: grid;
-  grid-template-columns: ${props => props.$cols ? `repeat(${props.$cols}, 1fr)` : '1fr'};
+  grid-template-columns: ${(props) =>
+    props.$cols ? `repeat(${props.$cols}, 1fr)` : '1fr'};
   gap: 0 12px;
   cursor: pointer;
   font-size: 16px;
   transition: 500ms;
+
+  @media (max-width: 768px) {
+    padding: 16px;
+    grid-template-columns: 1fr;
+  }
 
   &:hover {
     border: 1px solid #009cde;
@@ -50,11 +56,15 @@ const Label = styled.label<{$cols: number}>`
 `;
 
 const LabelListItem = styled.span`
-    font-size: 20px;
-    padding-left: 20px;
-    position: relative;
-    display: block;
-    line-height: 120%;
+  font-size: 20px;
+  padding-left: 20px;
+  position: relative;
+  display: block;
+  line-height: 120%;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 
   &::before {
     content: '';
@@ -66,7 +76,7 @@ const LabelListItem = styled.span`
     border-radius: 50%;
     background-color: #343a40;
   }
-`
+`;
 
 const RadioList = ({
   name,
@@ -79,8 +89,8 @@ const RadioList = ({
   const id = useId();
 
   const labelList = () => {
-    return label.split('|')
-  }
+    return label.split('|');
+  };
 
   return (
     <div className={className}>
@@ -92,23 +102,20 @@ const RadioList = ({
         onChange={() => onChange && onChange(value)}
         checked={checked}
       />
-      <Label
-        htmlFor={id}
-        $cols={labelList().length > 4 ? 2 : 1}
-      >
+      <Label htmlFor={id} $cols={labelList().length > 4 ? 2 : 1}>
         <span>
-        {labelList().slice(0, labelList().length / 2).map((item) => (
-            <LabelListItem>
-                {item}
-            </LabelListItem>
-        ))}
+          {labelList()
+            .slice(0, labelList().length / 2)
+            .map((item) => (
+              <LabelListItem>{item}</LabelListItem>
+            ))}
         </span>
         <span>
-        {labelList().slice(labelList().length / 2).map((item) => (
-            <LabelListItem>
-                {item}
-            </LabelListItem>
-        ))}
+          {labelList()
+            .slice(labelList().length / 2)
+            .map((item) => (
+              <LabelListItem>{item}</LabelListItem>
+            ))}
         </span>
       </Label>
     </div>

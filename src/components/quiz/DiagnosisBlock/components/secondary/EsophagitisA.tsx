@@ -1,6 +1,6 @@
 import { rentgenometry } from '../../../../../data/examinationsData';
 import { schedule } from '../../../../../data/recommendations';
-import { DosageList } from '../../../../DosageList/DosageList';
+import { DosageList } from '../../../../DosageList';
 import { CardsList } from '../../../CardsList';
 import {
   BackLink,
@@ -11,6 +11,7 @@ import {
   Heading,
   Item,
   List,
+  QuizWrap,
   Text,
 } from '../../../../elements';
 import { getAnswer } from '../../../../../app/helpers';
@@ -80,7 +81,7 @@ const EsophagitisA = ({ onBack }: Props) => {
   ];
 
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <ColumnsWrap>
         <Column>
           <BackLink onClick={onBack}>Назад</BackLink>
@@ -135,12 +136,12 @@ const EsophagitisA = ({ onBack }: Props) => {
             <Text>
               Учитывая наличие у пациента ночных эпизодов ГЭРБ, при выборе
               препарата из класса ИПП рекомендуется отдавать предпочтение
-              оригинальному <span>рабепразолу</span>, т.к. у препарата есть:
+              оригинальному <a href="https://abbottpro.ru/academy/preparation/pariet-20" rel="noreferrer" target='_blank'>рабепразолу</a>, т.к. у препарата есть:
             </Text>
           ) : (
             <Text>
               При выборе препарата из класса ИПП рекомендуется отдавать
-              предпочтение оригинальному <span>рабепразолу</span>, т.к. у
+              предпочтение оригинальному <a href="https://abbottpro.ru/academy/preparation/pariet-20" rel="noreferrer" target='_blank'>рабепразолу</a>, т.к. у
               препарата есть:
             </Text>
           )}
@@ -155,13 +156,13 @@ const EsophagitisA = ({ onBack }: Props) => {
           </List>
 
           <Text>
-            Рекомендуется добавление <span>итоприда гидрохлорида</span> для
-            устранения моторных нарушений. <span>Итоприда гидрохлорид</span>{' '}
+            Рекомендуется добавление <a href="https://abbottpro.ru/academy/preparation/ganaton" rel="noreferrer" target='_blank'>итоприда гидрохлорида</a> для
+            устранения моторных нарушений. <a href="https://abbottpro.ru/academy/preparation/ganaton" rel="noreferrer" target='_blank'>Итоприда гидрохлорид</a>{' '}
             доказано нормализует тонус НПС, улучшает ПРНПС и антродуоденальную
             координацию, снижая количество эпизодов рефлюкса.
           </Text>
 
-          <ButtonLink to="/" $large={true} style={{ marginBottom: `32px` }}>
+          <ButtonLink  to="/interactions" $large={true}>
             <svg
               width="25"
               height="24"
@@ -172,16 +173,16 @@ const EsophagitisA = ({ onBack }: Props) => {
               <path
                 d="M10.5 17C14.366 17 17.5 13.866 17.5 10C17.5 6.13401 14.366 3 10.5 3C6.63401 3 3.5 6.13401 3.5 10C3.5 13.866 6.63401 17 10.5 17Z"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M21.5 21L15.5 15"
                 stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             Проверить межлекарственные взаимодействия
@@ -194,7 +195,7 @@ const EsophagitisA = ({ onBack }: Props) => {
           </Foot>
         </Column>
       </ColumnsWrap>
-    </div>
+    </QuizWrap>
   );
 };
 

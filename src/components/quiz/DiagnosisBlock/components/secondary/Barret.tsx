@@ -1,5 +1,5 @@
 import { CardsList } from '../../../CardsList';
-import { BackLink, ButtonLink, Foot } from '../../../../elements';
+import { BackLink, ButtonLink, Foot, QuizWrap } from '../../../../elements';
 import { DiagnosisCard, DiagnosisHeading } from '../elements';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 
 const Barret = ({ onBack }: Props) => {
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <BackLink onClick={onBack}>
         Назад
       </BackLink>
@@ -41,7 +41,7 @@ const Barret = ({ onBack }: Props) => {
           Закончить прием
         </ButtonLink>
       </Foot>
-    </div>
+    </QuizWrap>
   );
 };
 

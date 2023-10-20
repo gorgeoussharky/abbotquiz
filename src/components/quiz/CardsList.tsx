@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import type { RecommendationCardType } from '../../types/interfaces';
 import { RecommendationCard } from './RecommendationCard';
-import { Notification } from '../Notification/Notification';
+import { Notification  } from './Notification';
 
 interface Props {
   title?: string;
@@ -25,6 +25,10 @@ const Title = styled.div`
   line-height: 150%;
   font-size: 20px;
   margin-bottom: 12px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const List = styled.ul`

@@ -1,6 +1,6 @@
 import { rentgenometry } from '../../../../../data/examinationsData';
 import { alternative, drugs, lifestyle, schedule } from '../../../../../data/recommendations';
-import { DosageList } from '../../../../DosageList/DosageList';
+import { DosageList } from '../../../../DosageList';
 import { CardsList } from '../../../CardsList';
 import {
   BackLink,
@@ -11,6 +11,7 @@ import {
   Heading,
   Item,
   List,
+  QuizWrap,
   Text,
 } from '../../../../elements';
 import { getAnswer } from '../../../../../app/helpers';
@@ -50,7 +51,7 @@ const FunctionalHeartburn = ({ onBack }: Props) => {
     }
 
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <ColumnsWrap>
         <Column>
           <BackLink onClick={onBack}>Назад</BackLink>
@@ -83,7 +84,7 @@ const FunctionalHeartburn = ({ onBack }: Props) => {
           </Foot>
         </Column>
       </ColumnsWrap>
-    </div>
+    </QuizWrap>
   );
 };
 

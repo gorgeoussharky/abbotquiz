@@ -1,5 +1,5 @@
 import { CardsList } from '../../../CardsList';
-import { BackLink, ButtonLink, Foot } from '../../../../elements';
+import { BackLink, ButtonLink, Foot, QuizWrap } from '../../../../elements';
 import { DiagnosisCard, DiagnosisHeading } from '../elements';
 import { consultations, dilatation, drugs, lifestyle, surgical } from '../../../../../data/recommendations';
 
@@ -22,7 +22,7 @@ const PJP = ({ onBack }: Props) => {
       const diagnosisDrugs = () => {
         return {
             ...drugs,
-            text: 'Назначение системных лекарственных препаратов неэффективно, но ИПП могут облегчать симптомы'
+            text: 'Назначение системных лекарственных препаратов неэффективно, <b>но ИПП могут облегчать симптомы</b>'
         }
     }
 
@@ -36,7 +36,7 @@ const PJP = ({ onBack }: Props) => {
      
 
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <BackLink onClick={onBack}>Назад</BackLink>
 
       <DiagnosisHeading>Вероятный диагноз</DiagnosisHeading>
@@ -53,7 +53,7 @@ const PJP = ({ onBack }: Props) => {
       <Foot $align="flex-end">
         <ButtonLink to="/">Закончить прием</ButtonLink>
       </Foot>
-    </div>
+    </QuizWrap>
   );
 };
 

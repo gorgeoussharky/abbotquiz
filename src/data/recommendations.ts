@@ -8,6 +8,7 @@ import foodIcon from '../assets/img/food.png';
 import egdsIcon from '../assets/img/egds.png'
 import complexIcon from '../assets/img/search.png'
 import needleIcon from '../assets/img/needle.png'
+import bottleIcon from '../assets/img/drugsBottle.png'
 
 
 const examinations = {
@@ -61,12 +62,16 @@ const examinations = {
   alternative: {
     title: 'Алтеранативная медицина (в редких случаях)',
     icon: needleIcon
+  },
+  drugsBottle: {
+    title: 'Купирование возникающих эпизодов ГЭРБ с помощью антацидов или алгинат-содержащих препаратов',
+    icon: bottleIcon
   }
   
   
 };
 
-export const { consultations, lifestyle, schedule, drugs, peroralTherapy, dilatation, surgical, visit, food, lowPeristalic, complex, alternative } = examinations;
+export const { drugsBottle, consultations, lifestyle, schedule, drugs, peroralTherapy, dilatation, surgical, visit, food, lowPeristalic, complex, alternative } = examinations;
 export default examinations;
 
   

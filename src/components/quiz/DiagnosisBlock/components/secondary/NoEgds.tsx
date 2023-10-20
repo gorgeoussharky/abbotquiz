@@ -1,4 +1,4 @@
-import { BackLink, ButtonLink, Foot } from '../../../../elements';
+import { BackLink, ButtonLink, Foot, QuizWrap } from '../../../../elements';
 import { DiagnosisHeading } from '../elements';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 const NoEgds = ({ onBack }: Props) => {
 
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <BackLink onClick={onBack}>Назад</BackLink>
 
       <DiagnosisHeading>Для оценки полной клинической картины заболевания и постановки корректного диагноза пациенту рекомендуется проведение ЭГДС.</DiagnosisHeading>
@@ -16,7 +16,7 @@ const NoEgds = ({ onBack }: Props) => {
       <Foot $align="flex-end">
         <ButtonLink to="/">Закончить прием</ButtonLink>
       </Foot>
-    </div>
+    </QuizWrap>
   );
 };
 

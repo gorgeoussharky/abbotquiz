@@ -1,4 +1,4 @@
-import { BackLink, ButtonLink, Foot } from '../../../../elements';
+import { BackLink, ButtonLink, Foot, QuizWrap } from '../../../../elements';
 import { DiagnosisCard, DiagnosisHeading } from '../elements';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 const EsophagealMotilityDisorders = ({ onBack }: Props) => {
 
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <BackLink onClick={onBack}>Назад</BackLink>
 
       <DiagnosisHeading>Результаты диагностики</DiagnosisHeading>
@@ -24,7 +24,7 @@ const EsophagealMotilityDisorders = ({ onBack }: Props) => {
       <Foot $align="flex-end">
         <ButtonLink to="/">Закончить прием</ButtonLink>
       </Foot>
-    </div>
+    </QuizWrap>
   );
 };
 

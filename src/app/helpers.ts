@@ -29,3 +29,4 @@ export const getAnswer =  (examTitle: string, questionTitle: string) => {
 
     return selectedExaminations.some(el => el.title === title)
  }
+

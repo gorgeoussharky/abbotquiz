@@ -1,22 +1,35 @@
-import { useState } from 'react';
-import { SymptomsBlock } from '../components/quiz/SymptomsBlock/SymptomsBlock';
-import { SourcesList } from '../components/SourcesList/SourcesList';
-import { GerdQ } from '../components/quiz/GerdQ/GerdQ';
+import { useEffect, useState } from 'react';
+import { SymptomsBlock } from '../components/quiz/SymptomsBlock';
+import { SourcesList } from '../components/SourcesList';
+import { GerdQ } from '../components/quiz/GerdQ';
 import { DiagnosisBlock } from '../components/quiz/DiagnosisBlock/DiagnosisBlock';
-import { RecommendationsBlock } from '../components/quiz/RecommendationsBlock/RecommendationsBlock';
-import { useAppSelector } from '../app/hooks';
-import { selectSelectedSymptoms } from '../store/symptomsSlice';
+import { RecommendationsBlock } from '../components/quiz/RecommendationsBlock';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { clearSelectedSymptoms, selectSelectedSymptoms } from '../store/symptomsSlice';
 import { useNavigate } from 'react-router-dom';
+import { Container, QuizCard } from '../components/elements';
+import { ProgressBar } from '../components/ProgressBar';
+import { resetAnswers } from '../store/gerdQQuestionsSlice';
+import { addBlockHistory, removeLastBlockHistoryElement, selectHasLastDiagnosis, selectPrevBlocksHistory } from '../store/utilsSlice';
 
 const totalSteps = 3;
 
 const First = () => {
   const [step, setStep] = useState(1);
   const [block, setBlock] = useState('symptoms');
-  const [prevBlock, setPrevBlock] = useState<string[]>([])
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch()
   const selectedSymptoms = useAppSelector(selectSelectedSymptoms);
+
+  const hasLastDiagosis = useAppSelector(selectHasLastDiagnosis)
+  const blockHistory = useAppSelector(selectPrevBlocksHistory)
+
+  useEffect(() => {
+    if (hasLastDiagosis) {
+      setBlock('diagnosis')
+    }
+  }, [])
 
   const stepTitle = () => {
     switch (step) {
@@ -26,23 +39,21 @@ const First = () => {
         return 'Шаг 2: Уточняющие вопросы';
       case 3:
         return 'Шаг 3: Результаты первичного приема';
+      default:
+        return ''
     }
   };
 
-  const progress = () => {
-    return `${Math.round((step / totalSteps) * 100)}%`;
-  };
-
   const handleNext = () => {
-    setPrevBlock(prevBlock.concat(block));
+    dispatch(addBlockHistory(block));
 
     switch (block) {
-      case 'questions':
+      case 'gerdQ':
         setStep(3);
         setBlock('diagnosis');
         return;
       case 'symptoms':
-        // Find extraesophageal and esophageal symptoms count
+        // Кол-во пищеводных и внепищеводных
         const extraesophagealCount = selectedSymptoms.filter(
           (el) => el.type === 'Внепищеводные'
         ).length;
@@ -50,16 +61,16 @@ const First = () => {
           (el) => el.type === 'Пищеводные'
         ).length;
 
-        // Extraesophageal only
+        // Только внепищеводные
         if (extraesophagealCount && !esophagealCount) {
           setStep(3);
           setBlock('recommendations');
           return;
         }
 
-        // Esophageal only and both
+        // Только пищеводные
         setStep(2);
-        setBlock('questions');
+        setBlock('gerdQ');
         return;
     }
   };
@@ -67,13 +78,15 @@ const First = () => {
   const handleBack = () => {
     if (block === 'symptoms') {
       navigate('/')
+      dispatch(resetAnswers())
+      dispatch(clearSelectedSymptoms())
       return
     }
 
     
-    if (prevBlock.length > 0) {
-      setBlock(prevBlock[prevBlock.length - 1]);
-      setPrevBlock(prevBlock.slice(0, -1));
+    if (blockHistory.length > 0) {
+      setBlock(blockHistory[blockHistory.length - 1]);
+      dispatch(removeLastBlockHistoryElement());
     }
    
   };
@@ -82,7 +95,7 @@ const First = () => {
     switch (block) {
       case 'symptoms':
         return <SymptomsBlock onBack={handleBack} onNext={handleNext} />;
-      case 'questions':
+      case 'gerdQ':
         return <GerdQ onBack={handleBack} onNext={handleNext} />;
       case 'diagnosis':
         return <DiagnosisBlock onBack={handleBack}  />;
@@ -94,23 +107,14 @@ const First = () => {
   };
 
   return (
-    <div className="container">
-      <div className="quiz__card">
-        <div className="quiz__head">
-          <div className="quiz__head-label">{stepTitle()}</div>
-          <div className="quiz__percent">{progress()}</div>
-          <div className="quiz__progress">
-            <span style={{ width: progress() }}></span>
-          </div>
-        </div>
-
+    <Container>
+      <QuizCard>
+        <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
-      </div>
+      </QuizCard>
 
-      <div className="gastro-calculator-btn-wrap">
         <SourcesList />
-      </div>
-    </div>
+    </Container>
   );
 };
 

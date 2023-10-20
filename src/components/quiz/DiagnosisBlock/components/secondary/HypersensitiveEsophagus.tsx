@@ -1,5 +1,5 @@
 import { CardsList } from '../../../CardsList';
-import { BackLink, ButtonLink, Foot } from '../../../../elements';
+import { BackLink, ButtonLink, Foot, QuizWrap } from '../../../../elements';
 import { DiagnosisCard, DiagnosisHeading } from '../elements';
 import { consultations, drugs, lifestyle } from '../../../../../data/recommendations';
 
@@ -31,7 +31,7 @@ const HypersensitiveEsophagus = ({ onBack }: Props) => {
   }
 
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <BackLink onClick={onBack}>Назад</BackLink>
 
       <DiagnosisHeading>Вероятный диагноз</DiagnosisHeading>
@@ -48,7 +48,7 @@ const HypersensitiveEsophagus = ({ onBack }: Props) => {
       <Foot $align="flex-end">
         <ButtonLink to="/">Закончить прием</ButtonLink>
       </Foot>
-    </div>
+    </QuizWrap>
   );
 };
 

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getAnswer, hasExamination } from '../../../../app/helpers';
 import { Nerb } from './secondary/Nerb';
@@ -20,6 +19,7 @@ import { IneffectivePeristalsis } from './secondary/IneffectivePeristalsis';
 import { FunctionalHeartburn } from './secondary/FunctionalHeartburn';
 import { NoPeristalsis } from './secondary/NoPeristalsis';
 import { DystalEsophagospasm } from './secondary/DystalEsophagospasm';
+
 interface Props {
   onBack: () => void;
 }
@@ -28,38 +28,72 @@ const SecondaryDiagnosis = ({ onBack }: Props) => {
   const [diagnosis, setDiagnosis] = useState('');
 
   useEffect(() => {
-    // Есть ЭГДС
-    if (hasExamination('ЭГДС')) {
-      // Обнаружены признаки пищевода Баррета
-      if (getAnswer('ЭГДС', 'Обнаружены признаки пищевода Барретта?') === 1) {
-        setDiagnosis('barret');
-        return;
-      }
-
-      // Не выявлены признаки повреждения слизистой
-      if (
+    
+     // Есть рентгеноскопия
+     if (hasExamination('Рентгеноскопия пищевода и желудка с сульфатом бария')) {
+      //Перебираем варианты ответа
+      switch (
         getAnswer(
-          'ЭГДС',
-          'В ходе ЭГДС выявлены признаки повреждения слизистой оболочки пищевода?'
-        ) === 0
+          'Рентгеноскопия пищевода и желудка с сульфатом бария',
+          'Рентгеноскопия пищевода и желудка с сульфатом бария'
+        )
       ) {
-        setDiagnosis('nerb');
-        return;
+        case '1':
+          setDiagnosis('esophagealAchalasia');
+          return;
+        case '2':
+          setDiagnosis('esophagospasm');
+          return;
+        case '3':
+          setDiagnosis('gpod');
+          return;
+      }
+    }
+
+    console.log(1)
+
+     // Есть манометрия
+     if (hasExamination('Манометрия высокого разрешения')) {
+      switch (
+        getAnswer(
+          'Манометрия высокого разрешения',
+          'Оценка перистальтической активности'
+        )
+      ) {
+        case 1:
+          setDiagnosis('PJP');
+          return;
+        case 0:
+          setDiagnosis('esophagealAchalasia');
+          return;
       }
 
-      // Перебираем варианты ответа на вопрос об участках повреждения
-      switch (getAnswer('ЭГДС', 'Участки повреждения слизистой оболочки:')) {
-        case 'A':
-          setDiagnosis('esophagitisA');
+      
+
+
+      switch (
+        getAnswer(
+          'Манометрия высокого разрешения',
+          'Оценка перистальтической активности (детальная)'
+        )
+      ) {
+        case '1':
+          setDiagnosis('noPeristalsis');
           return;
-        case 'B':
-          setDiagnosis('esophagitisB');
+        case '2':
+          setDiagnosis('dystalEsophagospasm');
           return;
-        case 'C':
-          setDiagnosis('esophagitisC');
+        case '3':
+          setDiagnosis('hypercontractileEsophagus');
           return;
-        case 'D':
-          setDiagnosis('esophagitisD');
+        case '4':
+          setDiagnosis('ineffectivePeristalsis');
+          return;
+        case '5':
+          setDiagnosis('ineffectivePeristalsis');
+          return;
+        case '6':
+          setDiagnosis('functionalHeartburn');
           return;
       }
     }
@@ -73,7 +107,7 @@ const SecondaryDiagnosis = ({ onBack }: Props) => {
         getAnswer(
           'Суточная pH-импедансометрия',
           'Процент времени, в течение которого pH был <4'
-        ) === '>6'
+        ) === '>6%'
       ) {
         setDiagnosis('refluxEsophagitis');
         return;
@@ -128,72 +162,38 @@ const SecondaryDiagnosis = ({ onBack }: Props) => {
       }
     }
 
-    // Есть рентгеноскопия
-    if (hasExamination('Рентгеноскопия пищевода и желудка с сульфатом бария')) {
-      //Перебираем варианты ответа
-      switch (
-        getAnswer(
-          'Рентгеноскопия пищевода и желудка с сульфатом бария',
-          'Рентгеноскопия пищевода и желудка с сульфатом бария'
-        )
-      ) {
-        case '1':
-          setDiagnosis('esophagealAchalasia');
-          return;
-        case '2':
-          setDiagnosis('esophagospasm');
-          return;
-        case '3':
-          setDiagnosis('gpod');
-          return;
-      }
-    }
-
-    // Есть манометрия
-    if (hasExamination('Манометрия высокого разрешения')) {
-      if (
-        getAnswer(
-          'Манометрия высокого разрешения',
-          'Оценка перистальтической активности'
-        ) === 1
-      ) {
-        setDiagnosis('PJP');
+      // Есть ЭГДС
+    if (hasExamination('ЭГДС')) {
+      // Обнаружены признаки пищевода Баррета
+      if (getAnswer('ЭГДС', 'Обнаружены признаки пищевода Барретта?') === 1) {
+        setDiagnosis('barret');
         return;
       }
 
+      // Не выявлены признаки повреждения слизистой
       if (
         getAnswer(
-          'Манометрия высокого разрешения',
-          'Оценка перистальтической активности'
+          'ЭГДС',
+          'В ходе ЭГДС выявлены признаки повреждения слизистой оболочки пищевода?'
         ) === 0
       ) {
-        setDiagnosis('esophagealAchalasia');
+        setDiagnosis('nerb');
         return;
       }
 
-      switch (
-        getAnswer(
-          'Манометрия высокого разрешения',
-          'Оценка перистальтической активности (детальная)'
-        )
-      ) {
-        case '1':
-          setDiagnosis('noPeristalsis');
+      // Перебираем варианты ответа на вопрос об участках повреждения
+      switch (getAnswer('ЭГДС', 'Участки повреждения слизистой оболочки:')) {
+        case 'A':
+          setDiagnosis('esophagitisA');
           return;
-        case '2':
-          setDiagnosis('dystalEsophagospasm');
+        case 'B':
+          setDiagnosis('esophagitisB');
           return;
-        case '3':
-          setDiagnosis('hypercontractileEsophagus');
+        case 'C':
+          setDiagnosis('esophagitisC');
           return;
-        case '4':
-          setDiagnosis('ineffectivePeristalsis');
-          return;
-        case '5':
-          setDiagnosis('ineffectivePeristalsis');
-          return;
-        case '6':
-          setDiagnosis('functionalHeartburn');
+        case 'D':
+          setDiagnosis('esophagitisD');
           return;
       }
     }
@@ -208,7 +208,7 @@ const SecondaryDiagnosis = ({ onBack }: Props) => {
       return <EsophagitisA onBack={onBack} />;
     case 'esophagitisB':
       return <EsophagitisB onBack={onBack} />;
-    case 'esophagitisc':
+    case 'esophagitisC':
       return <EsophagitisC onBack={onBack} />;
     case 'esophagitisD':
       return <EsophagitisD onBack={onBack} />;

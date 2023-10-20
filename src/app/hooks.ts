@@ -13,6 +13,7 @@ export const useIsMobile = (): boolean => {
       const updateSize = (): void => {
         setIsMobile(window.matchMedia('(max-width: 768px)').matches);
       };
+      updateSize()
       window.addEventListener('resize', updateSize);
       return () => window.removeEventListener('resize', updateSize);
     }, []);

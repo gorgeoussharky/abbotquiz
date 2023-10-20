@@ -1,32 +1,34 @@
-import { Link } from "react-router-dom";
-import { Recommendations } from "../../../../Recommendations/Recommendations";
+import {
+  BackLink,
+  ButtonLink,
+  Foot,
+  QuizWrap,
+} from '../../../../elements';
+import { DiagnosisHeading, DiagnosisCard } from '../elements';
 
 interface Props {
-    onBack: () => void;
+  onBack: () => void;
 }
 
-const LowProb = ({onBack}: Props) => {
-    return (
-        <div className="quiz-block">
-          <button className="quiz-block__back" onClick={onBack}>
-            Назад
-          </button>
+const LowProb = ({ onBack }: Props) => {
   
-          <div className="quiz-block__title">Результаты диагностики</div>
-  
-          <Recommendations
-            list={[
-              '<span>Диагноз ГЭРБ маловероятен.</span><br>Рекомендовано продолжить диагностический поиск в других нозологиях',
-            ]}
-          />
-  
-          <div className="quiz-block__foot quiz-block__foot--end">
-            <Link to="/" className="quiz-block__btn">
-              Закончить прием
-            </Link>
-          </div>
-        </div>
-      );
-}
+  return (
+    <QuizWrap>
+      <BackLink onClick={onBack}>Назад</BackLink>
 
-export { LowProb }
+      <DiagnosisHeading>Результаты диагностики</DiagnosisHeading>
+
+      <DiagnosisCard>
+        <span>Диагноз ГЭРБ маловероятен.</span>
+        Рекомендовано продолжить диагностический поиск в других нозологиях
+      </DiagnosisCard>
+
+
+      <Foot $align="flex-end">
+        <ButtonLink $type='light' to="/">Закончить прием</ButtonLink>
+      </Foot>
+    </QuizWrap>
+  );
+};
+
+export { LowProb };

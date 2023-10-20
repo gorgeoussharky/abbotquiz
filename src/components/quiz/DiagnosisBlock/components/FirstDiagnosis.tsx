@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../../../app/hooks';
-import { selectQuestions } from '../../../../store/questionsSlice';
+import { selectGerdQQuestions } from '../../../../store/gerdQQuestionsSlice';
 import { LowProb } from './first/LowProb';
 import { HighProb } from './first/HighProb';
 
@@ -8,20 +8,17 @@ interface Props {
 }
 
 const FirstDiagnosis = ({ onBack }: Props) => {
-  const questions = useAppSelector(selectQuestions);
+  const questions = useAppSelector(selectGerdQQuestions);
 
   const questionsPoints = () => {
     return questions.reduce((acc, question) => {
       if (!question.value) return acc;
 
       if (typeof question.value.value === 'boolean') return acc
-      // TS shenanigans
-      return (
-        acc +
-        (typeof question.value.value === 'string'
-          ? parseInt(question.value.value, 10)
-          : question.value.value)
-      );
+
+      if (typeof question.value.value === 'string') return acc + parseInt(question.value.value, 10)
+      
+      return acc + question.value.value;
     }, 0);
   };
 

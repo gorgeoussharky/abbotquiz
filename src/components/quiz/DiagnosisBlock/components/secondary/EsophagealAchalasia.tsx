@@ -1,5 +1,5 @@
 import { CardsList } from '../../../CardsList';
-import { BackLink, ButtonLink, Foot } from '../../../../elements';
+import { BackLink, ButtonLink, Foot, QuizWrap } from '../../../../elements';
 import { DiagnosisCard, DiagnosisHeading } from '../elements';
 import { dilatation, lifestyle, peroralTherapy, surgical } from '../../../../../data/recommendations';
 
@@ -16,7 +16,6 @@ const EsophagealAchalasia = ({ onBack }: Props) => {
             list: [
                 'Тщательное пережевывание пищи',
                 'Контроль позиции тела при приеме пищи',
-                'Исключение газированных напитков и др.'
             ]
         }
     }
@@ -29,7 +28,7 @@ const EsophagealAchalasia = ({ onBack }: Props) => {
     }
 
   return (
-    <div className="quiz-block">
+    <QuizWrap>
       <BackLink onClick={onBack}>Назад</BackLink>
 
       <DiagnosisHeading>Вероятный диагноз</DiagnosisHeading>
@@ -46,7 +45,7 @@ const EsophagealAchalasia = ({ onBack }: Props) => {
       <Foot $align="flex-end">
         <ButtonLink to="/">Закончить прием</ButtonLink>
       </Foot>
-    </div>
+    </QuizWrap>
   );
 };
 
