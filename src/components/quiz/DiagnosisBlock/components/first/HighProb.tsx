@@ -11,7 +11,7 @@ import { CardsList } from "../../../CardsList";
 import { BackLink, ButtonLink, Column, ColumnsWrap, Foot, Heading, Item, List, QuizWrap, Text } from "../../../../elements";
 import { DosageList } from "../../../../DosageList";
 import { schedule } from "../../../../../data/recommendations";
-import { DiagnosisCard } from "../elements";
+import { DiagnosisButtonLink, DiagnosisCard } from "../elements";
 
 interface Props {
   points: number
@@ -228,7 +228,7 @@ const HighProb = ({ onBack, points }: Props) => {
 
           <CardsList notifications={secondaryNotifications()} />
 
-          <ButtonLink  to="/interactions" $large>
+          <DiagnosisButtonLink  to="/interactions" $large={true}>
             <svg
               width="25"
               height="24"
@@ -252,7 +252,7 @@ const HighProb = ({ onBack, points }: Props) => {
               />
             </svg>
             Проверить межлекарственные взаимодействия
-          </ButtonLink>
+          </DiagnosisButtonLink>
 
           <Foot $align="flex-end">
             <ButtonLink to="/" $type="light">

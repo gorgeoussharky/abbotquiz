@@ -66,7 +66,7 @@ const Control = styled.input`
   border-radius: 20px;
   border: 1px solid #d9d9d9;
   background: #fff;
-  padding: 12px 30px;
+  padding: 12px 20px;
   overflow: hidden;
   color: #000;
   font-size: 16px;

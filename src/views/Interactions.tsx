@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SourcesList } from '../components/SourcesList';
 import { useNavigate } from 'react-router-dom';
 import { Container, QuizCard } from '../components/elements';
@@ -13,6 +13,12 @@ const Interactions = () => {
   const [block, setBlock] = useState('meds');
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0
+    });
+  }, [block])
 
   const stepTitle = () => {
     switch (step) {

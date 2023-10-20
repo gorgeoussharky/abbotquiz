@@ -55,6 +55,7 @@ const SymptomsBlock = ({onNext, onBack}: Props) => {
           </Text>
 
           <Combobox
+            label="Поиск симптомов"
             list={db.map((el) => {
               return {
                 value: el.title,

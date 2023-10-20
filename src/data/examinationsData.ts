@@ -6,7 +6,7 @@ import rentgenIcon from '../assets/img/rentgen.png';
 const examinations = {
   egds: {
     title: 'ЭГДС',
-    link: '/pdf/egds.pdf',
+    link: '/cdss/pdf/egds.pdf',
     linkLabel: 'Памятка для пациента',
     icon: egdsIcon,
     questions: [
@@ -135,7 +135,7 @@ const examinations = {
   },
   manometry: {
     title: 'Манометрия высокого разрешения',
-    link: '/pdf/manometry.pdf',
+    link: '/cdss/pdf/manometry.pdf',
     linkLabel: 'Памятка для пациента',
     icon: manometryIcon,
     questions: [
@@ -201,8 +201,8 @@ const examinations = {
   },
   phImpedance: {
     title: 'Суточная pH-импедансометрия',
-    link: '/pdf/ph.pdf',
-    linkLabel: 'Памятка для пациента',
+    // link: '/pdf/ph.pdf',
+    // linkLabel: 'Памятка для пациента',
     icon: phImpedanceIcon,
     questions: [
       {
@@ -255,7 +255,7 @@ const examinations = {
   },
   rentgenometry: {
     title: 'Рентгеноскопия пищевода и желудка с сульфатом бария',
-    link: '/pdf/rentgen.pdf',
+    link: '/cdss/pdf/rentgen.pdf',
     linkLabel: 'Памятка для пациента',
     icon: rentgenIcon,
     questions: [

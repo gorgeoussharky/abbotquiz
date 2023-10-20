@@ -23,7 +23,7 @@ const examinations = {
   lifestyle: {
     title: 'Модификация пищевого поведения и образа жизни',
     linkLabel: 'Подробнее',
-    link: '/pdf/lifestyle.pdf',
+    link: '/cdss/pdf/lifestyle.pdf',
     linkHasArrow: true,
     icon: lifestyleIcon,
   },

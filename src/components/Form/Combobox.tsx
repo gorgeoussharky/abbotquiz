@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 interface Props {
     list: Option[]
+    label: string
     onSelect?: (item: Option) => void
 }
 
@@ -71,7 +72,7 @@ const ItemBtn = styled.button`
   
 `
 
-const Combobox = ({list, onSelect}: Props) => {
+const Combobox = ({list, label, onSelect}: Props) => {
   const [query, setQuery] = useState('');
 
   const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
@@ -87,7 +88,7 @@ const Combobox = ({list, onSelect}: Props) => {
     <Wrap className="combobox" ref={setAnchor}>
       <ComboboxInput
         type="search"
-        label="Поиск симптомов"
+        label={label}
         value={query}
         $active={showDropdown}
         onInput={(val) => setQuery(val as string)}

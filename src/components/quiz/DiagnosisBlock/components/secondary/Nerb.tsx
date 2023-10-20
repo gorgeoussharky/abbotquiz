@@ -1,8 +1,8 @@
 import { phImpedance } from "../../../../../data/examinationsData";
 import { DosageList } from "../../../../DosageList";
 import { CardsList } from "../../../CardsList";
-import { BackLink, BlueCard, ButtonLink, Column, ColumnsWrap, Foot, Heading, QuizWrap, Subheading, Text } from "../../../../elements";
-import { DiagnosisCard, DiagnosisHeading } from "../elements";
+import { BackLink, ButtonLink, Column, ColumnsWrap, Foot, Heading, QuizWrap, Subheading, Text } from "../../../../elements";
+import { DiagnosisButtonLink, DiagnosisCard, DiagnosisHeading } from "../elements";
 
 interface Props {
     onBack: () => void;
@@ -121,7 +121,7 @@ const Nerb = ({onBack}: Props) => {
 
                 <CardsList title="Обратить внимание" notifications={[
                   "Обсудите риск прогрессирования болезни и развитие таких осложнений, как пищевод Барретта, стриктуры и АКП.",
-                  "Разъясните важность соблюдения схемы приема препаратов и модификации образа жизни. <a target='_blank' href='/pdf/lifestyle.pdf'>Памятка для пациента</a>"
+                  "Разъясните важность соблюдения схемы приема препаратов и модификации образа жизни. <a target='_blank' href='/cdss/pdf/lifestyle.pdf'>Памятка для пациента</a>"
                 ]} />
             </Column>
   
@@ -140,7 +140,7 @@ const Nerb = ({onBack}: Props) => {
               <DosageList title="Антациды с или без алгината натрия:" smallTitle list={combo} />
               <DosageList title="Антациды с или без алгината натрия:" smallTitle list={alginat} />
   
-              <ButtonLink $large  to="/interactions">
+              <DiagnosisButtonLink $large to="/interactions">
                 <svg
                   width="25"
                   height="24"
@@ -164,7 +164,7 @@ const Nerb = ({onBack}: Props) => {
                   />
                 </svg>
                 Проверить межлекарственные взаимодействия
-              </ButtonLink>
+              </DiagnosisButtonLink>
   
               <Foot
                 $align="flex-end"

@@ -15,7 +15,7 @@ import {
   Text,
 } from '../../../../elements';
 import { getAnswer } from '../../../../../app/helpers';
-import { DiagnosisHeading, DiagnosisCard } from '../elements';
+import { DiagnosisHeading, DiagnosisCard, DiagnosisButtonLink } from '../elements';
 
 interface Props {
   onBack: () => void;
@@ -112,7 +112,7 @@ const EsophagitisC = ({ onBack }: Props) => {
             title="Обратить внимание"
             notifications={[
               'Обсудите риск прогрессирования болезни и развитие таких осложнений, как пищевод Барретта, стриктуры и АКП. ',
-              "Разъясните важность соблюдения схемы приема препаратов и модификации образа жизни. <a target='_blank' href='/pdf/lifestyle.pdf'>Памятка для пациента</a> ",
+              "Разъясните важность соблюдения схемы приема препаратов и модификации образа жизни. <a target='_blank' href='/cdss/pdf/lifestyle.pdf'>Памятка для пациента</a> ",
             ]}
           />
 
@@ -165,7 +165,7 @@ const EsophagitisC = ({ onBack }: Props) => {
             количество эпизодов рефлюкса.
           </Text>
 
-          <ButtonLink  to="/interactions" $large={true}>
+          <DiagnosisButtonLink  to="/interactions" $large={true}>
             <svg
               width="25"
               height="24"
@@ -189,7 +189,7 @@ const EsophagitisC = ({ onBack }: Props) => {
               />
             </svg>
             Проверить межлекарственные взаимодействия
-          </ButtonLink>
+          </DiagnosisButtonLink>
 
           <Foot $align="flex-end">
             <ButtonLink to="/" $type="light">

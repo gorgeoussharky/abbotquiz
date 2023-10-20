@@ -67,7 +67,7 @@ const TherapyEffective = ({ onBack }: Props) => {
 
       <Notification
         content='Для устойчивой ремиссии пациенту необходимо пожизненно придерживаться советов по модификации образа жизни <br>
-      <a href="/pdf/lifestyle.pdf">Памятка для пациента</a>'
+      <a href="/cdss/pdf/lifestyle.pdf">Памятка для пациента</a>'
       />
 
       {!hasEgdsResults && (

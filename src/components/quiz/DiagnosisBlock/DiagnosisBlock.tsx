@@ -14,8 +14,10 @@ const DiagnosisBlock = ({ onBack }: Props) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    // Для возврана на диагноз с межлека
-    dispatch(setHasLastDiagnosis(true))
+    // Для возврана на диагноз с межлека (только для первичного и повторного)
+    if (location.pathname !== '/control') {
+      dispatch(setHasLastDiagnosis(true))
+    }
   }, [])
 
   if (location.pathname === '/first') {

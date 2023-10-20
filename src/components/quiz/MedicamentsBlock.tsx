@@ -82,6 +82,7 @@ const MedicamentsBlock = ({ onNext, onBack }: Props) => {
           </Text>
 
           <Combobox
+            label="Поиск препаратов"
             list={medicamentsDb.map((el) => {
               return {
                 value: el,

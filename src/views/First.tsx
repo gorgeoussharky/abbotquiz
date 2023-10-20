@@ -31,6 +31,13 @@ const First = () => {
     }
   }, [])
 
+  useEffect(() => {
+    window.scrollTo({
+      top: 0
+    });
+  }, [block])
+
+
   const stepTitle = () => {
     switch (step) {
       case 1:

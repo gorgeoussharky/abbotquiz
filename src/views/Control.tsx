@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SourcesList } from '../components/SourcesList';
 import { GerdQ } from '../components/quiz/GerdQ';
 import { DiagnosisBlock } from '../components/quiz/DiagnosisBlock/DiagnosisBlock';
@@ -12,19 +12,26 @@ import {
   setControlAnswer,
 } from '../store/controlAppointmentSlice';
 import { selectGerdQQuestions } from '../store/gerdQQuestionsSlice';
+import { addBlockHistory, removeLastBlockHistoryElement, selectPrevBlocksHistory } from '../store/utilsSlice';
 
 const totalSteps = 3;
 
 const Control = () => {
   const [step, setStep] = useState(1);
   const [block, setBlock] = useState('egds');
-  const [prevBlock, setPrevBlock] = useState<string[]>([]);
+  const blockHistory = useAppSelector(selectPrevBlocksHistory)
 
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const controlQuestions = useAppSelector(selectControlQuestions);
   const gerdQQuestions = useAppSelector(selectGerdQQuestions)
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0
+    });
+  }, [block])
 
   const stepTitle = () => {
     switch (step) {
@@ -52,7 +59,7 @@ const Control = () => {
   };
 
   const handleNext = () => {
-    setPrevBlock(prevBlock.concat(block));
+    dispatch(addBlockHistory(block));
 
     const hasEgdsResults = controlQuestions.find((el) => el.title === 'Есть ли у пациента результаты контрольного исследования ЭГДС?')?.value?.value;
 
@@ -106,9 +113,9 @@ const Control = () => {
       return;
     }
 
-    if (prevBlock.length > 0) {
-      setBlock(prevBlock[prevBlock.length - 1]);
-      setPrevBlock(prevBlock.slice(0, -1));
+    if (blockHistory.length > 0) {
+      setBlock(blockHistory[blockHistory.length - 1]);
+      dispatch(removeLastBlockHistoryElement());
     }
   };
 

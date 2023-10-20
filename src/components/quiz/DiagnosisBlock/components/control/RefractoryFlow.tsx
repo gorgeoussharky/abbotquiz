@@ -151,8 +151,8 @@ const RefractoryFlow = ({ onBack }: Props) => {
           </Notice>
 
           <ResultButtonLink to="/secondary/">
-          Результаты дополнительных исследований
-        </ResultButtonLink>
+            Результаты дополнительных исследований
+          </ResultButtonLink>
 
         <Foot $align="flex-end">
           <ButtonLink $type='light' to="/">Закончить прием</ButtonLink>
