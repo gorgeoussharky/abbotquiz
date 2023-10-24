@@ -17,7 +17,7 @@ export const ColumnsWrap = styled.div<{ $cols?: number }>`
   flex-grow: 1;
   margin-bottom: 40px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     grid-template-columns: 1fr;
     margin: 0;
   }
@@ -30,7 +30,7 @@ export const Head = styled.div`
   justify-content: space-between;
   gap: 12px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
@@ -48,7 +48,7 @@ export const Column = styled.div`
   flex-direction: column;
   height: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     margin-bottom: 20px;
     padding: 0;
   }
@@ -56,7 +56,7 @@ export const Column = styled.div`
   &:nth-of-type(even) {
     border-left: 1px solid #d9d9d9;
 
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
       border: none;
     }
   }
@@ -67,7 +67,7 @@ export const Foot = styled.div<{ $align?: 'center' | 'flex-end' }>`
   display: flex;
   justify-content: ${(props) => props.$align || 'flex-start'};
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     margin-top: 36px;
     padding-top: 24px;
     border-top: 1px solid #d9d9d9;
@@ -81,7 +81,7 @@ export const Heading = styled.div`
   text-transform: uppercase;
   margin-bottom: 32px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     margin-bottom: 12px;
   }
 `;
@@ -108,7 +108,7 @@ export const Item = styled.li`
   padding-left: 20px;
   position: relative;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
   }
 
@@ -127,7 +127,7 @@ export const Item = styled.li`
     border-radius: 50%;
     background-color: #343a40;
 
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
       top: 10px;
     }
   }
@@ -139,7 +139,7 @@ export const MarkedItem = styled.li`
   position: relative;
   counter-increment: counter;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
   }
 
@@ -162,7 +162,7 @@ export const Text = styled.p`
   font-size: 20px;
   margin-top: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
     margin-bottom: 24px;
   }
@@ -178,7 +178,7 @@ export const Notice = styled.small`
 font-size: 16px;
 `
 
-export const Button = styled.button<{ $type?: 'light' }>`
+export const Button = styled.button<{ $type?: 'light', $large?: boolean }>`
   position: relative;
   line-height: 1;
   padding: 0 30px;
@@ -197,9 +197,22 @@ export const Button = styled.button<{ $type?: 'light' }>`
   gap: 16px;
   text-decoration: none;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     max-width: 100%;
   }
+
+  ${(props) =>
+    props.$large &&
+    `
+        max-width: 100%;
+        text-transform: uppercase;
+        font-weight: 700;
+
+        @media (max-width: 991px) {
+          padding: 4px 16px;
+        }
+      
+    `}
 
   ${(props) =>
     props.$type === 'light' &&
@@ -229,7 +242,7 @@ export const ButtonLink = styled(Link)<{ $type?: 'light'; $large?: boolean }>`
   text-decoration: none;
   text-align: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     border-radius: 20px;
     max-width: 100%;
   }
@@ -241,7 +254,7 @@ export const ButtonLink = styled(Link)<{ $type?: 'light'; $large?: boolean }>`
         text-transform: uppercase;
         font-weight: 700;
 
-        @media (max-width: 768px) {
+        @media (max-width: 991px) {
           padding: 4px 16px;
         }
       
@@ -268,7 +281,7 @@ export const BlueCard = styled.div`
   display: grid;
   gap: 24px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     gap: 4px;
     font-size: 20px;
   }
@@ -288,7 +301,7 @@ export const BlueCard = styled.div`
     top: 16px;
     font-style: normal;
 
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
       line-height: 100%;
       font-size: 24px;
       display: block;
@@ -329,7 +342,7 @@ export const Subheading = styled.div`
   margin-bottom: 12px;
   font-weight: 700;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
     margin-bottom: 20px;
   }
@@ -358,7 +371,7 @@ export const QuizCard = styled.div`
   flex-direction: column;
   margin: 40px 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     padding: 20px;
     min-height: 1px;
   }

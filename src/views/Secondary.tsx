@@ -206,6 +206,10 @@ const Secondary = () => {
         // Переход на диагноз в любом случае
         setBlock('diagnosis');
         setStep(3);
+
+        if (window.ym) {
+          window.ym(90602537,'reachGoal','cdss_end2')
+        }
         break;
 
       case 'phBasic':
@@ -377,7 +381,7 @@ const Secondary = () => {
         return (
           <QuestionsBlock
             title="Повреждения слизистой оболочки пищевода"
-            questions={getQuestions('ЭГДС').slice(5, 8)}
+            questions={getQuestions('ЭГДС').slice(4, 8)}
             onBack={handleBack}
             onNext={handleNext}
             onChange={(val, questionTitle) =>

@@ -26,7 +26,7 @@ const Title = styled.div`
   font-size: 20px;
   margin-bottom: 12px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
   }
 `;

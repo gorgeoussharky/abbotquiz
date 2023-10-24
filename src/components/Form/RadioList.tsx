@@ -43,7 +43,7 @@ const Label = styled.label<{ $cols: number }>`
   font-size: 16px;
   transition: 500ms;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     padding: 16px;
     grid-template-columns: 1fr;
   }
@@ -62,7 +62,7 @@ const LabelListItem = styled.span`
   display: block;
   line-height: 120%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
   }
 

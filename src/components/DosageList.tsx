@@ -6,7 +6,7 @@ const Title = styled.div<{$small?: boolean}>`
   font-weight: 700;
   margin-bottom: 12px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
     margin-bottom: 10px;
   }
@@ -29,7 +29,7 @@ const Item = styled.li`
   position: relative;
 
   
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
   }
 
@@ -44,7 +44,7 @@ const Item = styled.li`
     background-color: #343a40;
 
     
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     top: 10px
   }
   }

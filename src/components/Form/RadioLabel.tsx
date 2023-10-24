@@ -35,14 +35,14 @@ const Label = styled.label<{ $longText: boolean }>`
   transition: 500ms;
   height: 100%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     text-align: center;
   }
 
   ${(props) =>
     props.$longText &&
     `
-      @media (max-width: 768px) {
+      @media (max-width: 991px) {
         text-align: left;
         
         br {

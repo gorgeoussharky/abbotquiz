@@ -58,6 +58,9 @@ const First = () => {
       case 'gerdQ':
         setStep(3);
         setBlock('diagnosis');
+        if (window.ym) {
+          window.ym(90602537,'reachGoal','cdss_end1')
+        }
         return;
       case 'symptoms':
         // Кол-во пищеводных и внепищеводных

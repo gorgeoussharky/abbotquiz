@@ -21,7 +21,7 @@ const Wrap = styled.li<{$hasIcon: boolean}>`
       grid-template-columns: auto 40px;
   `}
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     padding: 12px;
     gap: 24px;
   }
@@ -34,7 +34,7 @@ const ItemTitle = styled.div`
   font-weight: 700;
   line-height: 116%;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
   }
 
@@ -47,7 +47,7 @@ const ItemText = styled.div`
   font-size: 20px;
 
   
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
   }
 `;
@@ -57,7 +57,7 @@ const ItemList = styled(List)`
   margin-top: 8px;
   margin-bottom: 0;
   
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     padding-left: 10px;
   }
 
@@ -73,7 +73,7 @@ const ItemLink = styled.a<{ $arrow?: boolean }>`
   display: flex;
   align-items: center;
   
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
   }
 

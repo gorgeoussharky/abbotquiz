@@ -20,7 +20,7 @@ const DrugsList = styled(List)`
 `;
 
 const DrugsDosageList = styled(DosageList)`
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     ul {
       grid-template-columns: 1fr;
     }

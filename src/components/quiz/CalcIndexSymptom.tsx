@@ -44,7 +44,7 @@ const Toggler = styled.button`
   align-items: center;
   justify-content: space-between;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
       font-size: 16px;
       margin-top: 24px;
   } 
@@ -56,7 +56,7 @@ const Content = styled.div`
   border: 1px solid var(--accent);
   margin-top: 12px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     margin-top: 24px;
   }
 `;
@@ -67,7 +67,7 @@ const Title = styled.div`
   margin-bottom: 16px;
 
   
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
     margin-bottom: 12px;
   }
@@ -98,7 +98,7 @@ const CalcIndexSymptom = () => {
         >
           <path
             fill-rule="evenodd"
-            clip-rule="evenodd"
+            clipRule="evenodd"
             d="M20.6562 7.83794C21.1146 8.28856 21.1146 9.01912 20.6562 9.46974L12.8301 17.1621C12.6099 17.3784 12.3113 17.5 12 17.5C11.6887 17.5 11.3901 17.3784 11.1699 17.1621L3.34376 9.46974C2.88541 9.01912 2.88541 8.28856 3.34376 7.83794C3.80237 7.38735 4.54559 7.38735 5.00394 7.83794L12 14.7144L18.996 7.83794C19.4544 7.38735 20.1977 7.38735 20.6562 7.83794Z"
             fill="#8C8C8C"
           />

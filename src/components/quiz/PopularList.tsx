@@ -16,7 +16,7 @@ const Title = styled.div`
         line-height: 125%;
         margin-bottom: 4px;
 
-        @media (max-width: 768px) {
+        @media (max-width: 991px) {
           margin-bottom: 12px;
         }
 `

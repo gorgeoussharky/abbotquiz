@@ -7,6 +7,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GlobalStyle } from './components/globalStyles';
 
+declare global {
+  interface Window {
+      ym:any;
+  }
+}
+
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 

@@ -29,7 +29,7 @@ const List = styled.div`
   display: grid;
   gap: 40px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     gap: 20px;
   }
 `;
@@ -44,7 +44,7 @@ const ItemTitle = styled.div`
   margin-bottom: 8px;
   gap: 8px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
     padding-left: 0;
   }

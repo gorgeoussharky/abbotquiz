@@ -19,7 +19,7 @@ const QuestionHeading = styled.div`
   margin-bottom: 12px;
   font-weight: 700;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 16px;
     margin-bottom: 20px;
   }
@@ -30,7 +30,7 @@ const QuestionsList = styled.div`
   gap: 32px;
   margin-bottom: 40px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     margin-bottom: 0;
     gap: 16px;
   }
@@ -44,7 +44,7 @@ const QuestionWarning = styled.div`
       position: relative;
       margin-top: 20px;
 
-      @media (max-width: 768px) {
+      @media (max-width: 991px) {
         font-size: 16px;
         margin-top: 12px;
         line-height:125%;
@@ -75,7 +75,7 @@ const RadioLabelsWrap = styled.div<{$cols: number}>`
   grid-template-columns: ${props => `repeat(${props.$cols}, 1fr)`};
   align-items: stretch;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     grid-template-columns: 1fr;
   }
 `
@@ -84,7 +84,7 @@ const NextBtn = styled(Button)`
   margin-top: 32px;
 
   
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     margin-top: 0;
   }
 `;

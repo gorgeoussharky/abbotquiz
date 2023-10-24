@@ -23,7 +23,7 @@ const ResultButtonLink = styled(ButtonLink)`
    max-width: 100%;
   margin: 32px 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     margin: 24px 0;
   }
 `;

@@ -2,7 +2,8 @@ import { phImpedance } from "../../../../../data/examinationsData";
 import { DosageList } from "../../../../DosageList";
 import { CardsList } from "../../../CardsList";
 import { BackLink, ButtonLink, Column, ColumnsWrap, Foot, Heading, QuizWrap, Subheading, Text } from "../../../../elements";
-import { DiagnosisButtonLink, DiagnosisCard, DiagnosisHeading } from "../elements";
+import { DiagnosisCard, DiagnosisHeading } from "../elements";
+import { InteractionsLinkBtn } from "../../../InteractionsLinkBtn";
 
 interface Props {
     onBack: () => void;
@@ -140,31 +141,7 @@ const Nerb = ({onBack}: Props) => {
               <DosageList title="Антациды с или без алгината натрия:" smallTitle list={combo} />
               <DosageList title="Антациды с или без алгината натрия:" smallTitle list={alginat} />
   
-              <DiagnosisButtonLink $large to="/interactions">
-                <svg
-                  width="25"
-                  height="24"
-                  viewBox="0 0 25 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M10.5 17C14.366 17 17.5 13.866 17.5 10C17.5 6.13401 14.366 3 10.5 3C6.63401 3 3.5 6.13401 3.5 10C3.5 13.866 6.63401 17 10.5 17Z"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M21.5 21L15.5 15"
-                    stroke="white"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                Проверить межлекарственные взаимодействия
-              </DiagnosisButtonLink>
+              <InteractionsLinkBtn />
   
               <Foot
                 $align="flex-end"

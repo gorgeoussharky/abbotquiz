@@ -11,7 +11,7 @@ const Wrap = styled.div`
     flex-wrap: wrap;
     margin-bottom: 40px;
 
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
         margin-bottom: 24px;
     }
 `

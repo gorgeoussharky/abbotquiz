@@ -17,7 +17,7 @@ interface Props {
 const Filters = styled.div`
   margin-bottom: 48px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     margin-bottom: 24px;
   }
 `;
@@ -28,7 +28,7 @@ const FiltersHead = styled.div`
   gap: 12px;
   margin-bottom: 10px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     grid-template-columns: 1fr;
     margin-bottom: 24px;
   }
@@ -97,7 +97,7 @@ const List = styled.ul`
 const InteractionsButton = styled(Button)`
   margin-top: 32px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     margin-top: 0;
   }
 `;
@@ -128,9 +128,7 @@ const InteractionsBlock = ({ onBack, onBackToDiagnosis }: Props) => {
   const selectedMedicaments = useAppSelector(selectSelectedMedicaments);
   const [order, setOrder] = useState<Option>(orderings[0]);
 
-  const [activeMainMedsList, setActiveMainMedsList] = useState<string[]>([
-    mainMedicaments[0],
-  ]);
+  const [activeMainMedsList, setActiveMainMedsList] = useState<string[]>(mainMedicaments);
 
   const [activeMedsList, setActiveMedsList] =
     useState<string[]>(selectedMedicaments);

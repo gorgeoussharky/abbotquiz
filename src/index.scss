@@ -85,7 +85,7 @@
     flex-grow: 1;
     margin-bottom: 40px;
 
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
       grid-template-columns: 1fr;
     }
   }
@@ -105,7 +105,7 @@
     flex-direction: column;
     height: 100%;
 
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
       margin-bottom: 20px;
     }
 
@@ -172,7 +172,7 @@
       font-weight: 700;
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 991px) {
       font-size: 16px;
     }
   }

@@ -32,7 +32,7 @@ const Content = styled.div`
     max-width: 570px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     max-width: 440px;
     padding: 66px 0;
   }
@@ -59,7 +59,7 @@ const Title = styled.div`
     line-height: 40px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 26px;
     line-height: 36px;
   }
@@ -85,7 +85,7 @@ const Desc = styled.div`
     line-height: 28px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 20px;
     line-height: 25px;
   }

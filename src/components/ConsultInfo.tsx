@@ -13,6 +13,7 @@ const items = [
       'Эмпирическая терапия',
     ],
     route: '/first',
+    ymTarget: 'cdss_1st',
   },
   {
     title: 'Повторный прием',
@@ -22,6 +23,7 @@ const items = [
       'Планирование терапии',
     ],
     route: '/secondary',
+    ymTarget: 'cdss_2nd',
   },
   {
     title: 'Контрольный прием',
@@ -31,6 +33,7 @@ const items = [
       'Преодоление рефрактерности',
     ],
     route: '/control',
+    ymTarget: 'cdss_3rd'
   },
 ];
 
@@ -150,7 +153,7 @@ const Advantages = styled.div`
   border: 1px solid #00b140;
   background: #fff;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     padding: 26px 26px 32px;
   }
   @media (max-width: 576px) {
@@ -173,7 +176,7 @@ const AdvantagesTitle = styled.div`
     font-size: 30px;
     line-height: 40px;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 26px;
     line-height: 32px;
   }

@@ -50,7 +50,7 @@ const Meta = styled.ul`
   grid-template-columns: 1fr 1fr 1fr;
   margin-bottom: 20px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -84,7 +84,7 @@ const Description = styled.div`
   margin-bottom: 20px;
   font-size: 16px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 20px;
   }
 `;
@@ -103,7 +103,7 @@ const TacticsContent = styled.div`
   margin-top: 10px;
   font-size: 16px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     font-size: 20px;
   }
 `;

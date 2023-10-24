@@ -76,20 +76,6 @@ const examinations = {
         ],
       },
       {
-        title: 'Обнаружены признаки пищевода Барретта?',
-        type: 'radio',
-        options: [
-          {
-            label: 'Да',
-            value: 1,
-          },
-          {
-            label: 'Нет',
-            value: 0,
-          },
-        ],
-      },
-      {
         title: 'Участки повреждения слизистой оболочки:',
         type: 'radio',
         options: [

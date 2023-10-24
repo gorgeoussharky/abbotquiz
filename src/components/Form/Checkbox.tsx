@@ -33,7 +33,7 @@ const Label = styled.label`
     cursor: pointer;
     padding-left: 36px;
 
-    @media (max-width: 768px) {
+    @media (max-width: 991px) {
       font-size: 16px;
       display: flex;
       padding-left: 32px;

@@ -6,6 +6,7 @@ interface AppointmentItemType {
   title: string;
   list: string[];
   route: string;
+  ymTarget?: string;
 }
 
 interface Props {
@@ -25,7 +26,7 @@ const Wrap = styled.li`
     width: calc(50% - 28px);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     flex: 0 0 calc(100% - 28px);
     width: calc(100% - 28px);
     max-width: 400px;
@@ -123,6 +124,9 @@ const ItemLink = styled(Link)`
 const AppointmentItem = ({ item, onClick }: Props) => {
   const handleClick = () => {
     onClick && onClick();
+    if (window.ym) {
+      window.ym(90602537,'reachGoal',item.ymTarget)
+    }
   };
 
   return (

@@ -11,7 +11,7 @@ export const useIsMobile = (): boolean => {
   
     useLayoutEffect(() => {
       const updateSize = (): void => {
-        setIsMobile(window.matchMedia('(max-width: 768px)').matches);
+        setIsMobile(window.matchMedia('(max-width: 991px)').matches);
       };
       updateSize()
       window.addEventListener('resize', updateSize);
