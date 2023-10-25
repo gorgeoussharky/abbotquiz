@@ -34,6 +34,8 @@ const ControlDiagnosis = ({ onBack }: Props) => {
     }, 0);
   };
 
+  console.log(questions)
+
   useEffect(() => {
     // Нет результатов ЭГДС
     if (!hasEgdsResults) {

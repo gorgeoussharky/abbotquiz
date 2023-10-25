@@ -80,7 +80,7 @@ const Control = styled.button<{ $active: boolean; $hasPrefix: boolean }>`
   text-overflow: ellipsis;
   align-items: center;
   justify-content: flex-start;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath fill-rule='evenodd' clipRule='evenodd' d='M13.7708 4.88936C14.0764 5.18977 14.0764 5.67681 13.7708 5.97722L8.55337 11.1054C8.40661 11.2497 8.20755 11.3307 7.99998 11.3307C7.79243 11.3307 7.59337 11.2497 7.44659 11.1054L2.22917 5.97722C1.92361 5.67681 1.92361 5.18977 2.22917 4.88936C2.53491 4.58896 3.03039 4.58896 3.33596 4.88936L7.99998 9.47365L12.664 4.88936C12.9696 4.58897 13.4651 4.58897 13.7708 4.88936Z' fill='%238C8C8C'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath fillRule='evenodd' clipRule='evenodd' d='M13.7708 4.88936C14.0764 5.18977 14.0764 5.67681 13.7708 5.97722L8.55337 11.1054C8.40661 11.2497 8.20755 11.3307 7.99998 11.3307C7.79243 11.3307 7.59337 11.2497 7.44659 11.1054L2.22917 5.97722C1.92361 5.67681 1.92361 5.18977 2.22917 4.88936C2.53491 4.58896 3.03039 4.58896 3.33596 4.88936L7.99998 9.47365L12.664 4.88936C12.9696 4.58897 13.4651 4.58897 13.7708 4.88936Z' fill='%238C8C8C'/%3E%3C/svg%3E");
   background-position: calc(100% - 16px);
   background-repeat: no-repeat;
   white-space: nowrap;
