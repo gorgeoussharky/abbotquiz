@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { QuizWrap, BackLink, Heading, ButtonLink, Foot, Button } from '../elements';
+import { QuizWrap, BackLink, Heading, Foot, Button } from '../elements';
 import { Select } from '../form/Select';
 
 import interactionsDB from '../../data/interactionsDb';

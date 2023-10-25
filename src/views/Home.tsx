@@ -6,6 +6,7 @@ import { clearHistory, setHasLastDiagnosis } from '../store/utilsSlice';
 import { clearSelectedMedicaments } from '../store/interactionsSlice';
 import { clearSelectedExaminations } from '../store/examinationsSlice';
 import { clearSelectedSymptoms } from '../store/symptomsSlice';
+import { resetAnswers } from '../store/gerdQQuestionsSlice';
 
 const Home = () => {
 
@@ -17,6 +18,7 @@ const Home = () => {
     dispatch(clearSelectedMedicaments())
     dispatch(clearSelectedExaminations())
     dispatch(clearSelectedSymptoms())
+    dispatch(resetAnswers())
     dispatch(setHasLastDiagnosis(false))
   }, [])
 

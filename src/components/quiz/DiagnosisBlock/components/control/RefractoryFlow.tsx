@@ -38,7 +38,7 @@ const RefractoryFlow = ({ onBack }: Props) => {
           <DiagnosisHeading>Вероятный диагноз</DiagnosisHeading>
 
           <DiagnosisCard>
-            ГЭРБ <var>Рефрактерное течение</var>
+            Диагноз: К21.0 ГЭРБ, рефрактерное течение
           </DiagnosisCard>
 
           <Text>

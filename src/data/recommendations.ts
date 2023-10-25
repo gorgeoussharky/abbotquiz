@@ -30,6 +30,9 @@ const examinations = {
   peroralTherapy:{
     title: 'Пероральная медикаментозная терапия в преоперационном периоде или при наличие противопоказаний к хирургическому лечению',
     icon: drugsIcon,
+    link: 'https://www.gastro.ru/userfiles/R_AhalKard_2016.pdf',
+    linkLabel: 'Подробнее',
+    linkHasArrow: true,
   },
   dilatation: {
     title: 'Пневматическая дилатация',
