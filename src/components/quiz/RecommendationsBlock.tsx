@@ -19,7 +19,8 @@ const RecommendationsBlock = ({ onBack }: Props) => {
     return symptoms.filter((el) => el.type === 'Внепищеводные');
   };
 
-  const generateText = (title: string, doctors: string) => {
+  const generateText = (title: string, doctors?: string) => {
+    if (!doctors) return ''
     return `Учитывая наличие у пациента <span>${title}</span> с целью исключения
     сопутствующей патологии рекомендуется направить пациента на
     консультацию к следующему (-им) специалисту (-ам): <span>${doctors}</span>`;

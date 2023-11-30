@@ -1,15 +1,9 @@
 export interface DBEntry {
-  id: number;
   title: string;
   group: string;
-  groupId: number;
   type: string;
-  typeId: number;
-  doctors: string;
-  ph: boolean;
-  manometry: boolean;
-  radiography: boolean;
-  showOnFront: boolean;
+  doctors?: string;
+  showOnFront?: boolean;
 }
 
 export interface QuestionEntry {
@@ -21,6 +15,12 @@ export interface QuestionEntry {
     text: string;
     condition: string | number;
   };
+  optional?: boolean;
+  id?: string
+  condition?: {
+    question: string
+    value: string | number;
+  }
 }
 
 
@@ -41,6 +41,8 @@ export interface RecommendationCardType {
   icon?: string;
   children?: JSX.Element | JSX.Element[]
   linkHasArrow?: boolean;
+  expandable?: boolean;
+  unlist?: boolean;
 }
 
 export interface Option {

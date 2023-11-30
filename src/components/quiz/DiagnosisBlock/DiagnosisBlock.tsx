@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { FirstDiagnosis } from './components/FirstDiagnosis';
 import { SecondaryDiagnosis } from './components/SecondaryDiagnosis';
 import { ControlDiagnosis } from './components/ControlDiagnosis';
+import { FirstSrkDiagnosis } from './components/srk/FirstSrkDiagnosis';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../../../app/hooks';
 import { setHasLastDiagnosis } from '../../../store/utilsSlice';
@@ -30,6 +31,10 @@ const DiagnosisBlock = ({ onBack }: Props) => {
 
   if (location.pathname === '/control') {
     return <ControlDiagnosis onBack={onBack} />;
+  }
+
+  if (location.pathname === '/srk/first') {
+    return <FirstSrkDiagnosis onBack={onBack} />;
   }
 
   return <></>

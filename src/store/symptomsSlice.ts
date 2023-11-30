@@ -11,7 +11,7 @@ export interface SymptomsState {
 
 const initialState: SymptomsState = {
   selected: [],
-  db: Object.values(db)
+  db
 };
 
 export const symptomsSlice = createSlice({

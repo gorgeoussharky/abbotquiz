@@ -103,7 +103,7 @@ export const MarkedList = styled.ol`
   gap: 10px;
 `;
 
-export const Item = styled.li`
+export const Item = styled.li<{$unlist?: boolean}>`
   font-size: 20px;
   padding-left: 20px;
   position: relative;
@@ -131,6 +131,14 @@ export const Item = styled.li`
       top: 10px;
     }
   }
+
+  ${props => props.$unlist && `
+    padding: 0;
+    
+    &::before {
+      content: none;
+    }
+  `}
 `;
 
 export const MarkedItem = styled.li`

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const Title = styled.div<{$small?: boolean}>`
-  font-size: ${props => props.$small ? '17px' : '20px'};
+const Title = styled.div<{ $small?: boolean }>`
+  font-size: ${(props) => (props.$small ? '17px' : '20px')};
   font-style: normal;
   font-weight: 700;
   margin-bottom: 12px;
@@ -10,7 +10,7 @@ const Title = styled.div<{$small?: boolean}>`
     font-size: 16px;
     margin-bottom: 10px;
   }
-`
+`;
 
 const List = styled.ul<{ $cols?: number }>`
   list-style: none;
@@ -27,8 +27,8 @@ const Item = styled.li`
   font-size: 20px;
   padding-left: 20px;
   position: relative;
+  line-height: 1;
 
-  
   @media (max-width: 991px) {
     font-size: 16px;
   }
@@ -39,26 +39,30 @@ const Item = styled.li`
     height: 6px;
     position: absolute;
     left: 0;
-    top: 14px;
+    top: 10px;
     border-radius: 50%;
     background-color: #343a40;
 
-    
-  @media (max-width: 991px) {
-    top: 10px
+    @media (max-width: 991px) {
+      top: 10px;
+    }
   }
+
+  div {
+    max-width: 90%;
   }
 
   span {
     color: #8c8c8c;
     font-size: 14px;
     display: block;
+    margin-top: 12px;
   }
 `;
 
 interface Props {
   title?: string;
-  smallTitle?: boolean
+  smallTitle?: boolean;
   className?: string;
   cols?: number;
   list: {
@@ -74,8 +78,8 @@ const DosageList = ({ list, cols, className, title, smallTitle }: Props) => {
       <List $cols={cols}>
         {list.map((item) => (
           <Item key={item.title}>
-            {item.title}
-            {item.dosage && <span>{item.dosage}</span>}
+            <div>{item.title}</div>
+            {item.dosage && <span dangerouslySetInnerHTML={{__html: item.dosage}}></span>}
           </Item>
         ))}
       </List>

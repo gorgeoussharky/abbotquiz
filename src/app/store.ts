@@ -5,15 +5,19 @@ import examinationsReducer from '../store/examinationsSlice';
 import controlAppointmentSlice from '../store/controlAppointmentSlice';
 import interactionsSlice from '../store/interactionsSlice';
 import utilsSlice from '../store/utilsSlice';
+import srkSymptomsSlice from '../store/srkSymptomsSlice';
+import rim4Slice from '../store/rim4Slice';
 
 export const store = configureStore({
   reducer: {
     symptoms: symptomsReducer,
+    srkSymptoms: srkSymptomsSlice,
     gerdQQuestions: ferdQQuestionsSlice,
     examinations: examinationsReducer,
     controlAppointment: controlAppointmentSlice,
     interactions: interactionsSlice,
-    utils: utilsSlice
+    utils: utilsSlice,
+    rim4: rim4Slice
   },
 });
 

@@ -1,43 +1,46 @@
 import { useEffect, useState } from 'react';
-import { SymptomsBlock } from '../components/quiz/SymptomsBlock';
-import { SourcesList } from '../components/SourcesList';
-import { GerdQ } from '../components/quiz/GerdQ';
-import { DiagnosisBlock } from '../components/quiz/DiagnosisBlock/DiagnosisBlock';
-import { RecommendationsBlock } from '../components/quiz/RecommendationsBlock';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { SymptomsBlock } from '../../components/quiz/SymptomsBlock';
+import { SourcesList } from '../../components/SourcesList';
+import { GerdQ } from '../../components/quiz/GerdQ';
+import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
+import { RecommendationsBlock } from '../../components/quiz/RecommendationsBlock';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  addSelectedSymptom,
-  clearSelectedSymptoms,
-  removeSelectedSymptom,
-  selectSelectedSymptoms,
-  selectSymptomsDB,
-} from '../store/symptomsSlice';
+  addSrkSelectedSymptom,
+  clearSrkSelectedSymptoms,
+  removeSrkSelectedSymptom,
+  selectSrkSelectedSymptoms,
+  selectSrkSymptomsDB,
+} from '../../store/srkSymptomsSlice';
 import { useNavigate } from 'react-router-dom';
-import { Container, QuizCard } from '../components/elements';
-import { ProgressBar } from '../components/ProgressBar';
-import { resetAnswers } from '../store/gerdQQuestionsSlice';
+import { Container, QuizCard } from '../../components/elements';
+import { ProgressBar } from '../../components/ProgressBar';
+import { resetAnswers } from '../../store/gerdQQuestionsSlice';
 import {
   addBlockHistory,
   removeLastBlockHistoryElement,
   selectHasLastDiagnosis,
   selectPrevBlocksHistory,
-} from '../store/utilsSlice';
-import { Option } from '../types/interfaces';
+} from '../../store/utilsSlice';
+import { Option } from '../../types/interfaces';
+import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
+import { selectRim4Questions, setRim4Answer } from '../../store/rim4Slice';
 
 const totalSteps = 3;
 
-const First = () => {
+const SrkFirst = () => {
   const [step, setStep] = useState(1);
   const [block, setBlock] = useState('symptoms');
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const selectedSymptoms = useAppSelector(selectSelectedSymptoms);
+  const selectedSymptoms = useAppSelector(selectSrkSelectedSymptoms);
 
   const hasLastDiagosis = useAppSelector(selectHasLastDiagnosis);
   const blockHistory = useAppSelector(selectPrevBlocksHistory);
 
-  const db = useAppSelector(selectSymptomsDB);
+  const db = useAppSelector(selectSrkSymptomsDB);
+  const rim4Questions = useAppSelector(selectRim4Questions);
 
   useEffect(() => {
     if (hasLastDiagosis) {
@@ -67,33 +70,28 @@ const First = () => {
   const handleNext = () => {
     dispatch(addBlockHistory(block));
 
-    switch (block) {
-      case 'gerdQ':
-        setStep(3);
-        setBlock('diagnosis');
-        if (window.ym) {
-          window.ym(90602537, 'reachGoal', 'cdss_end1');
-        }
-        return;
-      case 'symptoms':
-        // Кол-во пищеводных и внепищеводных
-        const extraesophagealCount = selectedSymptoms.filter(
-          (el) => el.type === 'Внепищеводные'
-        ).length;
-        const esophagealCount = selectedSymptoms.filter(
-          (el) => el.type === 'Пищеводные'
-        ).length;
+    const isLowProb = () => {
+      const srkTypes = ['Боль в животе', 'Диарея', 'Запор'];
 
-        // Только внепищеводные
-        if (extraesophagealCount && !esophagealCount) {
+      // Поиск по соотвествующим группам и подсчет количества подходящих симптомов
+      return !selectedSymptoms.filter((el) => {
+        return srkTypes.some((type) => el.type === type);
+      }).length;
+    };
+
+    switch (block) {
+      case 'symptoms':
+        if (isLowProb()) {
           setStep(3);
-          setBlock('recommendations');
+          setBlock('diagnosis');
           return;
         }
-
-        // Только пищеводные
         setStep(2);
-        setBlock('gerdQ');
+        setBlock('rim4');
+        return;
+      case 'rim4':
+        setStep(3);
+        setBlock('diagnosis');
         return;
     }
   };
@@ -103,7 +101,7 @@ const First = () => {
 
     if (!dbItem) return;
 
-    dispatch(addSelectedSymptom(dbItem));
+    dispatch(addSrkSelectedSymptom(dbItem));
   };
 
   const handleSymptomRemove = (item: Option) => {
@@ -111,14 +109,14 @@ const First = () => {
 
     if (!dbItem) return;
 
-    dispatch(removeSelectedSymptom(dbItem));
+    dispatch(removeSrkSelectedSymptom(dbItem));
   };
 
   const handleBack = () => {
     if (block === 'symptoms') {
       navigate('/');
       dispatch(resetAnswers());
-      dispatch(clearSelectedSymptoms());
+      dispatch(clearSrkSelectedSymptoms());
       return;
     }
 
@@ -137,17 +135,30 @@ const First = () => {
             selected={selectedSymptoms}
             onRemove={handleSymptomRemove}
             onSelect={handleSymptomSelect}
-            onClear={() => dispatch(clearSelectedSymptoms())}
+            onClear={() => dispatch(clearSrkSelectedSymptoms())}
             onBack={handleBack}
             onNext={handleNext}
           />
         );
-      case 'gerdQ':
-        return <GerdQ onBack={handleBack} onNext={handleNext} />;
+      case 'rim4':
+        return (
+          <QuestionsBlock
+            title="Опрос по критериям Рим IV"
+            questions={rim4Questions}
+            onBack={handleBack}
+            onNext={handleNext}
+            onChange={(val, questionTitle) =>
+              dispatch(
+                setRim4Answer({
+                  title: questionTitle,
+                  option: val,
+                })
+              )
+            }
+          />
+        );
       case 'diagnosis':
         return <DiagnosisBlock onBack={handleBack} />;
-      case 'recommendations':
-        return <RecommendationsBlock onBack={handleBack} />;
       default:
         return <></>;
     }
@@ -165,4 +176,4 @@ const First = () => {
   );
 };
 
-export { First };
+export { SrkFirst };

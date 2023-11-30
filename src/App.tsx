@@ -4,6 +4,8 @@ import { First } from "./views/First";
 import { Secondary } from "./views/Secondary";
 import { Control } from "./views/Control";
 import { Interactions } from "./views/Interactions";
+import { SrkFirst } from "./views/srk/First";
+
 import { useEffect } from "react";
 
 
@@ -24,6 +26,7 @@ function App() {
       <Route path="/secondary" element={<Secondary />} />
       <Route path="/control" element={<Control />} />
       <Route path="/interactions" element={<Interactions />} />
+      <Route path="/srk/first" element={<SrkFirst />} />
     </Routes>
   );
 }

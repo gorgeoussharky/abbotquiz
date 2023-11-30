@@ -24,6 +24,7 @@ export const getAnswer =  (examTitle: string, questionTitle: string) => {
    return answer.value
  };
 
+
  export const hasExamination = (title: string) => {
     const selectedExaminations = store.getState().examinations.selected
 

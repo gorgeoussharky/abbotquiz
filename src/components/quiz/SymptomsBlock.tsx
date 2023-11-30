@@ -9,36 +9,22 @@ import {
   clearSelectedSymptoms,
   selectSymptomsDB,
 } from '../../store/symptomsSlice';
-import { Option } from '../../types/interfaces';
+import { DBEntry, Option } from '../../types/interfaces';
 import { SelectedList } from '../SelectedList';
 import { BackLink, Button, Column, ColumnsWrap, Foot, Head, Heading, QuizWrap, Text, TextBtn } from '../elements';
 
 interface Props {
+  symptoms: DBEntry[],
+  selected: DBEntry[],
+  onSelect: (value: Option) => void
+  onRemove: (value: Option) => void
   onNext: () => void;
   onBack: () => void;
+  onClear: () => void;
 }
 
-const SymptomsBlock = ({onNext, onBack}: Props) => {
-  const selectedSymptoms = useAppSelector(selectSelectedSymptoms);
-  const db = useAppSelector(selectSymptomsDB);
-
-  const dispatch = useAppDispatch();
-
-  const handleSymptomSelect = (item: Option) => {
-    const dbItem = db.find((symptom) => symptom.title === item.value);
-
-    if (!dbItem) return;
-
-    dispatch(addSelectedSymptom(dbItem));
-  };
-
-  const handleSymptomRemove = (item: Option) => {
-    const dbItem = db.find((symptom) => symptom.title === item.value);
-
-    if (!dbItem) return;
-
-    dispatch(removeSelectedSymptom(dbItem));
-  }
+const SymptomsBlock = ({symptoms, selected, onSelect, onRemove, onClear, onNext, onBack}: Props) => {
+ 
 
   return (
     <QuizWrap>
@@ -56,17 +42,17 @@ const SymptomsBlock = ({onNext, onBack}: Props) => {
 
           <Combobox
             label="Поиск симптомов"
-            list={db.map((el) => {
+            list={symptoms.map((el) => {
               return {
                 value: el.title,
                 label: el.title,
               };
             })}
-            onSelect={handleSymptomSelect}
+            onSelect={onSelect}
           />
 
           <Foot >
-            <PopularList onSelect={handleSymptomSelect} list={db.filter(el => el.showOnFront).map(el => {
+            <PopularList onSelect={onSelect} list={symptoms.filter(el => el.showOnFront).map(el => {
               return {
                 label: el.title,
                 value: el.title,
@@ -79,16 +65,16 @@ const SymptomsBlock = ({onNext, onBack}: Props) => {
           <Head>
             <Heading>Добавленные симптомы</Heading>
  
-            {Boolean(selectedSymptoms.length) && (
+            {Boolean(selected.length) && (
               <TextBtn
-                onClick={() => dispatch(clearSelectedSymptoms())}
+                onClick={onClear}
               >
                 Сбросить все
               </TextBtn>
             )}
           </Head>
 
-          <SelectedList onRemove={handleSymptomRemove} list={selectedSymptoms.map(el => {
+          <SelectedList onRemove={onRemove} list={selected.map(el => {
               return {
                 label: el.title,
                 value: el.title,
@@ -97,7 +83,7 @@ const SymptomsBlock = ({onNext, onBack}: Props) => {
 
 
           <Foot>
-            {Boolean(selectedSymptoms.length) && (
+            {Boolean(selected.length) && (
               <Button onClick={onNext}>
                 Продолжить
               </Button>
