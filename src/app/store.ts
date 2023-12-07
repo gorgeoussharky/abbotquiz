@@ -3,7 +3,6 @@ import symptomsReducer from '../store/symptomsSlice';
 import ferdQQuestionsSlice from '../store/gerdQQuestionsSlice';
 import examinationsReducer from '../store/examinationsSlice';
 import controlAppointmentSlice from '../store/controlAppointmentSlice';
-import interactionsSlice from '../store/interactionsSlice';
 import utilsSlice from '../store/utilsSlice';
 import srkSymptomsSlice from '../store/srkSymptomsSlice';
 import rim4Slice from '../store/rim4Slice';
@@ -15,7 +14,6 @@ export const store = configureStore({
     gerdQQuestions: ferdQQuestionsSlice,
     examinations: examinationsReducer,
     controlAppointment: controlAppointmentSlice,
-    interactions: interactionsSlice,
     utils: utilsSlice,
     rim4: rim4Slice
   },

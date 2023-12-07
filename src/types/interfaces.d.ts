@@ -60,3 +60,7 @@ export interface InteractionDBEntry {
   tactik?: string
   mainMed?: string
 }
+
+export interface InteractionDB {
+  [key: string]: InteractionDBEntry[]
+}

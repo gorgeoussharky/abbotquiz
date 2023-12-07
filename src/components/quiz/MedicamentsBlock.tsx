@@ -1,7 +1,6 @@
 import { Combobox } from '../form/Combobox';
 import { PopularList } from './PopularList';
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Option } from '../../types/interfaces';
 import { SelectedList } from '../SelectedList';
 import {
@@ -16,16 +15,14 @@ import {
   Text,
   TextBtn,
 } from '../elements';
-import {
-  addSelectedMedicament,
-  clearSelectedMedicaments,
-  removeSelectedMedicament,
-  selectMedicaments,
-  selectSelectedMedicaments,
-} from '../../store/interactionsSlice';
 import styled from 'styled-components';
 
 interface Props {
+  selected: string[],
+  medicaments: string[],
+  onClear: () => void;
+  onSelect: (item: string) => void;
+  onRemove: (item: string) => void;
   onNext: () => void;
   onBack: () => void;
 }
@@ -34,37 +31,18 @@ const MedicamentsHeading = styled(Heading)`
     max-width: 70%;
 `
 
-const MedicamentsBlock = ({ onNext, onBack }: Props) => {
-  const selectedMedicaments = useAppSelector(selectSelectedMedicaments);
-  const medicamentsDb = useAppSelector(selectMedicaments);
-
+const MedicamentsBlock = ({ medicaments, selected, onNext, onBack, onClear, onRemove, onSelect }: Props) => {
   const popularMedicaments = [
-    {
-      value: 'Акалабрутиниб',
-      label: 'Акалабрутиниб',
-    },
-    {
-      value: 'Цефдиторен',
-      label: 'Цефдиторен',
-    },
-    {
-      value: 'Цефуроксим',
-      label: 'Цефуроксим',
-    },
-    {
-      value: 'Клопидогрел',
-      label: 'Клопидогрел',
-    },
-  ];
+    
+  ] as Option[];
 
-  const dispatch = useAppDispatch();
 
   const handleMedicamentSelect = (item: Option) => {
-    dispatch(addSelectedMedicament(item.value as string));
+    onSelect(item.value as string);
   };
 
   const handleMedicamentRemove = (item: Option) => {
-    dispatch(removeSelectedMedicament(item.value as string));
+    onRemove(item.value as string);
   };
 
   return (
@@ -83,7 +61,7 @@ const MedicamentsBlock = ({ onNext, onBack }: Props) => {
 
           <Combobox
             label="Поиск препаратов"
-            list={medicamentsDb.map((el) => {
+            list={medicaments.map((el) => {
               return {
                 value: el,
                 label: el,
@@ -104,8 +82,8 @@ const MedicamentsBlock = ({ onNext, onBack }: Props) => {
           <Head>
             <MedicamentsHeading>Выбранные лекарственные препараты (МНН)</MedicamentsHeading>
 
-            {Boolean(selectedMedicaments.length) && (
-              <TextBtn onClick={() => dispatch(clearSelectedMedicaments())}>
+            {Boolean(selected.length) && (
+              <TextBtn onClick={() => onClear()}>
                 Сбросить все
               </TextBtn>
             )}
@@ -113,7 +91,7 @@ const MedicamentsBlock = ({ onNext, onBack }: Props) => {
 
           <SelectedList
             onRemove={handleMedicamentRemove}
-            list={selectedMedicaments.map((el) => {
+            list={selected.map((el) => {
               return {
                 label: el,
                 value: el,
@@ -122,7 +100,7 @@ const MedicamentsBlock = ({ onNext, onBack }: Props) => {
           />
 
           <Foot>
-            {Boolean(selectedMedicaments.length) && (
+            {Boolean(selected.length) && (
               <Button onClick={onNext}>Продолжить</Button>
             )}
           </Foot>

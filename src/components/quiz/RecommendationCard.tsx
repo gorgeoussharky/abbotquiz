@@ -200,6 +200,7 @@ const RecommendationCard = ({ item }: Props) => {
               <ItemList $unlist={item.unlist}>
                 {item.list.map((listItem) => (
                   <Item
+                    key={listItem}
                     $unlist={item.unlist}
                     dangerouslySetInnerHTML={{ __html: listItem }}
                   ></Item>

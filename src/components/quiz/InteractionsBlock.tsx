@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { QuizWrap, BackLink, Heading, Foot, Button } from '../elements';
 import { Select } from '../form/Select';
 
-import interactionsDB from '../../data/interactionsDb';
-import { useAppSelector } from '../../app/hooks';
-import { selectSelectedMedicaments } from '../../store/interactionsSlice';
 import styled from 'styled-components';
-import { InteractionDBEntry, Option } from '../../types/interfaces';
+import { InteractionDBEntry, InteractionDB, Option } from '../../types/interfaces';
 import { InteractionItem } from './InteractionsItem';
 
 interface Props {
+  selectedMeds: string[]
+  interactionsDB: InteractionDB,
   onBack: () => void;
   onBackToDiagnosis: () => void;
 }
@@ -113,25 +112,12 @@ const orderings = [
   },
 ];
 
-const mainMedicaments = [
-  'Рабепразол',
-  'Омепразол',
-  'Эзомепразол',
-  'Лансопразол',
-  'Пантопразол',
-  'Декслансопразол',
-  'Итоприд',
-  'Сукральфат',
-];
-
-const InteractionsBlock = ({ onBack, onBackToDiagnosis }: Props) => {
-  const selectedMedicaments = useAppSelector(selectSelectedMedicaments);
+const InteractionsBlock = ({ selectedMeds, interactionsDB, onBack, onBackToDiagnosis }: Props) => {
   const [order, setOrder] = useState<Option>(orderings[0]);
 
-  const [activeMainMedsList, setActiveMainMedsList] = useState<string[]>(mainMedicaments);
+  const [activeMainMedsList, setActiveMainMedsList] = useState<string[]>(Object.keys(interactionsDB));
 
-  const [activeMedsList, setActiveMedsList] =
-    useState<string[]>(selectedMedicaments);
+  const [activeMedsList, setActiveMedsList] = useState<string[]>(selectedMeds);
 
   const handleMainMedToggle = (med: string) => {
     if (activeMainMedsList.includes(med)) {
@@ -160,15 +146,18 @@ const InteractionsBlock = ({ onBack, onBackToDiagnosis }: Props) => {
       ] as InteractionDBEntry[];
 
       if (interactionMedDB) {
-        activeMedsList.forEach((med) => {
-          const interactionItem = interactionMedDB.filter(
-            (el) => el.name === med
-          )[0];
+        activeMedsList.forEach((med, key) => {
+          const interactionItem = interactionMedDB.find(
+            (el) => el.name.trim() === med.trim()
+          );
+
+
 
           if (interactionItem) {
             interactions.push({
               ...interactionItem,
               mainMed,
+              id: key + 1,
             });
           } else {
             interactions.push({
@@ -231,7 +220,7 @@ const InteractionsBlock = ({ onBack, onBackToDiagnosis }: Props) => {
           <Select
             isMulti
             label="Показать взаимодействие только с:"
-            options={selectedMedicaments.map((el) => {
+            options={selectedMeds.map((el) => {
               return {
                 value: el,
                 label: el,
@@ -244,7 +233,7 @@ const InteractionsBlock = ({ onBack, onBackToDiagnosis }: Props) => {
         </FiltersHead>
 
         <MedsList>
-          {mainMedicaments.map((el) => (
+          {Object.keys(interactionsDB).map((el) => (
             <li key={el}>
               <MedsItemBtn
                 $active={activeMainMedsList.includes(el)}
@@ -265,7 +254,7 @@ const InteractionsBlock = ({ onBack, onBackToDiagnosis }: Props) => {
 
       <List>
         {interactionsList().map((el) => (
-          <InteractionItem item={el} />
+          <InteractionItem key={el.id} item={el} />
         ))}
       </List>
 

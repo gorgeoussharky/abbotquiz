@@ -161,7 +161,7 @@ const InteractionItem = ({ item }: Props) => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_16344_51565)">
+          <g clipPath="url(#clip0_16344_51565)">
             <rect
               width="24"
               height="24"

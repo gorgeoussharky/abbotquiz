@@ -2,19 +2,27 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../elements';
 
+interface Props {
+  routePrefix?: string;
+}
+
 const DiagosisInteractionButton = styled(Button)`
   margin-bottom: 32px;
 
   @media (max-width: 991px) {
     margin-bottom: 0;
+    padding: 8px 16px;
+    gap: 8px;
+    border-radius: 20px;
+    height: auto;
   }
 `;
 
-const InteractionsLinkBtn = () => {
+const InteractionsLinkBtn = ({routePrefix}: Props) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/interactions');
+    navigate(`${routePrefix || ''}/interactions`);
     if (window.ym) {
       window.ym(90602537, 'reachGoal', 'cdss_comparison');
     }

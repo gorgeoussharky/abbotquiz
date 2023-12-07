@@ -90,7 +90,7 @@ const RadioLabelsWrap = styled.div<{ $cols: number }>`
 
 const CheckboxList = styled.div`
   display: grid;
-  gap: 4px 8px;
+  gap: 10px 8px;
   grid-template-columns: 1fr 1fr;
   align-items: start;
 

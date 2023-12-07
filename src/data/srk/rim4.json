@@ -18,6 +18,7 @@
     "id": "last_8_weeks",
     "title": "Вышеуказанные симптомы отмечаются у больного в <span>последние 8 недель или более как минимум 1 раз в неделю?</span>",
     "type": "radio",
+    "optional": true,
     "condition": {
         "question": "recid_stomach_ache",
         "value": 1

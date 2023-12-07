@@ -28,10 +28,25 @@ import doctorIcon from '../../../../../../assets/img/doctor.png';
 import stomach from '../../../../../../assets/img/stomach.png';
 import egds from '../../../../../../assets/img/egds.png';
 import { selectSrkSelectedSymptoms } from '../../../../../../store/srkSymptomsSlice';
+import styled from 'styled-components';
 
 interface Props {
   onBack: () => void;
 }
+
+const SrkDiagnosisCard = styled(DiagnosisCard)`
+  font-size: 24px;
+
+  var {
+    @media (max-width: 768px) {
+      top: 0 !important;
+      bottom: 0;
+      margin: auto;
+      height: fit-content;
+      font-size: 36px !important;
+    }
+  }
+`;
 
 const HighProb = ({ onBack }: Props) => {
   const symptoms = useAppSelector(selectSrkSelectedSymptoms);
@@ -39,7 +54,6 @@ const HighProb = ({ onBack }: Props) => {
   const hasType = (type: string) => {
     return Boolean(symptoms.filter((el) => el.type === type).length);
   };
-
 
   const baseExaminations = () => {
     const list: RecommendationCardType[] = [];
@@ -84,8 +98,8 @@ const HighProb = ({ onBack }: Props) => {
       expandable: true,
       list: (() => {
         let list = [
-            'Анализ крови на ТТГ',
-            'Консультация гинеколога при подозрении на связь болей с гинекологическими заболеваниями (эндометриоз, воспалительные заболевания, опухоль яичника)',
+          'Анализ крови на ТТГ',
+          'Консультация гинеколога при подозрении на связь болей с гинекологическими заболеваниями (эндометриоз, воспалительные заболевания, опухоль яичника)',
         ];
 
         if (hasType('Диарея')) {
@@ -98,7 +112,7 @@ const HighProb = ({ onBack }: Props) => {
         }
 
         return list;
-      })()
+      })(),
     });
 
     return list;
@@ -225,12 +239,13 @@ const HighProb = ({ onBack }: Props) => {
     },
   ];
 
-  const herbHelp:RecommendationCardType = {
-    title: 'С дифференциальной диагностикой и подходами к лечению ГЭРБ можно ознакомиться в соответствующем разделе сайта:',
+  const herbHelp: RecommendationCardType = {
+    title:
+      'С дифференциальной диагностикой и подходами к лечению ГЭРБ можно ознакомиться в соответствующем разделе сайта:',
     linkHasArrow: true,
     linkLabel: 'Перейти',
-    link: '/cdss/secondary'
-  }
+    link: '/cdss/secondary',
+  };
 
   return (
     <QuizWrap>
@@ -240,11 +255,11 @@ const HighProb = ({ onBack }: Props) => {
 
           <Heading style={{ marginBottom: 12 }}>Вероятный диагноз</Heading>
 
-          <DiagnosisCard style={{ gap: 0, fontWeight: 400 }}>
+          <SrkDiagnosisCard style={{ gap: 0, fontWeight: 400 }}>
             <span style={{ maxWidth: '60%' }}>СРК</span>
             <var>96,3%</var>
-            Точность критериев Рим IV
-          </DiagnosisCard>
+            <div style={{ maxWidth: '65%' }}>Точность критериев Рим IV</div>
+          </SrkDiagnosisCard>
 
           <Heading>
             Для подтверждения диагноза необходимо дообследование
@@ -261,7 +276,9 @@ const HighProb = ({ onBack }: Props) => {
         </Column>
 
         <Column className="quiz-block__column">
-          <Heading className="quiz-block__title" style={{ marginBottom: 12 }}>Эмпирическая терапия</Heading>
+          <Heading className="quiz-block__title" style={{ marginBottom: 12 }}>
+            Эмпирическая терапия
+          </Heading>
 
           <Text>
             <span>
@@ -327,7 +344,7 @@ const HighProb = ({ onBack }: Props) => {
             </>
           )}
 
-          <InteractionsLinkBtn />
+          <InteractionsLinkBtn routePrefix='/srk' />
 
           <Foot $align="flex-end">
             <ButtonLink to="/" $type="light">
