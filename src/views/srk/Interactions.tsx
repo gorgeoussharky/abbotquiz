@@ -1,6 +1,6 @@
 import { InteractionsWrap } from '../../components/quiz/InteractionsWrap';
-import medicamentsDB from '../../data/srk/medicaments.json'
-import interactions from '../../data/srk/interactionsDb.json'
+import medicamentsDB from '../../store/srk/data/medicaments.json'
+import interactions from '../../store/srk/data/interactionsDb.json'
 
 
 const SrkInteractions = () => {

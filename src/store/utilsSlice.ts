@@ -3,13 +3,22 @@ import { RootState } from '../app/store';
 
 
 export interface UtilsSliceState {
-    hasLastDiagnosis: boolean;
-  prevBlocksHistory: string[]
+  hasLastDiagnosis: boolean;
+  prevBlocksHistory: string[],
+  medsToCheck: string[],
 }
 
 const initialState: UtilsSliceState = {
-    hasLastDiagnosis: false,
-  prevBlocksHistory: []
+  hasLastDiagnosis: false,
+  prevBlocksHistory: [],
+  medsToCheck: [
+    "Рабепразол",
+    "Лансопразол",
+    "Омепразол",
+    "Пантопразол",
+    "Эзомепразол",
+    "Декслансопразол"
+],
 };
 
 export const utilsSlice = createSlice({
@@ -31,6 +40,9 @@ export const utilsSlice = createSlice({
     },
     clearHistory: (state) => {
         state.prevBlocksHistory = []
+    },
+    setMedsToCheck: (state, action: PayloadAction<string[]>) => {
+      state.medsToCheck = action.payload
     }
   },
 });
@@ -39,10 +51,12 @@ export const {
     addBlockHistory,
     setHasLastDiagnosis,
     removeLastBlockHistoryElement,
-    clearHistory
+    clearHistory,
+    setMedsToCheck
 } = utilsSlice.actions;
 
 export const selectHasLastDiagnosis = (state: RootState) => state.utils.hasLastDiagnosis
 export const selectPrevBlocksHistory = (state: RootState) => state.utils.prevBlocksHistory
+export const selectMedsToCheck = (state: RootState) => state.utils.medsToCheck
 
 export default utilsSlice.reducer;

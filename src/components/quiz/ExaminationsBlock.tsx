@@ -2,7 +2,7 @@ import {
   useAppSelector,
   useAppDispatch,
 } from '../../app/hooks';
-import { removeSelectedExamination, selectExaminations, selectSelectedExaminations, addSelectedExamination } from '../../store/examinationsSlice';
+import { removeSelectedExamination, selectExaminations, selectSelectedExaminations, addSelectedExamination } from '../../store/herb/examinationsSlice';
 import { Checkbox } from '../form/Checkbox';
 import { Examination } from '../../types/interfaces';
 import styled from 'styled-components';

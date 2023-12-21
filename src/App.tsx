@@ -1,13 +1,14 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Home } from './views/Home';
-import { First } from './views/First';
-import { Secondary } from './views/Secondary';
-import { Control } from './views/Control';
-import { Interactions } from './views/Interactions';
+import { First } from './views/gerb/First';
+import { Secondary } from './views/gerb/Secondary';
+import { Control } from './views/gerb/Control';
+import { Interactions } from './views/gerb/Interactions';
 import { SrkFirst } from './views/srk/First';
 
 import { useEffect } from 'react';
 import { SrkInteractions } from './views/srk/Interactions';
+import { SrkSecondary } from './views/srk/Secondary';
 
 function App() {
   const location = useLocation();
@@ -26,6 +27,7 @@ function App() {
       <Route path="/control" element={<Control />} />
       <Route path="/interactions" element={<Interactions />} />
       <Route path="/srk/first" element={<SrkFirst />} />
+      <Route path="/srk/secondary" element={<SrkSecondary />} />
       <Route path="/srk/interactions" element={<SrkInteractions />} />
     </Routes>
   );

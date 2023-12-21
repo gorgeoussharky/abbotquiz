@@ -1,6 +1,6 @@
 import { store } from './store';
 
-export const getQuestions = (examTitle: string) => {
+export const getHerbQuestions = (examTitle: string) => {
     const selectedExaminations = store.getState().examinations.selected
 
     const examinationQuestions = selectedExaminations.find(el => el.title === examTitle)?.questions

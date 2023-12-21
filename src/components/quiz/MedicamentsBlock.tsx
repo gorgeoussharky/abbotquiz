@@ -70,12 +70,12 @@ const MedicamentsBlock = ({ medicaments, selected, onNext, onBack, onClear, onRe
             onSelect={handleMedicamentSelect}
           />
 
-          <Foot>
+          {/* <Foot>
             <PopularList
               onSelect={handleMedicamentSelect}
               list={popularMedicaments}
             />
-          </Foot>
+          </Foot> */}
         </Column>
 
         <Column>

@@ -13,6 +13,7 @@ interface Props {
 
 const Wrap = styled.div<{$border?: boolean}>`
     margin-bottom: 12px;
+    margin-top: 12px;
 
    ${props => props.$border && `
       border-bottom: 1px solid #BDBDBD;

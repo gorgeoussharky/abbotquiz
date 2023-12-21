@@ -8,7 +8,7 @@ import {
   removeSelectedSymptom,
   clearSelectedSymptoms,
   selectSymptomsDB,
-} from '../../store/symptomsSlice';
+} from '../../store/herb/symptomsSlice';
 import { DBEntry, Option } from '../../types/interfaces';
 import { SelectedList } from '../SelectedList';
 import { BackLink, Button, Column, ColumnsWrap, Foot, Head, Heading, QuizWrap, Text, TextBtn } from '../elements';

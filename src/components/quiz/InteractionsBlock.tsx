@@ -5,6 +5,8 @@ import { Select } from '../form/Select';
 import styled from 'styled-components';
 import { InteractionDBEntry, InteractionDB, Option } from '../../types/interfaces';
 import { InteractionItem } from './InteractionsItem';
+import { useAppSelector } from '../../app/hooks';
+import { selectMedsToCheck } from '../../store/utilsSlice';
 
 interface Props {
   selectedMeds: string[]
@@ -115,7 +117,9 @@ const orderings = [
 const InteractionsBlock = ({ selectedMeds, interactionsDB, onBack, onBackToDiagnosis }: Props) => {
   const [order, setOrder] = useState<Option>(orderings[0]);
 
-  const [activeMainMedsList, setActiveMainMedsList] = useState<string[]>(Object.keys(interactionsDB));
+  const medsToCheck = useAppSelector(selectMedsToCheck)
+
+  const [activeMainMedsList, setActiveMainMedsList] = useState<string[]>(medsToCheck);
 
   const [activeMedsList, setActiveMedsList] = useState<string[]>(selectedMeds);
 
@@ -147,11 +151,10 @@ const InteractionsBlock = ({ selectedMeds, interactionsDB, onBack, onBackToDiagn
 
       if (interactionMedDB) {
         activeMedsList.forEach((med, key) => {
+          
           const interactionItem = interactionMedDB.find(
-            (el) => el.name.trim() === med.trim()
+            (el) => el.name?.trim() === med?.trim()
           );
-
-
 
           if (interactionItem) {
             interactions.push({
@@ -233,7 +236,7 @@ const InteractionsBlock = ({ selectedMeds, interactionsDB, onBack, onBackToDiagn
         </FiltersHead>
 
         <MedsList>
-          {Object.keys(interactionsDB).map((el) => (
+          {medsToCheck.map((el) => (
             <li key={el}>
               <MedsItemBtn
                 $active={activeMainMedsList.includes(el)}

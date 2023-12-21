@@ -9,7 +9,8 @@ interface Props {
   title: string;
   questions: Examination['questions'];
   children?: JSX.Element | JSX.Element[];
-  onChange?: (val: Option, title: string) => void;
+  cols?: number
+  onChange?: (val: Option, id: string) => void;
   onBack?: () => void;
   onNext?: () => void;
 }
@@ -17,7 +18,7 @@ interface Props {
 const QuestionHeading = styled.div`
   font-size: 20px;
   margin-bottom: 12px;
-  font-weight: 400;
+  font-weight: 700;
 
   ul {
     margin-top: 4px;
@@ -34,8 +35,9 @@ const QuestionHeading = styled.div`
   }
 `;
 
-const QuestionsList = styled.div`
+const QuestionsList = styled.div<{$cols?: number}>`
   display: grid;
+  grid-template-columns: ${props => props.$cols ? `repeat(${props.$cols}, 1fr)` : '1fr'};
   gap: 32px;
   margin-bottom: 40px;
 
@@ -88,10 +90,10 @@ const RadioLabelsWrap = styled.div<{ $cols: number }>`
   }
 `;
 
-const CheckboxList = styled.div`
+const CheckboxList = styled.div<{$cols?: number}>`
   display: grid;
   gap: 10px 8px;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: ${props => props.$cols ? `repeat(${props.$cols}, 1fr)` : '1fr 1fr'};
   align-items: start;
 
   @media (max-width: 991px) {
@@ -111,6 +113,7 @@ const QuestionsBlock = ({
   title,
   questions,
   children,
+  cols,
   onBack,
   onChange,
   onNext,
@@ -139,8 +142,8 @@ const QuestionsBlock = ({
     return conditionQuestion?.value?.value === condition.value;
   };
 
-  const handleCheckboxChange = (val: Option, title: string) => {
-    const question = questions?.find((el) => el.title === title);
+  const handleCheckboxChange = (val: Option, id: string) => {
+    const question = questions?.find((el) => el.id === id);
 
     if (!question) return;
 
@@ -151,7 +154,7 @@ const QuestionsBlock = ({
             label: val.label,
             value: JSON.stringify([val]),
           },
-          title
+          id
         );
       return;
     }
@@ -170,7 +173,7 @@ const QuestionsBlock = ({
           label: val.label,
           value: JSON.stringify(value),
         },
-        title
+        id
       );
   };
 
@@ -180,9 +183,9 @@ const QuestionsBlock = ({
 
       <Heading>{title}</Heading>
 
-      <QuestionsList>
+      <QuestionsList $cols={cols}>
         {questions?.map((question) => (
-          <div key={question.title}>
+          <div key={question.id}>
             {checkCondition(question.condition) && (           
               <div>
                 {question.type === 'radio' && (
@@ -195,13 +198,13 @@ const QuestionsBlock = ({
                     >
                       {question?.options?.map((option) => (
                         <RadioLabel
-                          key={option.label + question.title}
+                          key={option.label + question.id}
                           name={question.title}
                           checked={option.value === question.value?.value}
                           value={option.value}
                           label={option.label}
                           onChange={() =>
-                            onChange && onChange(option, question.title)
+                            onChange && onChange(option, question.id)
                           }
                         />
                       ))}
@@ -214,7 +217,7 @@ const QuestionsBlock = ({
                     <QuestionHeading
                       dangerouslySetInnerHTML={{ __html: question.title }}
                     />
-                    <CheckboxList>
+                    <CheckboxList $cols={question.cols}>
                       {question?.options?.map((option) => (
                         <Checkbox
                           key={option.label}
@@ -224,7 +227,7 @@ const QuestionsBlock = ({
                             (question.value?.value as string) || '[]'
                           ).some((el: Option) => el.value === option.value)}
                           onChange={() =>
-                            handleCheckboxChange(option, question.title)
+                            handleCheckboxChange(option, question.id)
                           }
                         />
                       ))}
@@ -236,13 +239,13 @@ const QuestionsBlock = ({
                   <RadioListWrap>
                     {question?.options?.map((option) => (
                       <RadioList
-                        key={option.label + question.title}
+                        key={option.label + question.id}
                         name={question.title}
                         checked={option.value === question.value?.value}
                         value={option.value}
                         label={option.label}
                         onChange={() =>
-                          onChange && onChange(option, question.title)
+                          onChange && onChange(option, question.id)
                         }
                       />
                     ))}

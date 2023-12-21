@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useAppSelector } from '../../app/hooks';
-import { selectSelectedSymptoms } from '../../store/symptomsSlice';
+import { selectSelectedSymptoms } from '../../store/herb/symptomsSlice';
 
 import { BackLink, BlueCard, ButtonLink, Foot, Heading, QuizWrap } from '../elements';
 

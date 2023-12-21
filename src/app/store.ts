@@ -1,11 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import symptomsReducer from '../store/symptomsSlice';
-import ferdQQuestionsSlice from '../store/gerdQQuestionsSlice';
-import examinationsReducer from '../store/examinationsSlice';
-import controlAppointmentSlice from '../store/controlAppointmentSlice';
+import symptomsReducer from '../store/herb/symptomsSlice';
+import ferdQQuestionsSlice from '../store/herb/gerdQQuestionsSlice';
+import examinationsReducer from '../store/herb/examinationsSlice';
+import controlAppointmentSlice from '../store/herb/controlAppointmentSlice';
 import utilsSlice from '../store/utilsSlice';
-import srkSymptomsSlice from '../store/srkSymptomsSlice';
-import rim4Slice from '../store/rim4Slice';
+import srkSymptomsSlice from '../store/srk/symptomsSlice';
+import rim4Slice from '../store/srk/rim4Slice';
+import srkExaminationsSlice from '../store/srk/examinationsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     srkSymptoms: srkSymptomsSlice,
     gerdQQuestions: ferdQQuestionsSlice,
     examinations: examinationsReducer,
+    srkExaminations: srkExaminationsSlice,
     controlAppointment: controlAppointmentSlice,
     utils: utilsSlice,
     rim4: rim4Slice

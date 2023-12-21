@@ -5,17 +5,10 @@ import { GerdQ } from '../../components/quiz/GerdQ';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
 import { RecommendationsBlock } from '../../components/quiz/RecommendationsBlock';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-  addSrkSelectedSymptom,
-  clearSrkSelectedSymptoms,
-  removeSrkSelectedSymptom,
-  selectSrkSelectedSymptoms,
-  selectSrkSymptomsDB,
-} from '../../store/srkSymptomsSlice';
 import { useNavigate } from 'react-router-dom';
 import { Container, QuizCard } from '../../components/elements';
 import { ProgressBar } from '../../components/ProgressBar';
-import { resetAnswers } from '../../store/gerdQQuestionsSlice';
+import { resetAnswers } from '../../store/herb/gerdQQuestionsSlice';
 import {
   addBlockHistory,
   removeLastBlockHistoryElement,
@@ -24,7 +17,8 @@ import {
 } from '../../store/utilsSlice';
 import { Option } from '../../types/interfaces';
 import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
-import { selectRim4Questions, setRim4Answer } from '../../store/rim4Slice';
+import { selectRim4Questions, setRim4Answer } from '../../store/srk/rim4Slice';
+import { selectSrkSelectedSymptoms, selectSrkSymptomsDB, addSrkSelectedSymptom, removeSrkSelectedSymptom, clearSrkSelectedSymptoms } from '../../store/srk/symptomsSlice';
 
 const totalSteps = 3;
 
@@ -82,6 +76,7 @@ const SrkFirst = () => {
     switch (block) {
       case 'symptoms':
         if (isLowProb()) {
+          
           setStep(3);
           setBlock('diagnosis');
           return;
@@ -142,6 +137,7 @@ const SrkFirst = () => {
         );
       case 'rim4':
         return (
+          <>
           <QuestionsBlock
             title="Опрос по критериям Рим IV"
             questions={rim4Questions}
@@ -156,6 +152,8 @@ const SrkFirst = () => {
               )
             }
           />
+          <div>*ВЗК — воспалительные заболевания кишечника</div>
+          </>
         );
       case 'diagnosis':
         return <DiagnosisBlock onBack={handleBack} />;

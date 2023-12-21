@@ -15,8 +15,9 @@ export interface QuestionEntry {
     text: string;
     condition: string | number;
   };
+  cols?: number
   optional?: boolean;
-  id?: string
+  id: string
   condition?: {
     question: string
     value: string | number;
@@ -63,4 +64,10 @@ export interface InteractionDBEntry {
 
 export interface InteractionDB {
   [key: string]: InteractionDBEntry[]
+}
+
+export interface InterpretationItemType {
+  title: string;
+  code: string;
+  content: () => JSX.Element
 }

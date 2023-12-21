@@ -3,9 +3,9 @@ import { ConsultBanner } from '../components/ConsultBanner';
 import { ConsultInfo } from '../components/ConsultInfo';
 import { useAppDispatch } from '../app/hooks';
 import { clearHistory, setHasLastDiagnosis } from '../store/utilsSlice';
-import { clearSelectedExaminations } from '../store/examinationsSlice';
-import { clearSelectedSymptoms } from '../store/symptomsSlice';
-import { resetAnswers } from '../store/gerdQQuestionsSlice';
+import { clearSelectedExaminations } from '../store/herb/examinationsSlice';
+import { clearSelectedSymptoms } from '../store/herb/symptomsSlice';
+import { resetAnswers } from '../store/herb/gerdQQuestionsSlice';
 
 const Home = () => {
 

@@ -1,7 +1,7 @@
 import { useAppSelector, useAppDispatch, useIsMobile } from '../../app/hooks';
-import { selectGerdQQuestions } from '../../store/gerdQQuestionsSlice';
+import { selectGerdQQuestions } from '../../store/herb/gerdQQuestionsSlice';
 import { RadioLabel } from '../form/RadioLabel';
-import { setAnswer } from '../../store/gerdQQuestionsSlice';
+import { setAnswer } from '../../store/herb/gerdQQuestionsSlice';
 import { Select } from '../form/Select';
 
 import {
