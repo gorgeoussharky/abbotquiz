@@ -42,6 +42,7 @@ const QuestionsList = styled.div<{$cols?: number}>`
   margin-bottom: 40px;
 
   @media (max-width: 991px) {
+    grid-template-columns: 1fr;
     margin-bottom: 0;
     gap: 16px;
   }
@@ -74,9 +75,15 @@ const QuestionWarning = styled.div`
   }
 `;
 
-const RadioListWrap = styled.div`
+const RadioListWrap = styled.div<{ $cols?: number }>`
   display: grid;
-  gap: 12px;
+  gap: 18px;
+  grid-template-columns: ${(props) => `repeat(${props.$cols}, 1fr)`};
+  align-items: stretch;
+
+  @media (max-width: 991px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const RadioLabelsWrap = styled.div<{ $cols: number }>`
@@ -194,7 +201,7 @@ const QuestionsBlock = ({
                       dangerouslySetInnerHTML={{ __html: question.title }}
                     />
                     <RadioLabelsWrap
-                      $cols={calcCols(question.options?.length || 3)}
+                      $cols={question.cols || calcCols(question.options?.length || 3)}
                     >
                       {question?.options?.map((option) => (
                         <RadioLabel
@@ -236,13 +243,16 @@ const QuestionsBlock = ({
                 )}
 
                 {question.type === 'radioList' && (
-                  <RadioListWrap>
+                  <RadioListWrap $cols={question.cols}>
                     {question?.options?.map((option) => (
                       <RadioList
                         key={option.label + question.id}
                         name={question.title}
                         checked={option.value === question.value?.value}
                         value={option.value}
+                        cols={option.cols}
+                        pill={question.pill}
+                        title={option.title}
                         label={option.label}
                         onChange={() =>
                           onChange && onChange(option, question.id)

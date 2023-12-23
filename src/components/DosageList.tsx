@@ -4,10 +4,16 @@ const Title = styled.div<{ $small?: boolean }>`
   font-size: ${(props) => (props.$small ? '17px' : '20px')};
   font-style: normal;
   font-weight: 700;
-  margin-bottom: 12px;
 
   @media (max-width: 991px) {
     font-size: 16px;
+  }
+`;
+
+const Head = styled.div`
+  margin-bottom: 12px;
+
+  @media (max-width: 991px) {
     margin-bottom: 10px;
   }
 `;
@@ -21,6 +27,11 @@ const List = styled.ul<{ $cols?: number }>`
     props.$cols ? `repeat(${props.$cols}, 1fr)` : '1fr 1fr'};
   gap: 0 12px;
   margin-bottom: 12px;
+
+  @media (max-width: 568px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 `;
 
 const Item = styled.li`
@@ -60,26 +71,47 @@ const Item = styled.li`
   }
 `;
 
+const Level = styled.div`
+  font-size: 16px;
+  margin-top: 4px;
+  color: var(--accent);
+`;
+
 interface Props {
   title?: string;
+  level?: string;
   smallTitle?: boolean;
   className?: string;
   cols?: number;
   list: {
     title: string;
     dosage?: string;
+    level?: string;
   }[];
 }
 
-const DosageList = ({ list, cols, className, title, smallTitle }: Props) => {
+const DosageList = ({
+  list,
+  cols,
+  className,
+  title,
+  level,
+  smallTitle,
+}: Props) => {
   return (
     <div className={className}>
-      {title && <Title $small={smallTitle}>{title}</Title>}
+      <Head>
+        {title && <Title $small={smallTitle}>{title}</Title>}
+        {level && <Level>Уровень рекомендаций {level}</Level>}
+      </Head>
       <List $cols={cols}>
         {list.map((item) => (
           <Item key={item.title}>
             <div>{item.title}</div>
-            {item.dosage && <span dangerouslySetInnerHTML={{__html: item.dosage}}></span>}
+            {level && <Level>Уровень рекомендаций {level}</Level>}
+            {item.dosage && (
+              <span dangerouslySetInnerHTML={{ __html: item.dosage }}></span>
+            )}
           </Item>
         ))}
       </List>

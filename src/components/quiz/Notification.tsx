@@ -11,7 +11,7 @@ const Wrap = styled.div`
   gap: 24px;
   align-items: center;
   border-radius: 4px;
-  background: rgba(234, 187, 22, 0.20);
+  background: rgba(234, 187, 22, 0.2);
   padding: 16px;
   font-size: 20px;
   color: rgba(0, 0, 0, 0.8);
@@ -37,6 +37,12 @@ const Text = styled.div`
     display: block;
     margin-top: 12px;
     font-size: 14px;
+  }
+
+  @media (max-width: 991px) {
+    p {
+      font-size: 16px !important;
+    }
   }
 `;
 

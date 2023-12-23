@@ -184,6 +184,12 @@ export const Text = styled.p`
 
 export const Notice = styled.small`
 font-size: 16px;
+
+a {
+  color: var(--accent);
+  display: block;
+  margin-top: 12px;;
+}
 `
 
 export const Button = styled.button<{ $type?: 'light', $large?: boolean }>`

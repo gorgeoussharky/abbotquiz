@@ -143,10 +143,10 @@ const SrkFirst = () => {
             questions={rim4Questions}
             onBack={handleBack}
             onNext={handleNext}
-            onChange={(val, questionTitle) =>
+            onChange={(val, id) =>
               dispatch(
                 setRim4Answer({
-                  title: questionTitle,
+                  id: id,
                   option: val,
                 })
               )

@@ -1,0 +1,51 @@
+[
+    {
+      "title": "Есть ли у пациента результаты контрольного исследования ЭГДС?",
+      "id": "has_egds",
+      "group": "egds",
+      "type": "radio",
+      "options": [
+        {
+          "label": "Да",
+          "value": 1
+        },
+        {
+          "label": "Нет",
+          "value": 0
+        }
+      ]
+    },
+    {
+        "title": "Выраженное улучшение состояния на повторной ЭГДС",
+        "type": "radio",
+        "group": "therapyImprovement",
+        "id": "has_improvments",
+        "options": [
+          {
+            "label": "Да",
+            "value": 1
+          },
+          {
+            "label": "Нет",
+            "value": 0
+          }
+        ]
+      },
+      {
+        "title": "Длительность ранее проведенной терапии составляла менее 8-ми недель?",
+        "type": "radio",
+        "group": "therapyLength",
+        "id": "small_length",
+        "options": [
+          {
+            "label": "Да",
+            "value": 1
+          },
+          {
+            "label": "Нет",
+            "value": 0
+          }
+        ]
+      }
+  ]
+  

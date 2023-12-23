@@ -17,7 +17,6 @@ const Wrap = styled.li<{ $hasIcon: boolean; $expandable?: boolean }>`
   padding: 16px;
   display: grid;
   align-items: center;
-
   gap: 12px;
 
   img {
@@ -83,8 +82,10 @@ const ItemTitle = styled.div<{ $expandable?: boolean, $expanded?: boolean }>`
 ${(props) =>
     props.$expanded &&
     `
+    color: var(--accent);
+
       &::before {
-        transform: rotate(0deg)
+        transform: rotate(180deg)
      }
   `}
 

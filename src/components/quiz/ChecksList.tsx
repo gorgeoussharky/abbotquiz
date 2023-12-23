@@ -15,6 +15,10 @@ const List = styled.ul`
   align-items: center;
   gap: 10px 24px;
   margin-bottom: 12px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const CheckItem = styled(Item)`

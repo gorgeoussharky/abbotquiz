@@ -7,6 +7,7 @@ import utilsSlice from '../store/utilsSlice';
 import srkSymptomsSlice from '../store/srk/symptomsSlice';
 import rim4Slice from '../store/srk/rim4Slice';
 import srkExaminationsSlice from '../store/srk/examinationsSlice';
+import srkControlAppointmentSlice from '../store/srk/controlAppointmentSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     examinations: examinationsReducer,
     srkExaminations: srkExaminationsSlice,
     controlAppointment: controlAppointmentSlice,
+    srkControlAppointment: srkControlAppointmentSlice,
     utils: utilsSlice,
     rim4: rim4Slice
   },

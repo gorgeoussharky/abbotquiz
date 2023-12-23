@@ -9,11 +9,11 @@ interface Props {
   notifications?: string[]
   hasBorder?: boolean;
   list?:RecommendationCardType[];
+  cols?: number
 }
 
 const Wrap = styled.div<{$border?: boolean}>`
     margin-bottom: 12px;
-    margin-top: 12px;
 
    ${props => props.$border && `
       border-bottom: 1px solid #BDBDBD;
@@ -32,20 +32,25 @@ const Title = styled.div`
   }
 `;
 
-const List = styled.ul`
+const List = styled.ul<{$cols?:number}>`
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
+  grid-template-columns: ${props => props.$cols ? `repeat(${props.$cols}, 1fr)` : '1fr'};
   gap: 12px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 
-const CardsList = ({ title, list, hasBorder, notifications }: Props) => {
+const CardsList = ({ title, list, hasBorder, notifications, cols }: Props) => {
   return (
     <Wrap $border={hasBorder}>
       {title && <Title>{title}</Title>}
-      <List>
+      <List $cols={cols}>
         {list?.map((item) => (
           <RecommendationCard key={item.title} item={item} />
         ))}

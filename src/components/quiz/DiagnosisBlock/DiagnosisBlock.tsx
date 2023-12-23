@@ -7,11 +7,13 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../../../app/hooks';
 import { setHasLastDiagnosis } from '../../../store/utilsSlice';
 import { SecondarySrkDiagnosis } from './srk/SecondaryDiagnosis';
+import { ControlSrkDiagnosis } from './srk/ControlDiagnosis';
 interface Props {
   onBack: () => void;
+  onFamiliarize?: () => void;
 }
 
-const DiagnosisBlock = ({ onBack }: Props) => {
+const DiagnosisBlock = ({ onBack, onFamiliarize }: Props) => {
   const location = useLocation();
   const dispatch = useAppDispatch()
 
@@ -39,7 +41,11 @@ const DiagnosisBlock = ({ onBack }: Props) => {
   }
 
   if (location.pathname === '/srk/secondary') {
-    return <SecondarySrkDiagnosis onBack={onBack} />;
+    return <SecondarySrkDiagnosis onFamiliarize={() => onFamiliarize && onFamiliarize()} onBack={onBack} />;
+  }
+  
+  if (location.pathname === '/srk/control') {
+    return <ControlSrkDiagnosis onBack={onBack} />;
   }
 
   return <></>

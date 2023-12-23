@@ -9,6 +9,7 @@ import { SrkFirst } from './views/srk/First';
 import { useEffect } from 'react';
 import { SrkInteractions } from './views/srk/Interactions';
 import { SrkSecondary } from './views/srk/Secondary';
+import { SrkControl } from './views/srk/Control';
 
 function App() {
   const location = useLocation();
@@ -28,6 +29,7 @@ function App() {
       <Route path="/interactions" element={<Interactions />} />
       <Route path="/srk/first" element={<SrkFirst />} />
       <Route path="/srk/secondary" element={<SrkSecondary />} />
+      <Route path="/srk/control" element={<SrkControl />} />
       <Route path="/srk/interactions" element={<SrkInteractions />} />
     </Routes>
   );

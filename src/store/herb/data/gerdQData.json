@@ -1,0 +1,146 @@
+[
+  {
+    "title": "Как часто пациент ощущал изжогу (чувство жжения за грудиной)?",
+    "type": "radio",
+    "id": "heartburn_frequency",
+    "group": "gerdQ",
+    "options": [
+      {
+        "label": "0 дней",
+        "value": 0
+      },
+      {
+        "label": "1 день",
+        "value": 1
+      },
+      {
+        "label": "2-3 дня",
+        "value": 2
+      },
+      {
+        "label": "4-7 дней",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "title": "Как часто пациент отмечал, что содержимое желудка (жидкость либо пища) снова попадает в глотку или полость рта (отрыжка)?",
+    "type": "radio",
+    "group": "gerdQ",
+    "id": "belching_frequency",
+    "options": [
+        {
+          "label": "0 дней",
+          "value": 0
+        },
+        {
+          "label": "1 день",
+          "value": 1
+        },
+        {
+          "label": "2-3 дня",
+          "value": 2
+        },
+        {
+          "label": "4-7 дней",
+          "value": 3
+        }
+      ]
+  },
+  {
+    "title": "Как часто пациент ощущал боль в центре верхней части живота?",
+    "type": "radio",
+    "group": "gerdQ",
+    "id": "pain_frequency",
+    "options": [
+        {
+          "label": "0 дней",
+          "value": 0
+        },
+        {
+          "label": "1 день",
+          "value": 1
+        },
+        {
+          "label": "2-3 дня",
+          "value": 2
+        },
+        {
+          "label": "4-7 дней",
+          "value": 3
+        }
+      ]
+  },
+  {
+    "title": "Как часто пациент ощущал тошноту?",
+    "type": "radio",
+    "id": "nausea_frequency",
+    "group": "gerdQ",
+    "options": [
+        {
+          "label": "0 дней",
+          "value": 0
+        },
+        {
+          "label": "1 день",
+          "value": 1
+        },
+        {
+          "label": "2-3 дня",
+          "value": 2
+        },
+        {
+          "label": "4-7 дней",
+          "value": 3
+        }
+      ]
+  },
+  {
+    "title": "Как часто изжога и/или отрыжка мешали пациенту хорошо выспаться ночью?",
+    "type": "radio",
+    "id": "bas_sleep_frequency",
+    "group": "gerdQ",
+    "options": [
+        {
+          "label": "0 дней",
+          "value": 0
+        },
+        {
+          "label": "1 день",
+          "value": 1
+        },
+        {
+          "label": "2-3 дня",
+          "value": 2
+        },
+        {
+          "label": "4-7 дней",
+          "value": 3
+        }
+      ]
+  },
+  {
+    "title": "Как часто по поводу изжоги и/или отрыжки пациент дополнительно принимал другие средства (антациды, альгинаты, пищевую соду), кроме рекомендованных врачом?",
+    "type": "radio",
+    "id": "drugs_frequency",
+    "group": "gerdQ",
+    "options": [
+        {
+          "label": "0 дней",
+          "value": 0
+        },
+        {
+          "label": "1 день",
+          "value": 1
+        },
+        {
+          "label": "2-3 дня",
+          "value": 2
+        },
+        {
+          "label": "4-7 дней",
+          "value": 3
+        }
+      ]
+  }
+]

@@ -15,6 +15,8 @@ export interface QuestionEntry {
     text: string;
     condition: string | number;
   };
+  group: string
+  pill?: boolean
   cols?: number
   optional?: boolean;
   id: string
@@ -47,8 +49,14 @@ export interface RecommendationCardType {
 }
 
 export interface Option {
+  title?: string;
   label: string;
   value: string | number | boolean;
+  cols?: number
+  dependency?: {
+    id: string
+    value: string
+  }
 }
 
 export interface InteractionDBEntry {
@@ -68,6 +76,13 @@ export interface InteractionDB {
 
 export interface InterpretationItemType {
   title: string;
-  code: string;
+  code?: string;
+  subtitle?: string
   content: () => JSX.Element
+}
+
+export interface DosageItem {
+  title: string
+  level?: string
+  dosage: string
 }
