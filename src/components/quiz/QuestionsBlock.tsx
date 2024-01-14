@@ -10,6 +10,7 @@ interface Props {
   questions: Examination['questions'];
   children?: JSX.Element | JSX.Element[];
   cols?: number
+  hideBtn?: boolean;
   onChange?: (val: Option, id: string) => void;
   onBack?: () => void;
   onNext?: () => void;
@@ -121,11 +122,14 @@ const QuestionsBlock = ({
   questions,
   children,
   cols,
+  hideBtn,
   onBack,
   onChange,
   onNext,
 }: Props) => {
   const isBtnActive = () => {
+    if (hideBtn) return false
+
     return questions!.filter(el => !el.optional).every((el) => typeof el.value?.value !== 'undefined');
   };
 

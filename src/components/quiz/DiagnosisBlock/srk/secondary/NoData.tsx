@@ -1,5 +1,11 @@
 import { CardsList } from '../../../CardsList';
-import { BackLink, ButtonLink, Foot, QuizWrap } from '../../../../elements';
+import {
+  BackLink,
+  ButtonLink,
+  Foot,
+  QuizWrap,
+  Text,
+} from '../../../../elements';
 import { DiagnosisCard } from '../../elements';
 import { schedule } from '../../../../../data/recommendations';
 import { DosageList } from '../../../../DosageList';
@@ -72,10 +78,32 @@ const NoData = ({ onBack }: Props) => {
 
       <DosageList title="Слабительные средства" list={laxative} />
 
-      <CardsList list={[repeat]} />
+      <Text>
+      В рамках терапии абдоминального болевого синдрома важно подобрать
+            препарат, который будет эффективно купировать боль и нормализовывать
+            моторику кишечника. Обоснованным выбором можно считать оригинальный
+            мебеверин. В рамках терапии абдоминального болевого синдрома важно
+            подобрать препарат, который будет эффективно купировать боль и
+            нормализовывать моторику кишечника. Обоснованным выбором можно
+            считать оригинальный{' '}
+            <a href="https://abbottpro.ru/academy/preparation/dyuspatalin" rel='noreferrer noopener' target="_blank">
+              мебеверин
+            </a>
+            . Препарат устраняет широкий спектр симптомов (боль, вздутие,
+            нарушения стула), за счет координации работы гладкомышечных клеток и
+            восстановления моторики кишечника. <br />
+            Учитывая его метаболизм без участия цитохромов печени, мебеверин
+            может беспрепятственно назначаться с большинством препаратов.
+            Длительность приема не ограничена, что свидетельствует о высоком
+            профиле безопасности.
+      </Text>
+
+      <CardsList blueNotifications list={[repeat]} />
 
       <Foot $align="flex-end">
-        <ButtonLink $type='light' to="/">Закончить прием</ButtonLink>
+        <ButtonLink $type="light" to="/">
+          Закончить прием
+        </ButtonLink>
       </Foot>
     </QuizWrap>
   );

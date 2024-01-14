@@ -44,3 +44,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+To convert xls-json to db 
+    return {
+      "name": el["Название"],
+      "recommendations": el["Рейтинг риска"],
+      "description": el['Описание'],
+      "risk": el['Серьезность'],
+      "level": el['Рейтинг надежности'],
+      "tactik": el["Управление пациентом"]
+    }

@@ -11,12 +11,13 @@ const totalSteps = 2;
 
 interface Props {
   medicaments: string[];
+  text: string;
   interactions: {
     [key: string]: InteractionDBEntry[]
   };
 }
 
-const InteractionsWrap = ({ medicaments, interactions }: Props) => {
+const InteractionsWrap = ({ medicaments, interactions, text }: Props) => {
   const [step, setStep] = useState(1);
   const [block, setBlock] = useState('meds');
 
@@ -67,6 +68,7 @@ const InteractionsWrap = ({ medicaments, interactions }: Props) => {
         return (
           <MedicamentsBlock
             medicaments={medicaments}
+            text={text}
             onClear={() => setSelectedMedicaments([])}
             onRemove={(item) =>
               setSelectedMedicaments(

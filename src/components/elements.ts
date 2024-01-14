@@ -91,6 +91,7 @@ export const List = styled.ul`
   padding: 0;
   margin: 0;
   margin-bottom: 12px;
+  padding-left: 6px;
 `;
 
 export const MarkedList = styled.ol`
@@ -175,9 +176,15 @@ export const Text = styled.p`
     margin-bottom: 24px;
   }
 
-  span, a {
+  span {
     text-decoration: none;
     font-weight: 700;
+    color: var(--accent);
+  }
+
+  a {
+    text-decoration: underline;
+    font-weight: 400;
     color: var(--accent);
   }
 `;
@@ -188,7 +195,7 @@ font-size: 16px;
 a {
   color: var(--accent);
   display: block;
-  margin-top: 12px;;
+  margin-top: 6px;
 }
 `
 

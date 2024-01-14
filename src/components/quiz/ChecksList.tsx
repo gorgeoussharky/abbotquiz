@@ -12,7 +12,7 @@ const List = styled.ul`
   padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px 24px;
   margin-bottom: 12px;
 

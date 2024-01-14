@@ -10,6 +10,7 @@ interface Props {
   hasBorder?: boolean;
   list?:RecommendationCardType[];
   cols?: number
+  blueNotifications?: boolean
 }
 
 const Wrap = styled.div<{$border?: boolean}>`
@@ -46,7 +47,7 @@ const List = styled.ul<{$cols?:number}>`
 `;
 
 
-const CardsList = ({ title, list, hasBorder, notifications, cols }: Props) => {
+const CardsList = ({ title, list, hasBorder, notifications, blueNotifications, cols }: Props) => {
   return (
     <Wrap $border={hasBorder}>
       {title && <Title>{title}</Title>}
@@ -55,7 +56,7 @@ const CardsList = ({ title, list, hasBorder, notifications, cols }: Props) => {
           <RecommendationCard key={item.title} item={item} />
         ))}
         {notifications?.map((el) => (
-          <Notification content={el} key={el} />
+          <Notification blue={blueNotifications} content={el} key={el} />
         ))}
       </List>
     </Wrap>

@@ -16,6 +16,7 @@ import { DosageList } from '../../../../DosageList';
 import {
   DosageItem,
   RecommendationCardType,
+  Option
 } from '../../../../../types/interfaces';
 
 import tube from '../../../../../assets/img/tube.png';
@@ -76,26 +77,42 @@ const Srk = ({ onBack }: Props) => {
     }
   }, [bsfkAnswer]);
 
-  const recommendations = [
-    {
-      title: 'Лабораторные диагностические исследования:',
-      list: [
-        'Общий (клинический) анализ крови',
-        'Биохимический анализ крови',
-        'Анализ кала на скрытую кровь',
-      ],
+  const recommendations = () => {
+    const list = [] as RecommendationCardType[]
+
+    const researches  = questions.find(el => el.id === 'lab_researches')
+
+    // Find selected
+    const selected = JSON.parse(researches!.value!.value as string) as Option[]
+
+    // Find unselected
+    const notSelectedResearches = researches?.options?.filter((option) => {
+
+      // If selected not contains value from options = add it to unselected
+      if (!selected.some(selectedEl => option.value === selectedEl.value)) return true
+
+      return false
+    })
+
+    list.push({
+      title:
+        'Лабораторные диагностические исследования',
+      list: notSelectedResearches?.map(el => el.label) as string[],
       icon: tube,
-    },
-    {
+    })
+
+    list.push({
       title:
         'Проведение гистологического исследования образцов ткани толстой кишки для исключения диагноза “Микроскопический колит”',
       icon: kidney,
-    },
-  ] as RecommendationCardType[];
+    })
+
+    return list
+   }
 
   const usefulMaterials = [
     {
-      title: 'Памятки по подготовке к исследованиям:',
+      title: 'Памятки по подготовке к исследованиям',
       icon: stomach,
       expandable: true,
       unlist: true,
@@ -106,7 +123,7 @@ const Srk = ({ onBack }: Props) => {
       ],
     },
     {
-      title: 'Памятки по питанию и модификации образа жизни:',
+      title: 'Памятки по питанию и модификации образа жизни',
       icon: egds,
       expandable: true,
       unlist: true,
@@ -138,7 +155,7 @@ const Srk = ({ onBack }: Props) => {
         },
         {
           title: 'Гиосцина бутилбромид',
-          dosage: `Внутрь: 10-20 мг 3-5 раз в день <br> Ректально: 10-20 мг 3-5 раз в день <br />
+          dosage: `Внутрь: 10-20 мг 3-5 раз в день <br>
           Ректально: 10-20 мг 3-5 раз в день`,
         },
         {
@@ -244,22 +261,27 @@ const Srk = ({ onBack }: Props) => {
 
           <DiagnosisHeading>Вероятный диагноз</DiagnosisHeading>
 
-          <DiagnosisCard style={{gap: 0}}>
-            <div style={{color: 'var(--accent)'}}>{diagnosis?.title}</div>
+          <DiagnosisCard style={{ gap: 0 }}>
+            <div style={{ color: 'var(--accent)' }}>{diagnosis?.title}</div>
             {diagnosis?.code}
           </DiagnosisCard>
 
           <DiagnosisHeading>Рекомендации</DiagnosisHeading>
 
-          <CardsList hasBorder list={recommendations} />
+          <CardsList blueNotifications hasBorder list={recommendations()} />
 
           <CardsList
+            blueNotifications
             hasBorder
             list={usefulMaterials}
             title="Полезные материалы"
           />
 
-          <CardsList title="Дополнительно" list={additional} />
+          <CardsList
+            blueNotifications
+            title="Дополнительно"
+            list={additional}
+          />
         </Column>
 
         <Column>
@@ -277,28 +299,33 @@ const Srk = ({ onBack }: Props) => {
           {diagnosis?.title !== 'СРК с запором' && (
             <>
               <div style={{ fontSize: 20, fontWeight: 700 }}>
-                Пробиотики, содержащие различные штаммы лакто- и бифидобактерий:
+                Пробиотики, содержащие различные штаммы <br /> лакто- и
+                бифидобактерий:
               </div>
-              <div style={{ color: 'var(--accent)', marginBottom: 12 }}>
+              <div
+                style={{
+                  color: 'var(--accent)',
+                  marginBottom: 12,
+                  fontSize: 16,
+                }}
+              >
                 Уровень рекомендаций А2
               </div>
               <List>
                 <Item>
-                  Должны содержать не менее миллиарда (10^9) бактериальных
-                  клеток в капсуле
+                Должны содержать не менее миллиарда (10^9) бактериальных клеток в капсуле
                 </Item>
                 <Item>
-                  В виде капсул, покрытых кишечнорастворимой оболочкой, или в
-                  виде микрокапсулированных пробиотических препаратов
+                В виде капсул, покрытых кишечнорастворимой оболочкой, или в виде микрокапсулированных пробиотических препаратов
                 </Item>
               </List>
             </>
           )}
 
-          <Notice style={{ marginBottom: 12 }}>
+          <Notice style={{ marginBottom: 12, fontSize: 20 }}>
             В клинических рекомендациях по лечению СРК также приведены
             гомеопатические препараты.
-            <a href="/" target="_blank">
+            <a rel='noreferrer nofollow' target="_blank" href="https://cr.minzdrav.gov.ru/schema/190_2">
               Подробнее
             </a>
           </Notice>
@@ -306,25 +333,27 @@ const Srk = ({ onBack }: Props) => {
           <Text>
             В рамках терапии абдоминального болевого синдрома важно подобрать
             препарат, который будет эффективно купировать боль и нормализовывать
-            моторику кишечника. Обоснованным выбором можно считать оригинальный{' '}
-            <a href="/" target="_blank">
+            моторику кишечника. Обоснованным выбором можно считать оригинальный
+            мебеверин. В рамках терапии абдоминального болевого синдрома важно
+            подобрать препарат, который будет эффективно купировать боль и
+            нормализовывать моторику кишечника. Обоснованным выбором можно
+            считать оригинальный{' '}
+            <a href="https://abbottpro.ru/academy/preparation/dyuspatalin" rel='noreferrer noopener' target="_blank">
               мебеверин
             </a>
-            , который за счет устранения широкого спектра симптомов (боль,
-            вздутие, нарушения стула), координирует работу гладкомышечных клеток
-            и восстанавливает моторику кишечника. Также, учитывая его метаболизм
-            без участия цитохромов печени, мебеверин может беспрепятственно
-            назначаться с большинством препаратов. Длительность приема препарата
-            не ограничена, что свидетельствует о высоком профиле его
-            безопасности.
+            . Препарат устраняет широкий спектр симптомов (боль, вздутие,
+            нарушения стула), за счет координации работы гладкомышечных клеток и
+            восстановления моторики кишечника. <br />
+            Учитывая его метаболизм без участия цитохромов печени, мебеверин
+            может беспрепятственно назначаться с большинством препаратов.
+            Длительность приема не ограничена, что свидетельствует о высоком
+            профиле безопасности.
           </Text>
 
           <InteractionsLinkBtn />
 
           <Foot $align="flex-end">
-            <ButtonLink to="/">
-              Закончить прием
-            </ButtonLink>
+            <ButtonLink to="/">Закончить прием</ButtonLink>
           </Foot>
         </Column>
       </ColumnsWrap>

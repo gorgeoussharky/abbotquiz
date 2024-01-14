@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import sources from '../data/sourcesData.json';
 import styled from 'styled-components';
+
+import herbSources from '../store/herb/data/sources.json'
+import srkSources from '../store/srk/data/sources.json'
+import { useLocation } from 'react-router-dom';
 
 const Wrap = styled.div`
   width: 100%;
@@ -70,6 +73,16 @@ const Item = styled.li``;
 
 const SourcesList = () => {
   const [expanded, setExpanded] = useState(false);
+  const location = useLocation()
+
+  const sourcesList = useMemo(() => {
+
+    if (location.pathname.includes('srk')) {
+      return srkSources
+    }
+
+    return herbSources
+  }, [location.pathname])
 
   return (
     <Wrap>
@@ -96,7 +109,7 @@ const SourcesList = () => {
       {expanded && (
         <Content>
           <List>
-            {sources.map((item, index) => (
+            {sourcesList.map((item, index) => (
               <Item key={index}>{item}</Item>
             ))}
           </List>

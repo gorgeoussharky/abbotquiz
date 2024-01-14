@@ -18,7 +18,13 @@ import {
 import { Option } from '../../types/interfaces';
 import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
 import { selectRim4Questions, setRim4Answer } from '../../store/srk/rim4Slice';
-import { selectSrkSelectedSymptoms, selectSrkSymptomsDB, addSrkSelectedSymptom, removeSrkSelectedSymptom, clearSrkSelectedSymptoms } from '../../store/srk/symptomsSlice';
+import {
+  selectSrkSelectedSymptoms,
+  selectSrkSymptomsDB,
+  addSrkSelectedSymptom,
+  removeSrkSelectedSymptom,
+  clearSrkSelectedSymptoms,
+} from '../../store/srk/symptomsSlice';
 
 const totalSteps = 3;
 
@@ -76,7 +82,6 @@ const SrkFirst = () => {
     switch (block) {
       case 'symptoms':
         if (isLowProb()) {
-          
           setStep(3);
           setBlock('diagnosis');
           return;
@@ -138,21 +143,24 @@ const SrkFirst = () => {
       case 'rim4':
         return (
           <>
-          <QuestionsBlock
-            title="Опрос по критериям Рим IV"
-            questions={rim4Questions}
-            onBack={handleBack}
-            onNext={handleNext}
-            onChange={(val, id) =>
-              dispatch(
-                setRim4Answer({
-                  id: id,
-                  option: val,
-                })
-              )
-            }
-          />
-          <div>*ВЗК — воспалительные заболевания кишечника</div>
+            <QuestionsBlock
+              title="Опрос по критериям Рим IV"
+              questions={rim4Questions}
+              onBack={handleBack}
+              onNext={handleNext}
+              onChange={(val, id) =>
+                dispatch(
+                  setRim4Answer({
+                    id: id,
+                    option: val,
+                  })
+                )
+              }
+            />
+            {rim4Questions.find((el) => el.id === 'recid_stomach_ache')?.value
+              ?.value === 1 && (
+              <div>*ВЗК — воспалительные заболевания кишечника</div>
+            )}
           </>
         );
       case 'diagnosis':

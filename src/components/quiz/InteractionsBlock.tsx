@@ -247,7 +247,7 @@ const InteractionsBlock = ({ selectedMeds, interactionsDB, onBack, onBackToDiagn
             </li>
           ))}
 
-          <li>
+          <li key="reset">
             <MedsReset onClick={() => setActiveMainMedsList([])}>
               Сбросить все
             </MedsReset>

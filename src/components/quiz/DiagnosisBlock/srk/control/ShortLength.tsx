@@ -18,7 +18,7 @@ const ShortLength = ({ onBack }: Props) => {
         в 3 месяца.
       </DiagnosisCard>
 
-      <Notification content="<p style='font-size: 24px; margin:0; font-weight: 700'>Если тяжесть симптомов СРК сильно ухудшает качество жизни пациента, рекомендуется рассмотреть возможность коррекции терапии и/или направления на&nbsp;консультацию к&nbsp;врачу-психиатру.</p>" />
+      <Notification blue content="<p style='font-size: 24px; margin:0; font-weight: 700'>Если тяжесть симптомов СРК сильно ухудшает качество жизни пациента, рекомендуется рассмотреть возможность коррекции терапии и/или направления на&nbsp;консультацию к&nbsp;врачу-психиатру.</p>" />
 
       <Foot $align="flex-end">
         <ButtonLink $type="light" to="/">

@@ -334,11 +334,11 @@ const HighProb = ({ onBack }: Props) => {
             </>
           )}
 
-          <CardsList list={baseExaminations()} hasBorder />
+          <CardsList blueNotifications list={baseExaminations()} hasBorder />
 
-          <CardsList title="Полезные материалы" list={usefulMaterials()} />
+          <CardsList blueNotifications title="Полезные материалы" list={usefulMaterials()} />
 
-          <Notice>*согласно исследованию Ромерус 2023 г.</Notice>
+          {isRim4BothYes() && <Notice>*согласно исследованию Ромерус 2023 г.</Notice>}
         </Column>
 
         <Column className="quiz-block__column">
@@ -380,7 +380,7 @@ const HighProb = ({ onBack }: Props) => {
 
           {hasType('Изжога и/или Тошнота') && (
             <>
-              <Notification content="<b>Нетипичные симптомы</b> Изжога и тошнота не являются типичными для СРК симптомами заболевания, но при этом не исключают его наличие." />
+              <Notification blue content="<b>Нетипичные симптомы</b> Изжога и тошнота не являются типичными для СРК симптомами заболевания, но при этом не исключают его наличие." />
 
               <Text>
                 Рекомендуется проведение диагностики верхних отделов ЖКТ на
@@ -398,7 +398,7 @@ const HighProb = ({ onBack }: Props) => {
                 <Item>Антациды</Item>
               </List>
 
-              <CardsList list={[herbHelp]} />
+              <CardsList blueNotifications list={[herbHelp]} />
             </>
           )}
 

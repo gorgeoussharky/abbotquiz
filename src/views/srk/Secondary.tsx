@@ -4,7 +4,7 @@ import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBl
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useNavigate } from 'react-router-dom';
 import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
-import { Container, Notice, QuizCard } from '../../components/elements';
+import { Button, Container, Notice, QuizCard } from '../../components/elements';
 import { ProgressBar } from '../../components/ProgressBar';
 import {
   addBlockHistory,
@@ -168,9 +168,14 @@ const SrkSecondary = () => {
   const handleBack = () => {
     if (block === 'examinations') {
       navigate('/');
-      //dispatch(clearSelectedExaminations());
+      dispatch(clearSrkExaminations());
       return;
     }
+
+    if (block === 'analysis') {
+      dispatch(clearSrkExaminations());
+    }
+
 
     if (blockHistory.length > 0) {
       if (blockHistory[blockHistory.length - 1] === 'diagnosis') {
@@ -194,6 +199,7 @@ const SrkSecondary = () => {
               questions={questions.filter((el) => el.group === 'examinations')}
               onBack={handleBack}
               onNext={handleNext}
+              hideBtn
               onChange={(val, id) =>
                 dispatch(
                   addSelectedSrkExaminationAnswer({
@@ -209,6 +215,7 @@ const SrkSecondary = () => {
                 ** чаще применяется водородный дыхательный тест с лактулозой
               </div>
             </Notice>
+            <Button onClick={handleNext} style={{marginTop:32, maxWidth:310, paddingLeft: 16, paddingRight: 16, marginLeft: 'auto'}}>{isNoData ? 'Результаты исследований отсутствуют' : 'Продолжить'}</Button>
           </>
         );
       case 'analysis':
@@ -249,12 +256,6 @@ const SrkSecondary = () => {
                 )
               }
             />
-            <Notice style={{marginTop: 24}}>
-              <div>*актуально только для пациентов с диареей</div>
-              <div>
-                ** чаще применяется водородный дыхательный тест с лактулозой
-              </div>
-            </Notice>
           </>
         );
       case 'damages':
@@ -322,7 +323,7 @@ const SrkSecondary = () => {
         return (
           <>
             <QuestionsBlock
-              title="Оценка стула с помощью Бристольской шкалы формы кала (БШФК)"
+              title="Оценка стула с помощью Бристольской шкалы форм кала (БШФК)"
               questions={questions.filter((el) => el.group === 'bsfk')}
               onBack={handleBack}
               onNext={handleNext}

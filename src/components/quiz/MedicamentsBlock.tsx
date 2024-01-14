@@ -20,6 +20,7 @@ import styled from 'styled-components';
 interface Props {
   selected: string[],
   medicaments: string[],
+  text: string
   onClear: () => void;
   onSelect: (item: string) => void;
   onRemove: (item: string) => void;
@@ -31,7 +32,7 @@ const MedicamentsHeading = styled(Heading)`
     max-width: 70%;
 `
 
-const MedicamentsBlock = ({ medicaments, selected, onNext, onBack, onClear, onRemove, onSelect }: Props) => {
+const MedicamentsBlock = ({ medicaments, selected, text, onNext, onBack, onClear, onRemove, onSelect }: Props) => {
   const popularMedicaments = [
     
   ] as Option[];
@@ -54,9 +55,7 @@ const MedicamentsBlock = ({ medicaments, selected, onNext, onBack, onClear, onRe
           <Heading>Проверка межлекарственных взаимодействий</Heading>
 
           <Text>
-            Укажите все лекарственные препараты (МНН), которые пациент принимает
-            в настоящее время, для проверки межлекарственных взаимодействий с
-            препаратами для лечения ГЭРБ
+            {text}
           </Text>
 
           <Combobox
