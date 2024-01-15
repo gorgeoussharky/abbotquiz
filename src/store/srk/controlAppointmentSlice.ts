@@ -37,12 +37,26 @@ export const srkControlAppointmentSlice = createSlice({
         };
       });
     },
+
+    resetSrkControlAnswerByID: (
+      state,
+      action: PayloadAction<{ id: string }>
+    ) => {
+      const questionIndex = state.list.findIndex(
+        (el) => el.id === action.payload.id
+      );
+
+      if (questionIndex < 0) return 
+
+      state.list[questionIndex].value = undefined;
+    },
   },
 });
 
 export const {
   setSrkControlAnswer,
   resetSrkControlAnswers,
+  resetSrkControlAnswerByID
 } = srkControlAppointmentSlice.actions;
 
 export const selectSrkControlQuestions = (state: RootState) =>

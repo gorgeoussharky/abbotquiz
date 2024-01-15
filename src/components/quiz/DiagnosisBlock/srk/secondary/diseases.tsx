@@ -105,9 +105,9 @@ export const fecesBlood = {
               expandable: true,
               unlist: true,
               list: [
-                'ЭГДС <a href="/cdss/pdf/egds.pdf">Скачать</a>',
-                'Манометрия высокого разрешения <a href="/cdss/pdf/manometry.pdf">Скачать</a>',
-                'Рентгеноскопия <a href="/cdss/pdf/rentgen.pdf">Скачать</a>',
+                'Колоноскопия <a href="/cdss/pdf/colono.pdf" target="_blank" rel="noopener">Скачать</a>',
+                'УЗИ <a href="/cdss/pdf/uzi.pdf" target="_blank" rel="noopener">Скачать</a>',
+                'Анализ кала <a href="/cdss/pdf/feces.pdf" target="_blank" rel="noopener">Скачать</a>',
               ],
             },
           ]}
@@ -649,7 +649,7 @@ export const ulcerative = {
                 'Средиземноморская диета',
                 `Диета low FODMAP 
                 <div>С низким содержанием олиго-ди-моносахаридов (лактозы, фруктозы, фруктанов, галактанов) и полиолов (сорбитола, ксилитола, маннитола)</div>
-                <a href="/">Памятка <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                <a href="/cdss/pdf/diet.pdf">Памятка <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
                 <path d="M12.8434 9.68492L8.65273 5.66203L9.75742 4.60156L15.834 10.4349L9.75742 16.2682L8.65273 15.2078L12.8434 11.1849H3.33398V9.68492H12.8434Z" fill="#009CDE"/>
                 </svg></a>`,
               ],

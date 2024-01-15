@@ -114,10 +114,19 @@ const First = () => {
   };
 
   const handleBack = () => {
+    
+    // Clearing results on back navigation
+    switch (block) {
+      case 'symptoms':
+        dispatch(clearSelectedSymptoms());
+        break;
+      case 'gerdQ':
+        dispatch(resetAnswers());
+        break;
+    }
+
     if (block === 'symptoms') {
       navigate('/');
-      dispatch(resetAnswers());
-      dispatch(clearSelectedSymptoms());
       return;
     }
 

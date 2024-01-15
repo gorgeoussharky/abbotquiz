@@ -62,10 +62,42 @@ export const examinationsSlice = createSlice({
       })
 
     },
+
+    removeSelectedExaminationAnswerByID: (state, action: PayloadAction<{ examinationTitle: string, id: string }>) => {
+
+      state.selected = state.selected.map((item) => {
+
+        if (item.title === action.payload.examinationTitle) {
+
+          return {
+            ...item,
+            questions: item.questions?.map((question) => {
+              
+
+              if (question.id === action.payload.id) {
+                
+                return {
+                  ...question,
+                  value: undefined
+                }
+              }
+
+              return question
+            })
+
+          }
+
+ 
+        }
+
+        return item
+      })
+
+    },
   },
 });
 
-export const { addSelectedExamination, removeSelectedExamination, clearSelectedExaminations, addSelectedExaminationAnswer } = examinationsSlice.actions;
+export const { addSelectedExamination, removeSelectedExamination, clearSelectedExaminations, addSelectedExaminationAnswer, removeSelectedExaminationAnswerByID } = examinationsSlice.actions;
 
 
 export const selectSelectedExaminations = (state: RootState) => state.examinations.selected;

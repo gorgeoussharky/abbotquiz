@@ -60,7 +60,7 @@ const HighProb = ({ onBack }: Props) => {
   };
 
   const checkRim4Answer = (id: string, answer: string | number) => {
-    const question = rim4Answers.find((el) => el.title === id);
+    const question = rim4Answers.find((el) => el.id === id);
 
     if (question?.value?.value === answer) {
       return true;
@@ -148,9 +148,9 @@ const HighProb = ({ onBack }: Props) => {
       expandable: true,
       unlist: true,
       list: [
-        'ЭГДС <a href="/cdss/pdf/egds.pdf">Скачать</a>',
-        'Манометрия высокого разрешения <a href="/cdss/pdf/manometry.pdf">Скачать</a>',
-        'Рентгеноскопия <a href="/cdss/pdf/rentgen.pdf">Скачать</a>',
+        'Колоноскопия <a href="/cdss/pdf/colono.pdf" target="_blank" rel="noopener">Скачать</a>',
+        'УЗИ <a href="/cdss/pdf/uzi.pdf" target="_blank" rel="noopener">Скачать</a>',
+        'Анализ кала <a href="/cdss/pdf/feces.pdf" target="_blank" rel="noopener">Скачать</a>',
       ],
     });
 
@@ -160,8 +160,8 @@ const HighProb = ({ onBack }: Props) => {
       expandable: true,
       unlist: true,
       list: [
-        'Дневник наблюдения <a href="">Скачать</a>',
-        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/lifestyle.pdf">Скачать</a>',
+        'Дневник наблюдения <a href="/cdss/pdf/diary.pdf" target="_blank" rel="noopener">Скачать</a>',
+        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/lifestyle.pdf" target="_blank" rel="noopener">Скачать</a>',
       ],
     });
 

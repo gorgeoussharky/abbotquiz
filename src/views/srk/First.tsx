@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useNavigate } from 'react-router-dom';
 import { Container, QuizCard } from '../../components/elements';
 import { ProgressBar } from '../../components/ProgressBar';
-import { resetAnswers } from '../../store/herb/gerdQQuestionsSlice';
 import {
   addBlockHistory,
   removeLastBlockHistoryElement,
@@ -14,7 +13,7 @@ import {
 } from '../../store/utilsSlice';
 import { Option } from '../../types/interfaces';
 import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
-import { selectRim4Questions, setRim4Answer } from '../../store/srk/rim4Slice';
+import { selectRim4Questions, setRim4Answer, resetRim4Answers } from '../../store/srk/rim4Slice';
 import {
   selectSrkSelectedSymptoms,
   selectSrkSymptomsDB,
@@ -110,9 +109,18 @@ const SrkFirst = () => {
   };
 
   const handleBack = () => {
+    switch (block) {
+      case 'symptoms':
+        dispatch(clearSrkSelectedSymptoms());
+        break;
+      case 'rim4':
+        dispatch(resetRim4Answers());
+        break;
+    }
+
     if (block === 'symptoms') {
       navigate('/');
-      dispatch(resetAnswers());
+      dispatch(resetRim4Answers());
       dispatch(clearSrkSelectedSymptoms());
       return;
     }

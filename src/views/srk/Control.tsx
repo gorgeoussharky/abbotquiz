@@ -11,6 +11,7 @@ import {
   selectPrevBlocksHistory,
 } from '../../store/utilsSlice';
 import {
+  resetSrkControlAnswerByID,
   selectSrkControlQuestions,
   setSrkControlAnswer,
 } from '../../store/srk/controlAppointmentSlice';
@@ -87,6 +88,19 @@ const SrkControl = () => {
   };
 
   const handleBack = () => {
+    // Clearing results on back navigation
+    switch (block) {
+      case 'therapy_control':
+        dispatch(resetSrkControlAnswerByID({ id: 'therapy_length' }));
+        break;
+      case 'therapy_improvement':
+        dispatch(resetSrkControlAnswerByID({ id: 'has_improvments' }));
+        break;
+      case 'srk_type':
+        dispatch(resetSrkControlAnswerByID({ id: 'srk_type' }));
+        break;
+    }
+
     if (block === 'therapy_control') {
       navigate('/');
       return;

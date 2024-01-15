@@ -55,8 +55,8 @@ const Remission = ({ onBack }: Props) => {
       expandable: true,
       unlist: true,
       list: [
-        'Дневник наблюдения <a href="">Скачать</a>',
-        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/lifestyle.pdf">Скачать</a>',
+        'Дневник наблюдения <a href="/cdss/pdf/diary.pdf" target="_blank" rel="noopener">Скачать</a>',
+        'Рекомендации по изменению образа жизни и пищевого поведения <a target="_blank" rel="noopener" href="/cdss/pdf/lifestyle.pdf">Скачать</a>',
       ],
     },
   ];

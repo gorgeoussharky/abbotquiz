@@ -13,6 +13,7 @@ import {
 } from '../../store/utilsSlice';
 import {
   addSelectedSrkExaminationAnswer,
+  clearSrkExaminationByID,
   clearSrkExaminations,
   selectSrkExaminations,
 } from '../../store/srk/examinationsSlice';
@@ -92,10 +93,10 @@ const SrkSecondary = () => {
 
   const handleFamiliarize = () => {
     // clear data
-    dispatch(clearSrkExaminations())
+    dispatch(clearSrkExaminations());
 
-    setBlock('bsfk')
-  }
+    setBlock('bsfk');
+  };
 
   const handleNext = () => {
     dispatch(addBlockHistory(block));
@@ -165,27 +166,48 @@ const SrkSecondary = () => {
   };
 
   const handleBack = () => {
+    
+    // Clearing results on back navigation
+    switch (block) {
+      case 'symptoms':
+        dispatch(clearSrkExaminations());
+        break;
+      case 'analysis':
+        dispatch(clearSrkExaminationByID({ id: 'feces_analysis' }));
+        dispatch(clearSrkExaminationByID({ id: 'blood_analysis' }));
+        dispatch(clearSrkExaminationByID({ id: 'instrumental_analysis' }));
+        dispatch(clearSrkExaminationByID({ id: 'additional_analysis' }));
+        break;
+      case 'damages':
+        dispatch(clearSrkExaminationByID({ id: 'intestine_damage' }));
+        break;
+      case 'colitis':
+        dispatch(clearSrkExaminationByID({ id: 'colitis' }));
+        break;
+      case 'feces_consistency':
+        dispatch(clearSrkExaminationByID({ id: 'feces_consistency' }));
+        break;
+      case 'bsfk':
+        dispatch(clearSrkExaminationByID({ id: 'bsfk' }));
+        break;
+    }
+
     if (block === 'examinations') {
       navigate('/');
-      dispatch(clearSrkExaminations());
       return;
     }
-
-    if (block === 'analysis') {
-      dispatch(clearSrkExaminations());
-    }
-
 
     if (blockHistory.length > 0) {
       if (blockHistory[blockHistory.length - 1] === 'diagnosis') {
         setBlock(blockHistory[blockHistory.length - 2]);
         dispatch(removeLastBlockHistoryElement());
-        return
+        return;
       }
 
       setBlock(blockHistory[blockHistory.length - 1]);
       dispatch(removeLastBlockHistoryElement());
     }
+
   };
 
   const QuizBlock = () => {
@@ -208,13 +230,24 @@ const SrkSecondary = () => {
                 )
               }
             />
-            <Notice style={{marginTop: 24}}>
+            <Notice style={{ marginTop: 24 }}>
               <div>*актуально только для пациентов с диареей</div>
               <div>
                 ** чаще применяется водородный дыхательный тест с лактулозой
               </div>
             </Notice>
-            <Button onClick={handleNext} style={{marginTop:32, maxWidth:310, paddingLeft: 16, paddingRight: 16, marginLeft: 'auto'}}>{isNoData ? 'Результаты исследований отсутствуют' : 'Продолжить'}</Button>
+            <Button
+              onClick={handleNext}
+              style={{
+                marginTop: 32,
+                maxWidth: 310,
+                paddingLeft: 16,
+                paddingRight: 16,
+                marginLeft: 'auto',
+              }}
+            >
+              {isNoData ? 'Результаты исследований отсутствуют' : 'Продолжить'}
+            </Button>
           </>
         );
       case 'analysis':
@@ -339,7 +372,12 @@ const SrkSecondary = () => {
           </>
         );
       case 'diagnosis':
-        return <DiagnosisBlock onFamiliarize={handleFamiliarize} onBack={handleBack} />;
+        return (
+          <DiagnosisBlock
+            onFamiliarize={handleFamiliarize}
+            onBack={handleBack}
+          />
+        );
       default:
         return <></>;
     }

@@ -7,30 +7,38 @@ import { Container, QuizCard } from '../../components/elements';
 import { ProgressBar } from '../../components/ProgressBar';
 import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
 import {
+  resetControlAnswerByID,
   selectControlQuestions,
   setControlAnswer,
 } from '../../store/herb/controlAppointmentSlice';
-import { selectGerdQQuestions } from '../../store/herb/gerdQQuestionsSlice';
-import { addBlockHistory, removeLastBlockHistoryElement, selectPrevBlocksHistory } from '../../store/utilsSlice';
+import {
+  resetAnswers,
+  selectGerdQQuestions,
+} from '../../store/herb/gerdQQuestionsSlice';
+import {
+  addBlockHistory,
+  removeLastBlockHistoryElement,
+  selectPrevBlocksHistory,
+} from '../../store/utilsSlice';
 
 const totalSteps = 3;
 
 const Control = () => {
   const [step, setStep] = useState(1);
   const [block, setBlock] = useState('egds');
-  const blockHistory = useAppSelector(selectPrevBlocksHistory)
+  const blockHistory = useAppSelector(selectPrevBlocksHistory);
 
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
   const controlQuestions = useAppSelector(selectControlQuestions);
-  const gerdQQuestions = useAppSelector(selectGerdQQuestions)
+  const gerdQQuestions = useAppSelector(selectGerdQQuestions);
 
   useEffect(() => {
     window.scrollTo({
-      top: 0
+      top: 0,
     });
-  }, [block])
+  }, [block]);
 
   const stepTitle = () => {
     switch (step) {
@@ -49,9 +57,10 @@ const Control = () => {
     return gerdQQuestions.reduce((acc, question) => {
       if (!question.value) return acc;
 
-      if (typeof question.value.value === 'boolean') return acc
+      if (typeof question.value.value === 'boolean') return acc;
 
-      if (typeof question.value.value === 'string') return acc + parseInt(question.value.value, 10)
+      if (typeof question.value.value === 'string')
+        return acc + parseInt(question.value.value, 10);
 
       return acc + question.value.value;
     }, 0);
@@ -60,53 +69,75 @@ const Control = () => {
   const handleNext = () => {
     dispatch(addBlockHistory(block));
 
-    const hasEgdsResults = controlQuestions.find((el) => el.title === 'Есть ли у пациента результаты контрольного исследования ЭГДС?')?.value?.value;
+    const hasEgdsResults = controlQuestions.find(
+      (el) =>
+        el.title ===
+        'Есть ли у пациента результаты контрольного исследования ЭГДС?'
+    )?.value?.value;
 
-    const hasImprovement = controlQuestions.find((el) => el.title === 'Выраженное улучшение состояния на повторной ЭГДС')?.value?.value;
+    const hasImprovement = controlQuestions.find(
+      (el) => el.title === 'Выраженное улучшение состояния на повторной ЭГДС'
+    )?.value?.value;
 
     switch (block) {
       case 'egds':
         // Есть ЭГДС
         if (hasEgdsResults) {
-          setStep(2)
-          setBlock('therapyImprovement')
-          return
-        };
+          setStep(2);
+          setBlock('therapyImprovement');
+          return;
+        }
 
         // Без ЭГДС
-        setStep(2)
-        setBlock('gerdQ')
-        return
+        setStep(2);
+        setBlock('gerdQ');
+        return;
 
       case 'therapyImprovement':
         // Есть выраженное улучшение
         if (hasImprovement) {
-          setBlock('gerdQ')
-          return
-        };
+          setBlock('gerdQ');
+          return;
+        }
 
         // Нет улучшения
-        setBlock('therapyLength')
-        return
+        setBlock('therapyLength');
+        return;
 
       case 'therapyLength':
-        setStep(3)
-        setBlock('diagnosis')
-        return
+        setStep(3);
+        setBlock('diagnosis');
+        return;
 
       case 'gerdQ':
         if (questionsPoints() > 6) {
-          setBlock('therapyLength')
-          return
-        };
+          setBlock('therapyLength');
+          return;
+        }
 
-        setStep(3)
-        setBlock('diagnosis')
-        return
+        setStep(3);
+        setBlock('diagnosis');
+        return;
     }
-  }
+  };
 
   const handleBack = () => {
+    // Clearing results on back navigation
+    switch (block) {
+      case 'egds':
+        dispatch(resetControlAnswerByID({ id: 'has_egds' }));
+        break;
+      case 'therapyImprovement':
+        dispatch(resetControlAnswerByID({ id: 'has_improvments' }));
+        break;
+      case 'therapyLength':
+        dispatch(resetControlAnswerByID({ id: 'small_length' }));
+        break;
+      case 'gerdQ':
+        dispatch(resetAnswers());
+        break;
+    }
+
     if (block === 'egds') {
       navigate('/');
       return;
@@ -124,7 +155,7 @@ const Control = () => {
         return (
           <QuestionsBlock
             title="ЭГДС"
-            questions={controlQuestions.filter(el => el.group === 'egds')}
+            questions={controlQuestions.filter((el) => el.group === 'egds')}
             onBack={handleBack}
             onNext={handleNext}
             onChange={(val, id) =>
@@ -141,7 +172,9 @@ const Control = () => {
         return (
           <QuestionsBlock
             title="Контроль терапии"
-            questions={controlQuestions.filter(el => el.group === 'therapyImprovement')}
+            questions={controlQuestions.filter(
+              (el) => el.group === 'therapyImprovement'
+            )}
             onBack={handleBack}
             onNext={handleNext}
             onChange={(val, id) =>
@@ -158,7 +191,9 @@ const Control = () => {
         return (
           <QuestionsBlock
             title="Контроль терапии"
-            questions={controlQuestions.filter(el => el.group === 'therapyLength')}
+            questions={controlQuestions.filter(
+              (el) => el.group === 'therapyLength'
+            )}
             onBack={handleBack}
             onNext={handleNext}
             onChange={(val, id) =>
