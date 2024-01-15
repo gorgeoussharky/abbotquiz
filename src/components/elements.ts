@@ -104,7 +104,7 @@ export const MarkedList = styled.ol`
   gap: 10px;
 `;
 
-export const Item = styled.li<{$unlist?: boolean}>`
+export const Item = styled.li<{ $unlist?: boolean }>`
   font-size: 20px;
   padding-left: 20px;
   position: relative;
@@ -133,7 +133,9 @@ export const Item = styled.li<{$unlist?: boolean}>`
     }
   }
 
-  ${props => props.$unlist && `
+  ${(props) =>
+    props.$unlist &&
+    `
     padding: 0;
     
     &::before {
@@ -158,7 +160,7 @@ export const MarkedItem = styled.li`
   }
 
   &::before {
-    content: counter(counter) ".";
+    content: counter(counter) '.';
     position: absolute;
     left: 0;
     top: 0;
@@ -190,16 +192,16 @@ export const Text = styled.p`
 `;
 
 export const Notice = styled.small`
-font-size: 16px;
+  font-size: 16px;
 
-a {
-  color: var(--accent);
-  display: block;
-  margin-top: 6px;
-}
-`
+  a {
+    color: var(--accent);
+    display: block;
+    margin-top: 6px;
+  }
+`;
 
-export const Button = styled.button<{ $type?: 'light', $large?: boolean }>`
+export const Button = styled.button<{ $type?: 'light'; $large?: boolean }>`
   position: relative;
   line-height: 1;
   padding: 0 30px;

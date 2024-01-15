@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { SourcesList } from '../../components/SourcesList';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
 import { RecommendationsBlock } from '../../components/quiz/RecommendationsBlock';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -590,8 +589,6 @@ const Secondary = () => {
         <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
       </QuizCard>
-
-      <SourcesList />
     </Container>
   );
 };

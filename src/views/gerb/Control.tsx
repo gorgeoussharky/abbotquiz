@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { SourcesList } from '../../components/SourcesList';
 import { GerdQ } from '../../components/quiz/GerdQ';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -187,8 +186,6 @@ const Control = () => {
         <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
       </QuizCard>
-
-      <SourcesList />
     </Container>
   );
 };

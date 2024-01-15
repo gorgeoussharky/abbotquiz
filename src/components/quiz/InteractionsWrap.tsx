@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { SourcesList } from '../SourcesList';
 import { useNavigate } from 'react-router-dom';
 import { Container, QuizCard } from '../elements';
 import { ProgressBar } from '../ProgressBar';
@@ -105,8 +104,6 @@ const InteractionsWrap = ({ medicaments, interactions, text }: Props) => {
         <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
       </QuizCard>
-
-      <SourcesList />
     </Container>
   );
 };

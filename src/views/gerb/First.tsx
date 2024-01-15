@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { SymptomsBlock } from '../../components/quiz/SymptomsBlock';
-import { SourcesList } from '../../components/SourcesList';
 import { GerdQ } from '../../components/quiz/GerdQ';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
 import { RecommendationsBlock } from '../../components/quiz/RecommendationsBlock';
@@ -159,8 +158,6 @@ const First = () => {
         <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
       </QuizCard>
-
-      <SourcesList />
     </Container>
   );
 };

@@ -2,14 +2,14 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GlobalStyle } from './components/globalStyles';
 
 declare global {
   interface Window {
-      ym:any;
+    ym: any;
   }
 }
 
@@ -18,7 +18,7 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename='/cdss'>
+    <BrowserRouter basename="/cdss">
       <Provider store={store}>
         <GlobalStyle />
         <App />

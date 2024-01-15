@@ -2,9 +2,13 @@ import { useMemo, useState } from 'react';
 
 import styled from 'styled-components';
 
-import herbSources from '../store/herb/data/sources.json'
-import srkSources from '../store/srk/data/sources.json'
+import herbSources from '../store/herb/data/sources.json';
+import srkSources from '../store/srk/data/sources.json';
 import { useLocation } from 'react-router-dom';
+
+interface Props {
+  type: 'srk' | 'herb';
+}
 
 const Wrap = styled.div`
   width: 100%;
@@ -14,6 +18,7 @@ const Wrap = styled.div`
 
 const Toggler = styled.button<{ $active: boolean }>`
   width: 100%;
+  max-width: 460px;
   position: relative;
   padding: 24px;
   border-radius: 4px;
@@ -44,6 +49,7 @@ const Toggler = styled.button<{ $active: boolean }>`
   ${(props) =>
     props.$active &&
     `
+      max-width: 100%;
       box-shadow: none;
       border-radius: 4px 4px 0 0;
     `}
@@ -69,26 +75,23 @@ const List = styled.ol`
   line-height: 20px;
 `;
 
-const Item = styled.li``;
-
-const SourcesList = () => {
+const SourcesList = ({ type }: Props) => {
   const [expanded, setExpanded] = useState(false);
-  const location = useLocation()
 
   const sourcesList = useMemo(() => {
-
-    if (location.pathname.includes('srk')) {
-      return srkSources
+    switch (type) {
+      case 'srk':
+        return srkSources;
+      case 'herb':
+        return herbSources;
+      default:
+        return [];
     }
-
-    return herbSources
-  }, [location.pathname])
+  }, [type]);
 
   return (
     <Wrap>
-      <Toggler $active={expanded}
-        onClick={() => setExpanded(!expanded)}
-      >
+      <Toggler $active={expanded} onClick={() => setExpanded(!expanded)}>
         Ключевые источники информации
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +113,7 @@ const SourcesList = () => {
         <Content>
           <List>
             {sourcesList.map((item, index) => (
-              <Item key={index}>{item}</Item>
+              <li key={index}>{item}</li>
             ))}
           </List>
         </Content>

@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { SrkInteractions } from './views/srk/Interactions';
 import { SrkSecondary } from './views/srk/Secondary';
 import { SrkControl } from './views/srk/Control';
+import { Layout } from './components/Layout';
 
 function App() {
   const location = useLocation();
@@ -22,15 +23,22 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/first" element={<First />} />
-      <Route path="/secondary" element={<Secondary />} />
-      <Route path="/control" element={<Control />} />
-      <Route path="/interactions" element={<Interactions />} />
-      <Route path="/srk/first" element={<SrkFirst />} />
-      <Route path="/srk/secondary" element={<SrkSecondary />} />
-      <Route path="/srk/control" element={<SrkControl />} />
-      <Route path="/srk/interactions" element={<SrkInteractions />} />
+      <Route path="/" element={<Home />}></Route>
+
+      <Route path="/" element={<Layout type="herb" />}>
+        <Route path="first" element={<First />} />
+        <Route path="secondary" element={<Secondary />} />
+        <Route path="control" element={<Control />} />
+        <Route path="interactions" element={<Interactions />} />
+      </Route>
+
+      <Route path="/srk"  element={<Layout type="srk" />}>
+        <Route index element={<Home />} />
+        <Route path="first" element={<SrkFirst />} />
+        <Route path="secondary" element={<SrkSecondary />} />
+        <Route path="control" element={<SrkControl />} />
+        <Route path="interactions" element={<SrkInteractions />} />
+      </Route>
     </Routes>
   );
 }

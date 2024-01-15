@@ -3,14 +3,18 @@ import { QuizWrap, BackLink, Heading, Foot, Button } from '../elements';
 import { Select } from '../form/Select';
 
 import styled from 'styled-components';
-import { InteractionDBEntry, InteractionDB, Option } from '../../types/interfaces';
+import {
+  InteractionDBEntry,
+  InteractionDB,
+  Option,
+} from '../../types/interfaces';
 import { InteractionItem } from './InteractionsItem';
 import { useAppSelector } from '../../app/hooks';
 import { selectMedsToCheck } from '../../store/utilsSlice';
 
 interface Props {
-  selectedMeds: string[]
-  interactionsDB: InteractionDB,
+  selectedMeds: string[];
+  interactionsDB: InteractionDB;
   onBack: () => void;
   onBackToDiagnosis: () => void;
 }
@@ -114,12 +118,18 @@ const orderings = [
   },
 ];
 
-const InteractionsBlock = ({ selectedMeds, interactionsDB, onBack, onBackToDiagnosis }: Props) => {
+const InteractionsBlock = ({
+  selectedMeds,
+  interactionsDB,
+  onBack,
+  onBackToDiagnosis,
+}: Props) => {
   const [order, setOrder] = useState<Option>(orderings[0]);
 
-  const medsToCheck = useAppSelector(selectMedsToCheck)
+  const medsToCheck = useAppSelector(selectMedsToCheck);
 
-  const [activeMainMedsList, setActiveMainMedsList] = useState<string[]>(medsToCheck);
+  const [activeMainMedsList, setActiveMainMedsList] =
+    useState<string[]>(medsToCheck);
 
   const [activeMedsList, setActiveMedsList] = useState<string[]>(selectedMeds);
 
@@ -149,25 +159,35 @@ const InteractionsBlock = ({ selectedMeds, interactionsDB, onBack, onBackToDiagn
         mainMed as keyof typeof interactionsDB
       ] as InteractionDBEntry[];
 
+      // active main med is in DB
       if (interactionMedDB) {
         activeMedsList.forEach((med, key) => {
-          
           const interactionItem = interactionMedDB.find(
             (el) => el.name?.trim() === med?.trim()
           );
 
           if (interactionItem) {
+            // Has data - push data
             interactions.push({
               ...interactionItem,
               mainMed,
               id: key + 1,
             });
           } else {
+            // No data, but in db - push without ID
             interactions.push({
               name: med,
               mainMed,
             });
           }
+        });
+      } else {
+        // No data, not in db - push without ID
+        activeMedsList.forEach((med, key) => {
+          interactions.push({
+            name: med,
+            mainMed,
+          });
         });
       }
     });

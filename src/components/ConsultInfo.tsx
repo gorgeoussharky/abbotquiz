@@ -1,39 +1,92 @@
 import styled from 'styled-components';
 import { AppointmentItem } from './AppointmentItem';
 import { SourcesList } from './SourcesList';
-import checkIcon from '../assets/img/icon-consult-help.svg'
+import checkIcon from '../assets/img/icon-consult-help.svg';
+import { useMemo, useState } from 'react';
+import { AgreementNumber } from './AgreementNumber';
 
-const items = [
+const types = [
   {
-    title: 'Первичный прием',
-    list: [
-      'Анализ жалоб',
-      'План обследования',
-      'Предварительный диагноз',
-      'Эмпирическая терапия',
+    title: 'Гастроэзофагеальная рефлюксная болезнь (ГЭРБ)',
+    text: 'Выберите прием и нажмите кнопку “начать”, чтобы смоделировать клинический случай и получить экспертную консультацию по ведению вашего пациента',
+    notices: [
+      `*Депрескрайбинг - это процесс снижения дозировки, приостановки приема
+      или полной отмены лекарственного препарата с целью снижения
+      полипрагмазии и улучшения результатов лечения.`,
     ],
-    route: '/first',
-    ymTarget: 'cdss_1st',
+    type: 'herb',
+    items: [
+      {
+        title: 'Первичный прием',
+        list: [
+          'Анализ жалоб',
+          'План обследования',
+          'Предварительный диагноз',
+          'Эмпирическая терапия',
+        ],
+        route: '/first',
+        ymTarget: 'cdss_1st',
+      },
+      {
+        title: 'Повторный прием',
+        list: [
+          'Интерпретация результатов обследования',
+          'Подтверждение диагноза',
+          'Планирование терапии',
+        ],
+        route: '/secondary',
+        ymTarget: 'cdss_2nd',
+      },
+      {
+        title: 'Контрольный прием',
+        list: [
+          'Оценка эффективности терапии',
+          'Депрескрайбинг*',
+          'Преодоление рефрактерности',
+        ],
+        route: '/control',
+        ymTarget: 'cdss_3rd',
+      },
+    ],
   },
   {
-    title: 'Повторный прием',
-    list: [
-      'Интерпретация результатов обследования',
-      'Подтверждение диагноза',
-      'Планирование терапии',
+    title: 'Синдром раздраженного кишечника (СРК)',
+    text: 'Выберите прием и нажмите кнопку “начать”, чтобы смоделировать клинический случай и получить экспертную консультацию по ведению вашего пациента',
+    type: 'srk',
+    items: [
+      {
+        title: 'Первичный прием',
+        list: [
+          'Анализ жалоб',
+          'План обследования',
+          'Предварительный диагноз',
+          'Эмпирическая терапия',
+        ],
+        route: '/srk/first',
+        ymTarget: 'srk_1st',
+      },
+      {
+        title: 'Повторный прием',
+        list: [
+          'Интерпретация результатов обследования на любом этапе ведения',
+          'Дифференциальная диагностика',
+          'Тактика ведения при СРК и других состояниях',
+          'Схемы терапии',
+        ],
+        route: '/srk/secondary',
+        ymTarget: 'srk_2nd',
+      },
+      {
+        title: 'Контрольный прием',
+        list: [
+          'Оценка эффективности терапии',
+          'Рекомендации по коррекции терапии',
+          'Памятки по питанию и модификации образа жизни',
+        ],
+        route: '/srk/control',
+        ymTarget: 'srk_3rd',
+      },
     ],
-    route: '/secondary',
-    ymTarget: 'cdss_2nd',
-  },
-  {
-    title: 'Контрольный прием',
-    list: [
-      'Оценка эффективности терапии',
-      'Депрескрайбинг*',
-      'Преодоление рефрактерности',
-    ],
-    route: '/control',
-    ymTarget: 'cdss_3rd'
   },
 ];
 
@@ -232,8 +285,7 @@ const AdvantageItem = styled.li`
     width: 26px;
     height: 26px;
     margin: 0 21px 0 0;
-    background: rgb(230, 247, 255) url(${checkIcon})
-      no-repeat center;
+    background: rgb(230, 247, 255) url(${checkIcon}) no-repeat center;
     background-size: auto;
     border-radius: 100%;
 
@@ -252,6 +304,40 @@ const Helper = styled.div`
   margin-top: 20px;
 `;
 
+const Head = styled.div`
+  padding: 0 100px;
+  margin: auto;
+  position: relative;
+
+  @media (max-width: 991px) {
+    padding: 0 60px;
+  }
+`;
+
+const NavBtn = styled.button`
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+
+  svg {
+    width: 50%;
+    height: 50%;
+  }
+
+  @media (max-width: 991px) {
+    width: 40px;
+    height: 40px;
+  }
+`
+
 const advantages = [
   'Подбор фармакотерапии',
   'Проверка межлекарственных взаимодействий',
@@ -260,18 +346,52 @@ const advantages = [
 ];
 
 const ConsultInfo = () => {
+  const [index, setIndex] = useState(0);
+
+  const data = useMemo(() => {
+    return types[index];
+  }, [index]);
+
   return (
     <Wrap className="consult-info">
       <Container>
         <Content>
-          <Title>Гастроэзофагеальная рефлюксная болезнь (ГЭРБ)</Title>
-          <Desc>
-            Выберите прием и нажмите кнопку “начать”, чтобы смоделировать
-            клинический случай и получить экспертную консультацию по ведению
-            вашего пациента
-          </Desc>
+          <Head>
+            <NavBtn style={{left: 0}}  onClick={() => setIndex(index === 0 ? types.length - 1 : index - 1)}>
+              <svg
+                width="18"
+                height="31"
+                viewBox="0 0 18 31"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M17 1.50011C18.1046 2.60471 18.1046 4.3955 17 5.5001L7.00004 15.5001L17 25.5C18.1046 26.6046 18.1046 28.3954 17 29.5C15.8954 30.6046 14.1046 30.6046 13 29.5L1.00006 17.5001C-0.104536 16.3955 -0.104536 14.6047 1.00006 13.5001L13 1.50011C14.1046 0.395517 15.8954 0.395517 17 1.50011Z"
+                  fill="white"
+                />
+              </svg>
+            </NavBtn>
+
+            <Title>{data.title}</Title>
+            <Desc>{data.text}</Desc>
+
+            <NavBtn style={{right: 0}} onClick={() => setIndex(index === types.length - 1 ? 0 : index + 1)}>
+              <svg
+                width="18"
+                height="31"
+                viewBox="0 0 18 31"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.999995 1.50011C-0.1046 2.60471 -0.1046 4.3955 0.999997 5.5001L11 15.5001L1 25.5C-0.10459 26.6046 -0.104589 28.3954 1.00001 29.5C2.1046 30.6046 3.8954 30.6046 4.99999 29.5L16.9999 17.5001C18.1045 16.3955 18.1045 14.6047 16.9999 13.5001L4.99998 1.50011C3.89538 0.395517 2.10459 0.395517 0.999995 1.50011Z"
+                  fill="white"
+                />
+              </svg>
+            </NavBtn>
+          </Head>
           <List>
-            {items.map((item) => (
+            {data.items.map((item) => (
               <AppointmentItem key={item.title} item={item} />
             ))}
           </List>
@@ -280,17 +400,19 @@ const ConsultInfo = () => {
         <Advantages>
           <AdvantagesTitle>Чем поможет цифровой консультант</AdvantagesTitle>
           <AdvantagesList>
-            {advantages.map((item) => <AdvantageItem key={item}>{item}</AdvantageItem> )}
+            {advantages.map((item) => (
+              <AdvantageItem key={item}>{item}</AdvantageItem>
+            ))}
           </AdvantagesList>
         </Advantages>
 
-        <SourcesList />
+        <SourcesList type={data.type as 'herb' | 'srk'} />
 
-        <Helper>
-          *Депрескрайбинг - это процесс снижения дозировки, приостановки приема
-          или полной отмены лекарственного препарата с целью снижения
-          полипрагмазии и улучшения результатов лечения.
-        </Helper>
+        {data.notices?.map((el) => (
+          <Helper key={el}>{el}</Helper>
+        ))}
+
+        <AgreementNumber type={data.type as 'herb' | 'srk'} />
       </Container>
     </Wrap>
   );
