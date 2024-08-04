@@ -8,6 +8,9 @@ import srkSymptomsSlice from '../store/srk/symptomsSlice';
 import rim4Slice from '../store/srk/rim4Slice';
 import srkExaminationsSlice from '../store/srk/examinationsSlice';
 import srkControlAppointmentSlice from '../store/srk/controlAppointmentSlice';
+import lppSymptomsReducer from '../store/lpp/symptomsSlice';
+import LPPTypeReducer from '../store/lpp/lppTypeSlice';
+import LPPMedicamentsReducer from '../store/lpp/medicamentsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +22,10 @@ export const store = configureStore({
     controlAppointment: controlAppointmentSlice,
     srkControlAppointment: srkControlAppointmentSlice,
     utils: utilsSlice,
-    rim4: rim4Slice
+    rim4: rim4Slice,
+    lppSymptoms: lppSymptomsReducer,
+    lppType: LPPTypeReducer,
+    lppMedicaments: LPPMedicamentsReducer
   },
 });
 

@@ -119,7 +119,7 @@ const SrkFirst = () => {
     }
 
     if (block === 'symptoms') {
-      navigate('/');
+      navigate('/srk');
       dispatch(resetRim4Answers());
       dispatch(clearSrkSelectedSymptoms());
       return;

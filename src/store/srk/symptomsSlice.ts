@@ -21,6 +21,8 @@ const dbWithTypes = () => {
     })
   })
 
+  console.log(types)
+
   return typesDB.concat(db)
 }
 

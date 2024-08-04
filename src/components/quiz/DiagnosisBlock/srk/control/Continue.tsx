@@ -47,7 +47,7 @@ const Continue = ({ onBack }: Props) => {
       unlist: true,
       list: [
         'Дневник наблюдения <a href="/cdss/pdf/diary.pdf" target="_blank" rel="noopener">Скачать</a>',
-        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/lifestyle.pdf" target="_blank" rel="noopener">Скачать</a>',
+        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/diet.pdf" target="_blank" rel="noopener">Скачать</a>',
       ],
     },
   ];
@@ -234,7 +234,7 @@ const Continue = ({ onBack }: Props) => {
             ]}
           />
 
-          <InteractionsLinkBtn />
+          <InteractionsLinkBtn routePrefix='/srk' />
 
           <Foot $align="flex-end">
             <ButtonLink to="/">Закончить прием</ButtonLink>

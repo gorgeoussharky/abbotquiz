@@ -14,6 +14,7 @@ const Wrap = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 const Toggler = styled.button<{ $active: boolean }>`
@@ -73,7 +74,22 @@ const List = styled.ol`
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
+  counter-reset: count;
 `;
+
+const Item = styled.li`
+  list-style: none;
+  counter-increment: count;
+  position: relative;
+
+  &::before {
+    content: counter(count) '.';
+    position: absolute;
+    left: -45px;
+    text-align: right;
+    min-width: 40px;
+  }
+`
 
 const SourcesList = ({ type }: Props) => {
   const [expanded, setExpanded] = useState(false);
@@ -112,8 +128,8 @@ const SourcesList = ({ type }: Props) => {
       {expanded && (
         <Content>
           <List>
-            {sourcesList.map((item, index) => (
-              <li key={index}>{item}</li>
+            {sourcesList.map((item) => (
+              <Item key={item}>{item}</Item>
             ))}
           </List>
         </Content>

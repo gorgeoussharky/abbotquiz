@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import { AppointmentItem } from './AppointmentItem';
 import { SourcesList } from './SourcesList';
 import checkIcon from '../assets/img/icon-consult-help.svg';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AgreementNumber } from './AgreementNumber';
+import { useLocation } from 'react-router-dom'
 
 const types = [
   {
@@ -347,6 +348,17 @@ const advantages = [
 
 const ConsultInfo = () => {
   const [index, setIndex] = useState(0);
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname.includes('/srk')) {
+      const srkData = types.findIndex(el => el.type === 'srk')
+
+      if (!srkData) return
+
+      setIndex(srkData)
+    }
+  }, [location.pathname])
 
   const data = useMemo(() => {
     return types[index];

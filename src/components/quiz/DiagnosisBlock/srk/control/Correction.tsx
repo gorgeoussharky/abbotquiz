@@ -63,7 +63,7 @@ const Correction = ({ onBack }: Props) => {
       unlist: true,
       list: [
         '<b>Дневник наблюдения</b> <a href="/cdss/pdf/diary.pdf" target="_blank" rel="noopener">Скачать</a>',
-        '<b>Рекомендации по изменению образа жизни и пищевого поведения </b>  <a target="_blank" rel="noopener" href="/cdss/pdf/lifestyle.pdf">Скачать</a>',
+        '<b>Рекомендации по изменению образа жизни и пищевого поведения </b>  <a target="_blank" rel="noopener" href="/cdss/pdf/diet.pdf">Скачать</a>',
       ],
     },
   ] as RecommendationCardType[];
@@ -132,7 +132,7 @@ const Correction = ({ onBack }: Props) => {
 
           <CardsList list={therapies()} blueNotifications />
 
-          <InteractionsLinkBtn />
+          <InteractionsLinkBtn routePrefix='/srk'  />
 
           <Foot $align="flex-end">
             <ButtonLink to="/">Закончить прием</ButtonLink>

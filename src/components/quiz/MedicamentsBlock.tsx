@@ -19,6 +19,7 @@ import styled from 'styled-components';
 
 interface Props {
   selected: string[],
+  heading?: string,
   medicaments: string[],
   text: string
   onClear: () => void;
@@ -32,7 +33,7 @@ const MedicamentsHeading = styled(Heading)`
     max-width: 70%;
 `
 
-const MedicamentsBlock = ({ medicaments, selected, text, onNext, onBack, onClear, onRemove, onSelect }: Props) => {
+const MedicamentsBlock = ({ medicaments, selected, heading, text, onNext, onBack, onClear, onRemove, onSelect }: Props) => {
   const popularMedicaments = [
     
   ] as Option[];
@@ -52,7 +53,7 @@ const MedicamentsBlock = ({ medicaments, selected, text, onNext, onBack, onClear
         <Column>
           <BackLink onClick={onBack}>Назад</BackLink>
 
-          <Heading>Проверка межлекарственных взаимодействий</Heading>
+          <Heading>{heading || 'Проверка межлекарственных взаимодействий'}</Heading>
 
           <Text>
             {text}

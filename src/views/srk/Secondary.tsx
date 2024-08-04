@@ -154,9 +154,21 @@ const SrkSecondary = () => {
           break;
         }
 
+
         setBlock('diagnosis');
         setStep(3);
         break;
+
+      case 'colitis':
+        if (questions.find(el => el.id === 'colitis')?.value?.value === 0) {
+          setBlock('bsfk');
+          setStep(3);
+          break
+        }
+
+        setBlock('diagnosis');
+        setStep(3);
+        break
 
       default:
         setBlock('diagnosis');
@@ -166,7 +178,7 @@ const SrkSecondary = () => {
   };
 
   const handleBack = () => {
-    
+
     // Clearing results on back navigation
     switch (block) {
       case 'symptoms':
@@ -193,7 +205,7 @@ const SrkSecondary = () => {
     }
 
     if (block === 'examinations') {
-      navigate('/');
+      navigate('/srk');
       return;
     }
 

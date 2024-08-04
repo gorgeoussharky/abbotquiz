@@ -1,14 +1,5 @@
 import { Combobox } from '../form/Combobox';
 import { PopularList } from './PopularList';
-
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-  selectSelectedSymptoms,
-  addSelectedSymptom,
-  removeSelectedSymptom,
-  clearSelectedSymptoms,
-  selectSymptomsDB,
-} from '../../store/herb/symptomsSlice';
 import { DBEntry, Option } from '../../types/interfaces';
 import { SelectedList } from '../SelectedList';
 import { BackLink, Button, Column, ColumnsWrap, Foot, Head, Heading, QuizWrap, Text, TextBtn } from '../elements';

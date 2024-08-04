@@ -8,6 +8,7 @@ import { useAppDispatch } from '../../../app/hooks';
 import { setHasLastDiagnosis } from '../../../store/utilsSlice';
 import { SecondarySrkDiagnosis } from './srk/SecondaryDiagnosis';
 import { ControlSrkDiagnosis } from './srk/ControlDiagnosis';
+import { FirstLPPDiagnosis } from './lpp/First';
 interface Props {
   onBack: () => void;
   onFamiliarize?: () => void;
@@ -46,6 +47,10 @@ const DiagnosisBlock = ({ onBack, onFamiliarize }: Props) => {
   
   if (location.pathname === '/srk/control') {
     return <ControlSrkDiagnosis onBack={onBack} />;
+  }
+
+  if (location.pathname === '/lpp/first') {
+    return <FirstLPPDiagnosis onBack={onBack} />;
   }
 
   return <></>

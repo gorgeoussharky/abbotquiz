@@ -102,7 +102,7 @@ const SrkControl = () => {
     }
 
     if (block === 'therapy_control') {
-      navigate('/');
+      navigate('/srk');
       return;
     }
 

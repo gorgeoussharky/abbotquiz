@@ -56,7 +56,7 @@ const Remission = ({ onBack }: Props) => {
       unlist: true,
       list: [
         'Дневник наблюдения <a href="/cdss/pdf/diary.pdf" target="_blank" rel="noopener">Скачать</a>',
-        'Рекомендации по изменению образа жизни и пищевого поведения <a target="_blank" rel="noopener" href="/cdss/pdf/lifestyle.pdf">Скачать</a>',
+        'Рекомендации по изменению образа жизни и пищевого поведения <a target="_blank" rel="noopener" href="/cdss/pdf/diet.pdf">Скачать</a>',
       ],
     },
   ];
@@ -242,7 +242,7 @@ const Remission = ({ onBack }: Props) => {
             профиле безопасности.
           </Text>
 
-          <InteractionsLinkBtn />
+          <InteractionsLinkBtn routePrefix='/srk'  />
 
           <Foot $align="flex-end">
             <ButtonLink to="/">Закончить прием</ButtonLink>

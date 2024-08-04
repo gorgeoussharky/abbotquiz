@@ -11,6 +11,7 @@ import { SrkInteractions } from './views/srk/Interactions';
 import { SrkSecondary } from './views/srk/Secondary';
 import { SrkControl } from './views/srk/Control';
 import { Layout } from './components/Layout';
+import { LPPFirst } from './views/lpp/First';
 
 function App() {
   const location = useLocation();
@@ -32,12 +33,17 @@ function App() {
         <Route path="interactions" element={<Interactions />} />
       </Route>
 
+      <Route path="/srk" element={<Home />}></Route>
+
       <Route path="/srk"  element={<Layout type="srk" />}>
-        <Route index element={<Home />} />
         <Route path="first" element={<SrkFirst />} />
         <Route path="secondary" element={<SrkSecondary />} />
         <Route path="control" element={<SrkControl />} />
         <Route path="interactions" element={<SrkInteractions />} />
+      </Route>
+
+      <Route path="/lpp"  element={<Layout type="srk" />}>
+        <Route path="first" element={<LPPFirst />} />
       </Route>
     </Routes>
   );

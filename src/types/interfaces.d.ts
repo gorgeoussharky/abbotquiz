@@ -6,6 +6,24 @@ export interface DBEntry {
   showOnFront?: boolean;
 }
 
+export interface LPPTypeEntry {
+  title_base: string
+  value_base?: number,
+  title_max: string,
+  value_max?: number,
+  unit: string,
+  id: string
+}
+
+export interface LPPMedicamentEntry {
+  name: string
+  toxicity: string
+  mechanism: string
+  risk: string
+  outcomes: string
+  links: string
+}
+
 export interface QuestionEntry {
   title: string;
   type: string
@@ -75,10 +93,11 @@ export interface InteractionDB {
 }
 
 export interface InterpretationItemType {
+  icon?: string
   title: string;
   code?: string;
   subtitle?: string
-  content: () => JSX.Element
+  content?: () => JSX.Element
 }
 
 export interface DosageItem {

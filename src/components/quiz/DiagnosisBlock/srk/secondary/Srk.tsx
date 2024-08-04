@@ -16,7 +16,8 @@ import { DosageList } from '../../../../DosageList';
 import {
   DosageItem,
   RecommendationCardType,
-  Option
+  Option,
+  QuestionEntry
 } from '../../../../../types/interfaces';
 
 import tube from '../../../../../assets/img/tube.png';
@@ -24,6 +25,7 @@ import kidney from '../../../../../assets/img/kidney.png';
 import stomach from '../../../../../assets/img/stomach.png';
 import egds from '../../../../../assets/img/egds.png';
 import schedule from '../../../../../assets/img/schedule.png';
+import doctor from '../../../../../assets/img/doctor.png';
 import { setMedsToCheck } from '../../../../../store/utilsSlice';
 import { InteractionsLinkBtn } from '../../../InteractionsLinkBtn';
 import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
@@ -80,26 +82,54 @@ const Srk = ({ onBack }: Props) => {
   const recommendations = () => {
     const list = [] as RecommendationCardType[]
 
-    const researches  = questions.find(el => el.id === 'lab_researches')
+    const labResearches = questions.find(el => el.id === 'lab_researches')
+    const instumentalResearches = questions.find(el => el.id === 'instrumental_researches')
+    const additionalResearches = questions.find(el => el.id === 'additional_researches')
 
-    // Find selected
-    const selected = JSON.parse(researches!.value!.value as string) as Option[]
+    const findUnselected = (researches: QuestionEntry) => {
+      if (!researches.value?.value) return
 
-    // Find unselected
-    const notSelectedResearches = researches?.options?.filter((option) => {
+      // Find selected
+      const selected = JSON.parse(researches.value.value as string) as Option[]
 
-      // If selected not contains value from options = add it to unselected
-      if (!selected.some(selectedEl => option.value === selectedEl.value)) return true
+      // Find unselected
+      const notSelected = researches?.options?.filter((option) => {
 
-      return false
-    })
+        // If selected not contains value from options = add it to unselected
+        if (!selected.some(selectedEl => option.value === selectedEl.value)) return true
 
-    list.push({
-      title:
-        'Лабораторные диагностические исследования',
-      list: notSelectedResearches?.map(el => el.label) as string[],
-      icon: tube,
-    })
+        return false
+      })
+
+      return notSelected
+    }
+
+    if (labResearches?.value?.value) {
+      list.push({
+        title:
+          'Лабораторные диагностические исследования',
+        list: findUnselected(labResearches)?.map(el => el.label) as string[],
+        icon: tube,
+      })
+    }
+
+    if (instumentalResearches?.value?.value) {
+      list.push({
+        title:
+          'Инструментальные диагностические исследования:',
+        list: findUnselected(instumentalResearches)?.map(el => el.label) as string[],
+        icon: kidney,
+      })
+    }
+
+    if (additionalResearches?.value?.value) {
+      list.push({
+        title:
+          'Дополнительные исследования',
+        list: findUnselected(additionalResearches)?.map(el => el.label) as string[],
+        icon: doctor,
+      })
+    }
 
     list.push({
       title:
@@ -108,7 +138,7 @@ const Srk = ({ onBack }: Props) => {
     })
 
     return list
-   }
+  }
 
   const usefulMaterials = [
     {
@@ -129,7 +159,7 @@ const Srk = ({ onBack }: Props) => {
       unlist: true,
       list: [
         'Дневник наблюдения <a href="/cdss/pdf/diary.pdf" target="_blank" rel="noopener">Скачать</a>',
-        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/lifestyle.pdf" target="_blank" rel="noopener">Скачать</a>',
+        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/diet.pdf" target="_blank" rel="noopener">Скачать</a>',
       ],
     },
   ];
@@ -313,10 +343,10 @@ const Srk = ({ onBack }: Props) => {
               </div>
               <List>
                 <Item>
-                Должны содержать не менее миллиарда (10^9) бактериальных клеток в капсуле
+                  Должны содержать не менее миллиарда (10^9) бактериальных клеток в капсуле
                 </Item>
                 <Item>
-                В виде капсул, покрытых кишечнорастворимой оболочкой, или в виде микрокапсулированных пробиотических препаратов
+                  В виде капсул, покрытых кишечнорастворимой оболочкой, или в виде микрокапсулированных пробиотических препаратов
                 </Item>
               </List>
             </>
@@ -350,7 +380,7 @@ const Srk = ({ onBack }: Props) => {
             профиле безопасности.
           </Text>
 
-          <InteractionsLinkBtn />
+          <InteractionsLinkBtn routePrefix='/srk' />
 
           <Foot $align="flex-end">
             <ButtonLink to="/">Закончить прием</ButtonLink>

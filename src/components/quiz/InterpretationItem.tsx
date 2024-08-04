@@ -5,13 +5,18 @@ import { useState } from 'react';
 interface Props {
   item: InterpretationItemType;
   expand?:boolean
+  transparent?: boolean
 }
 
-const Wrap = styled.div<{$expanded: boolean}>`
+const Wrap = styled.div<{$expanded: boolean, $transparent?: boolean}>`
   border-radius: 4px;
   border: 1px solid #009cde;
   background: #e6f7ff;
   padding: 16px;
+
+  ${props => props.$transparent && `
+    background: transparent;
+  `}
 
   ${props => props.$expanded && `
     background: transparent;
@@ -27,6 +32,7 @@ const Head = styled.div`
 const Info = styled.div`
   font-size: 24px;
   font-weight: 700;
+  display: flex;
 
   @media (max-width: 768px) {
     font-size: 18px;
@@ -48,17 +54,27 @@ const Content = styled.div`
   margin-top: 12px;
 `
 
-const InterpretationItem = ({ item, expand }: Props) => {
+const Icon = styled.img`
+  width: 40px;
+  height: 40px;
+  margin-right: 8px;
+  object-fit: contain;
+`
+
+const InterpretationItem = ({ item, expand, transparent }: Props) => {
   const [expanded, setExpanded] = useState(expand || false);
 
   return (
-    <Wrap $expanded={expanded}>
+    <Wrap $expanded={expanded} $transparent={transparent}>
       <Head>
         <Info>
-          <div>{expanded ? (item.subtitle || item.title) : item.title}</div>
+          {item.icon && <Icon src={item.icon} />}
+          <div>
+          <div style={{display: 'flex', flexDirection: 'column'}}>{expanded ? (item.subtitle || item.title) : item.title}</div>
           {item.code && <div>{item.code}</div>}
+          </div>
         </Info>
-        {!expanded && (
+        {!expanded && item.content && (
           <Toggler onClick={() => setExpanded(true)}>
             Подробнее
             <svg
@@ -79,7 +95,7 @@ const InterpretationItem = ({ item, expand }: Props) => {
         )}
       </Head>
 
-      {expanded && (
+      {expanded && item.content && (
        <Content>
         {item.content()}
         </Content>

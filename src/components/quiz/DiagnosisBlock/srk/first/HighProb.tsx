@@ -32,6 +32,7 @@ import { selectSrkSelectedSymptoms } from '../../../../../store/srk/symptomsSlic
 import styled from 'styled-components';
 import { setMedsToCheck } from '../../../../../store/utilsSlice';
 import { selectRim4Questions } from '../../../../../store/srk/rim4Slice';
+import { useMemo } from 'react';
 
 interface Props {
   onBack: () => void;
@@ -67,6 +68,20 @@ const HighProb = ({ onBack }: Props) => {
     }
 
     return false;
+  };
+
+  const hasAdditonalSymptoms = useMemo(() => {
+    const additionalSymptoms = rim4Answers.find((el) => el.id === 'additinal_symptoms');
+
+    if (!additionalSymptoms?.value?.value) return false
+
+    return JSON.parse(additionalSymptoms.value.value as string).length
+  }, [rim4Answers])
+
+  const isSrk = () => {
+    if (hasAdditonalSymptoms) return false
+
+    return true
   };
 
   const isRim4BothYes = () => {
@@ -161,7 +176,7 @@ const HighProb = ({ onBack }: Props) => {
       unlist: true,
       list: [
         'Дневник наблюдения <a href="/cdss/pdf/diary.pdf" target="_blank" rel="noopener">Скачать</a>',
-        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/lifestyle.pdf" target="_blank" rel="noopener">Скачать</a>',
+        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/diet.pdf" target="_blank" rel="noopener">Скачать</a>',
       ],
     });
 
@@ -192,7 +207,6 @@ const HighProb = ({ onBack }: Props) => {
     }
 
     if (hasType('Фибромиалгия')) {
-      list.push('Невролог');
       list.push('Ревматолог');
     }
 
@@ -293,6 +307,7 @@ const HighProb = ({ onBack }: Props) => {
     return items;
   };
 
+
   dispatch(setMedsToCheck(allMeds()));
 
   return (
@@ -303,7 +318,7 @@ const HighProb = ({ onBack }: Props) => {
 
           <Heading style={{ marginBottom: 12 }}>Вероятный диагноз</Heading>
 
-          {!isRim4BothYes() ? (
+          {!isSrk() ? (
             <>
               <SrkDiagnosisCard>
                 <span>
@@ -328,6 +343,12 @@ const HighProb = ({ onBack }: Props) => {
                 Код по МКБ-10: K58.8
               </SrkDiagnosisCard>
 
+              {!checkRim4Answer('last_8_weeks', 1) && (
+                <Text>
+                  <b>NB:</b> Продолжительность симптомов СРК у пациента составляет менее 8 недель. Исключение других возможных органических заболеваний ЖКТ рекомендовано даже при отсутствии изменений по результатам проводимой диагностики. Рекомендуется назначить повторный прием у гастроэнтеролога через 3 месяца.
+                </Text>
+              )}
+
               <Heading>
                 Для подтверждения диагноза необходимо дообследование:
               </Heading>
@@ -336,9 +357,15 @@ const HighProb = ({ onBack }: Props) => {
 
           <CardsList blueNotifications list={baseExaminations()} hasBorder />
 
-          <CardsList blueNotifications title="Полезные материалы" list={usefulMaterials()} />
+          <CardsList
+            blueNotifications
+            title="Полезные материалы"
+            list={usefulMaterials()}
+          />
 
-          {isRim4BothYes() && <Notice>*согласно исследованию Ромерус 2023 г.</Notice>}
+          {isRim4BothYes() && (
+            <Notice>*согласно исследованию Ромерус 2023 г.</Notice>
+          )}
         </Column>
 
         <Column className="quiz-block__column">
@@ -378,9 +405,39 @@ const HighProb = ({ onBack }: Props) => {
             </>
           )}
 
-          {hasType('Изжога и/или Тошнота') && (
+          <Text>
+            В рамках терапии абдоминального болевого синдрома важно подобрать
+            препарат, который будет эффективно купировать боль и нормализовывать
+            моторику кишечника. Обоснованным выбором можно считать оригинальный
+            мебеверин. В рамках терапии абдоминального болевого синдрома важно
+            подобрать препарат, который будет эффективно купировать боль и
+            нормализовывать моторику кишечника. Обоснованным выбором можно
+            считать оригинальный{' '}
+            <a
+              href="https://abbottpro.ru/academy/preparation/dyuspatalin"
+              rel="noreferrer noopener"
+              target="_blank"
+            >
+              мебеверин
+            </a>
+            . Препарат устраняет широкий спектр симптомов (боль, вздутие,
+            нарушения стула), за счет координации работы гладкомышечных клеток и
+            восстановления моторики кишечника. <br />
+            Учитывая его метаболизм без участия цитохромов печени, мебеверин
+            может беспрепятственно назначаться с большинством препаратов.
+            Длительность приема не ограничена, что свидетельствует о высоком
+            профиле безопасности.
+          </Text>
+
+
+          {(hasType('Изжога') || hasType('Тошнота')) && (
             <>
-              <Notification blue content="<b>Нетипичные симптомы</b> Изжога и тошнота не являются типичными для СРК симптомами заболевания, но при этом не исключают его наличие." />
+              <div style={{ marginBottom: 12 }}>
+                <Notification
+                  blue
+                  content="<b>Нетипичные симптомы</b> Изжога и тошнота не являются типичными для СРК симптомами заболевания, но при этом не исключают его наличие."
+                />
+              </div>
 
               <Text>
                 Рекомендуется проведение диагностики верхних отделов ЖКТ на

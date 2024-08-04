@@ -44,20 +44,24 @@ const Interpretation = ({ onBack, onFamiliarize }: Props) => {
         Интерпретация результатов обследования
       </DiagnosisHeading>
 
-      <Text>
-        На основании выявленных отклонений результатов обследований от норм,
-        можно допустить наличие у пациента следующих заболеваний:
-      </Text>
+      {Boolean(diseases.length) && (
+        <>
+          <Text>
+            На основании выявленных отклонений результатов обследований от норм,
+            можно допустить наличие у пациента следующих заболеваний:
+          </Text>
 
-      <InterpretationList>
-        {diseases.map((el) => (
-          <InterpretationItem
-            expand={diseases.length === 1}
-            item={el}
-            key={el.title}
-          />
-        ))}
-      </InterpretationList>
+          <InterpretationList>
+            {diseases.map((el) => (
+              <InterpretationItem
+                expand={diseases.length === 1}
+                item={el}
+                key={el.title}
+              />
+            ))}
+          </InterpretationList>
+        </>
+      )}
 
       <CardsList blueNotifications notifications={notifications} />
 
@@ -67,7 +71,7 @@ const Interpretation = ({ onBack, onFamiliarize }: Props) => {
         Продолжайте регулярно наблюдать пациента, даже если по результатам всех лабораторно-диагностических исследований не выявлено никаких отклонений.
       `} />
 
-      <Button style={{maxWidth: '100%', margin: '32px 0'}} onClick={onFamiliarize}>
+      <Button style={{ maxWidth: '100%', margin: '32px 0' }} onClick={onFamiliarize}>
         Ознакомиться с принципами терапии СРК
       </Button>
 
