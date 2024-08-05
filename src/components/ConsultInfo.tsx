@@ -89,6 +89,55 @@ const types = [
       },
     ],
   },
+  {
+    title: 'Лекарственные поражения печени (ЛПП)',
+    text: 'Выберите прием и нажмите кнопку «начать», чтобы смоделировать клинический случай и получить экспертную консультацию по ведению вашего пациента',
+    type: 'lpp',
+    items: [
+      {
+        title: 'Первичный прием',
+        list: [
+          'Оценка показателей на соответствие критериям ЛПП',
+          'Оценка гепатотоксичности препаратов',
+          'Определение типа поражения',
+          'План обследования',
+        ],
+        route: '/lpp/first',
+        ymTarget: 'lpp_1st',
+      },
+      {
+        title: 'Повторный прием',
+        list: [
+          'Постановка диагноза ЛПП',
+          'Оценка по RUCAM',
+          'Тактика ведения при ЛПП',
+          'Схемы терапии',
+        ],
+        route: '/lpp/secondary',
+        ymTarget: 'lpp_2nd',
+      },
+      {
+        title: 'Инструменты',
+        routes: [
+          {
+            title: 'Оценка R-показателя',
+            route: '/lpp/type',
+            ymTarget: 'lpp_r',
+          },
+          {
+            title: 'RUCAM',
+            route: '/lpp/rucam',
+            ymTarget: 'lpp_rucam',
+          },
+          {
+            title: 'Оценка гепатотоксичности препарата',
+            route: '/lpp/hepatoxicity',
+            ymTarget: 'lpp_hepatoxicity',
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 const Wrap = styled.section`
@@ -358,6 +407,14 @@ const ConsultInfo = () => {
 
       setIndex(srkData)
     }
+
+    if (location.pathname.includes('/lpp')) {
+      const lppData = types.findIndex(el => el.type === 'lpp')
+
+      if (!lppData) return
+
+      setIndex(lppData)
+    }
   }, [location.pathname])
 
   const data = useMemo(() => {
@@ -418,13 +475,13 @@ const ConsultInfo = () => {
           </AdvantagesList>
         </Advantages>
 
-        <SourcesList type={data.type as 'herb' | 'srk'} />
+        <SourcesList type={data.type as 'herb' | 'srk' | 'lpp'} />
 
         {data.notices?.map((el) => (
           <Helper key={el}>{el}</Helper>
         ))}
 
-        <AgreementNumber type={data.type as 'herb' | 'srk'} />
+        <AgreementNumber type={data.type as 'herb' | 'srk' | 'lpp'} />
       </Container>
     </Wrap>
   );

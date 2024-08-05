@@ -64,11 +64,14 @@ export const Column = styled.div`
 
 export const Foot = styled.div<{ $align?: 'center' | 'flex-end' }>`
   margin-top: auto;
+  gap: 20px;
   display: flex;
   justify-content: ${(props) => props.$align || 'flex-start'};
 
   @media (max-width: 991px) {
+    flex-direction: column;
     margin-top: 36px;
+    gap: 10px;
     padding-top: 24px;
     border-top: 1px solid #d9d9d9;
   }

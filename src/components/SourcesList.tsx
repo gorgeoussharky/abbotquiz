@@ -4,10 +4,11 @@ import styled from 'styled-components';
 
 import herbSources from '../store/herb/data/sources.json';
 import srkSources from '../store/srk/data/sources.json';
+import lppSources from '../store/lpp/data/sources.json';
 import { useLocation } from 'react-router-dom';
 
 interface Props {
-  type: 'srk' | 'herb';
+  type: 'srk' | 'herb' | 'lpp';
 }
 
 const Wrap = styled.div`
@@ -100,6 +101,8 @@ const SourcesList = ({ type }: Props) => {
         return srkSources;
       case 'herb':
         return herbSources;
+      case 'lpp':
+        return lppSources;
       default:
         return [];
     }

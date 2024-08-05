@@ -25,7 +25,7 @@ const CheckItem = styled(Item)`
   padding-left: 32px;
 
   &::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M5 12L10 17L20 7' stroke='%23009CDE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M5 12L10 17L20 7' stroke='%23009CDE' strokeWidth='2' strokeLinecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     width: 24px;
     height: 24px;
     background-color: transparent;

@@ -4,8 +4,12 @@ import {
     selectLPPMedicaments,
     selectSelectedLPPMedicaments,
 } from '../../../store/lpp/medicamentsSlice';
-import { Button, Heading, Text } from '../../elements';
+import { Button, ButtonLink, Heading, Text } from '../../elements';
 import styled from 'styled-components';
+
+interface Props {
+  selectedMeds: string[]
+}
 
 const Meds = styled.div`
   display: flex;
@@ -19,6 +23,26 @@ const Meds = styled.div`
     grid-template-columns: 1fr;
   }
 `;
+
+const MedBtn = styled.button<{ $active: boolean }>`
+  padding: 14px 28px;
+  font-size: 20px;
+  font-weight: 700;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  border-radius: 40px;
+
+  @media (max-width: 576px) {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  ${props => props.$active && `
+    background: var(--accent);
+    color: #fff;
+  `}
+`
 
 const Content = styled.div`
   margin-bottom: 32px;
@@ -111,28 +135,9 @@ const ItemText = styled.div`
   line-height: 125%;
 `;
 
-const MedBtn = styled.button<{ $active: boolean }>`
-  padding: 14px 28px;
-  font-size: 20px;
-  font-weight: 700;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  border-radius: 40px;
 
-  @media (max-width: 576px) {
-    width: 100%;
-    text-align: center;
-    font-size: 16px;
-  }
-
-  ${props => props.$active && `
-    background: var(--accent);
-    color: #fff;
-  `}
-`
 
 const ExpandBtn = styled(Button)`
-    margin-top: 16px;
     width: fit-content;
     padding: 8px 16px;
     padding-right: 8px;
@@ -143,8 +148,19 @@ const ExpandBtn = styled(Button)`
     }
 `
 
-const Hepotoxicity = () => {
-    const selectedMeds = useAppSelector(selectSelectedLPPMedicaments);
+const Foot = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  gap: 16px;
+
+  @media (max-width: 576px) {
+    flex-direction: column;
+    gap: 8px;
+  }
+`;
+
+const Hepotoxicity = ({selectedMeds}: Props) => {
     const meds = useAppSelector(selectLPPMedicaments);
     const [activeMed, setActiveMed] = useState<string>(selectedMeds[0]);
     const [expand, setExpand] = useState<boolean>(false);
@@ -225,12 +241,16 @@ const Hepotoxicity = () => {
                     </Item>
                 </List>
 
+                <Foot>
                 <ExpandBtn $type="light" onClick={() => setExpand(!expand)}>
                     {expand ? 'Свернуть' : 'Развернуть'}
                     <svg style={{ transform: `rotate(${expand ? '180' : '0'}deg)` }} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.4129 9.87382L12 15.2867L6.58711 9.87382" stroke="#009CDE" stroke-width="1.2" stroke-linecap="round" />
+                        <path d="M17.4129 9.87382L12 15.2867L6.58711 9.87382" stroke="#009CDE" strokeWidth="1.2" strokeLinecap="round" />
                     </svg>
                 </ExpandBtn>
+
+                <ButtonLink style={{maxWidth: 320}} to="/lpp/rucam">Окончательная оценка по шкале RUCAM</ButtonLink>
+                </Foot>
             </Content>
         </>
     );

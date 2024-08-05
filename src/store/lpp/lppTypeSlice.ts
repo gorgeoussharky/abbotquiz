@@ -17,21 +17,11 @@ export const LPPType = createSlice({
     name: 'LPPType',
     initialState,
     reducers: {
-        setValue: (
+        updateList: (
             state,
-            action: PayloadAction<{ id: string; base?: number, max?: number }>
+            action: PayloadAction<{ list: LPPTypeEntry[] }>
         ) => {
-
-            const questionIndex = state.list.findIndex(
-                (el) => el.id === action.payload.id
-            );
-            if (action.payload.base) {
-                state.list[questionIndex].value_base = action.payload.base;
-            }
-
-            if (action.payload.max) {
-                state.list[questionIndex].value_max = action.payload.max;
-            }
+            state.list = action.payload.list
         },
 
         resetValues: (state) => {
@@ -46,7 +36,7 @@ export const LPPType = createSlice({
     },
 });
 
-export const { setValue, resetValues } = LPPType.actions;
+export const { updateList, resetValues } = LPPType.actions;
 
 export const selectLPPType = (state: RootState) => state.lppType.list;
 

@@ -1,0 +1,84 @@
+[
+    {
+      "title": "Укажите тип ЛПП, который подозревается у пациента (на основании R-показателя)",
+      "id": "lpp_type",
+      "group": "lpp_type",
+      "cols": 1,
+      "type": "singular_checkbox",
+      "options": [
+        {
+          "label": "Гепатоцеллюлярный",
+          "value": "hepatocellular"
+        },
+        {
+          "label": "Смешанный",
+          "value": "mixed"
+        },
+        {
+          "label": "Холестатический",
+          "value": "hollistic"
+        }
+      ]
+    },
+    {
+        "title": "Отметьте, какие из нижеперечисленных патологий были исключены у пациента в результаты проведенных исследований:",
+        "type": "checkbox",
+        "cols": 1,
+        "optional": true,
+        "group": "patologies_mixed",
+        "id": "patologies_mixed",
+        "options":[
+            {
+              "label": "Вирусные гепатиты",
+              "value": "viral_hepatitis"
+            },
+            {
+              "label": "Аутоиммунные заболевания печени",
+              "value": "autoimmune_liver_diseases"
+            },
+            {
+              "label": "Патологии билиарного тракта и инфильтративные процессы",
+              "value": "biliary_tract_pathologies_and_infiltrative_processes"
+            },
+            {
+              "label": "Болезнь Вильсон",
+              "value": "wilson_disease"
+            },
+            {
+              "label": "Острая инфекция, вызванная цитомегаловирусом (ЦМВ)",
+              "value": "cytomegalovirus_infection"
+            },
+            {
+              "label": "Острая инфекция, вызванная вирусом Эппштейна-Барр",
+              "value": "epstein_barr_virus_infection"
+            },
+            {
+              "label": "Острая инфекция, вызванная вирусом простого герпеса (ВПГ)",
+              "value": "herpes_simplex_virus_infection"
+            },
+            {
+              "label": "Острая инфекция, вызванная вирусом ветряной оспы",
+              "value": "chickenpox_virus_infection"
+            }
+          ]
+      },
+      {
+          "title": "Отметьте, какие из нижеперечисленных патологий были исключены у пациента в результаты проведенных исследований:",
+          "type": "checkbox",
+          "group": "patologies_holestatic",
+          "cols": 1,
+          "optional": true,
+          "id": "patologies_holestatic",
+          "options":[
+              {
+                "label": "Патологии билиарного тракта и инфильтративные процессы",
+                "value": "biliary_tract_pathologies_and_infiltrative_processes"
+              },
+              {
+                "label": "Первичный билиарный холангит",
+                "value": "primary_biliary_holangitis"
+              }
+            ]
+        }
+  ]
+  

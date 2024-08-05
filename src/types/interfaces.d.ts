@@ -26,6 +26,7 @@ export interface LPPMedicamentEntry {
 
 export interface QuestionEntry {
   title: string;
+  subtitle?: string
   type: string
   options?: Option[];
   value?: Option;
@@ -34,6 +35,15 @@ export interface QuestionEntry {
     condition: string | number;
   };
   group: string
+  groups?: {
+    title: string;
+    id: string
+    options: {
+      label: string;
+      id: string
+      value: boolean[]
+    }[]
+  }[]
   pill?: boolean
   cols?: number
   optional?: boolean;
@@ -43,7 +53,6 @@ export interface QuestionEntry {
     value: string | number;
   }
 }
-
 
 export interface Examination {
   title: string;
@@ -68,6 +77,7 @@ export interface RecommendationCardType {
 
 export interface Option {
   title?: string;
+  score?: number
   label: string;
   value: string | number | boolean;
   cols?: number

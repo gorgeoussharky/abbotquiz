@@ -4,10 +4,23 @@ import { Tabs } from '../../../../Tabs';
 import { DiagnosisHeading, DiagnosisCard } from '../../elements';
 import { useAppSelector } from '../../../../../app/hooks';
 import { selectLPPType } from '../../../../../store/lpp/lppTypeSlice';
-import { fda, hospitalizations, liverBiopsi, serologicABCE, serologicAuto, serologicCirro, serologicLessKnown, visualized, visualizedMagnet, visualizedMultiple, wilsons } from './researches';
+import {
+  fda,
+  hospitalizations,
+  liverBiopsi,
+  serologicABCE,
+  serologicAuto,
+  serologicCirro,
+  serologicLessKnown,
+  visualized,
+  visualizedMagnet,
+  visualizedMultiple,
+  wilsons,
+} from '../researches';
 import { InterpretationItem } from '../../../InterpretationItem';
 import styled from 'styled-components';
 import { Hepotoxicity } from '../../../LPP/Hepotoxicity';
+import { selectSelectedLPPMedicaments } from '../../../../../store/lpp/medicamentsSlice';
 
 interface Props {
   onBack: () => void;
@@ -16,8 +29,8 @@ interface Props {
 const Info = styled.div`
   margin-bottom: 32px;
   padding: 16px;
-  border: 1px solid #009CDE;
-  background-color: #E6F7FF;
+  border: 1px solid #009cde;
+  background-color: #e6f7ff;
   padding-right: 20%;
   position: relative;
   display: grid;
@@ -30,28 +43,27 @@ const Info = styled.div`
     padding-top: 80px;
     font-size: 18px;
   }
-`
+`;
 
 const InfoTitle = styled.div`
- span {
-  color: var(--accent);
- }
-`
+  span {
+    color: var(--accent);
+  }
+`;
 
 const InfoFoot = styled.div`
-    display: flex;
-    gap: 24px;
+  display: flex;
+  gap: 24px;
 
-    @media (max-width: 576px) {
-      flex-direction: column;
-      gap: 12px;
-    }
+  @media (max-width: 576px) {
+    flex-direction: column;
+    gap: 12px;
+  }
 
-    span {
-      font-weight: 400;
-    }
-
-`
+  span {
+    font-weight: 400;
+  }
+`;
 
 const RValue = styled.div`
   position: absolute;
@@ -60,7 +72,7 @@ const RValue = styled.div`
   padding: 12px 16px;
   border-radius: 40px;
   background-color: #fff;
-  border: 1px solid #009CDE;
+  border: 1px solid #009cde;
   font-size: 20px;
 
   @media (max-width: 576px) {
@@ -68,7 +80,7 @@ const RValue = styled.div`
     left: 16px;
     font-size: 16px;
   }
-`
+`;
 
 const Content = styled.div`
   display: grid;
@@ -78,18 +90,19 @@ const Content = styled.div`
   hr {
     width: 100%;
     opacity: 0.3;
-    background-color: #BDBDBD;
+    background-color: #bdbdbd;
     height: 1px;
   }
-`
+`;
 
 const DiagnosisTabs = styled(Tabs)`
   margin-bottom: 24px;
-`
+`;
 
 const HighProb = ({ onBack }: Props) => {
   const tabs = ['Исследования 1-ой линии', 'Исследования 2-ой линии'];
   const answers = useAppSelector(selectLPPType);
+  const selectedMeds = useAppSelector(selectSelectedLPPMedicaments);
 
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
@@ -102,19 +115,19 @@ const HighProb = ({ onBack }: Props) => {
     const alt_max = alt?.value_max || 1;
     const shf_max = shf?.value_max || 1;
 
-    return (alt_base / alt_max) / (shf_base / shf_max);
+    return alt_base / alt_max / (shf_base / shf_max);
   }, [answers]);
 
   const rScoreLabel = useMemo(() => {
     if (rScore >= 5) {
-      return "R>=5";
+      return 'R>=5';
     }
 
     if (rScore > 2 && rScore < 5) {
-      return "2<R<5";
+      return '2<R<5';
     }
 
-    return "R<=2";
+    return 'R<=2';
   }, [rScore]);
 
   const hyLaw = useMemo(() => {
@@ -122,43 +135,39 @@ const HighProb = ({ onBack }: Props) => {
     const base_value = bili?.value_base || 0;
     const max_value = bili?.value_max || 0;
 
-    return rScore > 5 && base_value > max_value * 2
-
+    return rScore > 5 && base_value > max_value * 2;
   }, [answers, rScore]);
 
   const type = useMemo(() => {
     if (rScore >= 5) {
-      return 'гепатоцеллюлярный'
+      return 'гепатоцеллюлярный';
     }
 
     if (rScore > 2 && rScore < 5) {
-      return 'смешанный'
+      return 'смешанный';
     }
 
-    return 'холестатический'
+    return 'холестатический';
   }, [rScore]);
 
   const firstLineResearches = useMemo(() => {
-
     if (rScore <= 2) {
-      return [visualizedMultiple]
+      return [visualizedMultiple];
     }
-    
-    return [serologicABCE, serologicAuto, visualized]
 
+    return [serologicABCE, serologicAuto, visualized];
   }, [answers, rScore]);
 
   const secondLineResearches = useMemo(() => {
     if (rScore <= 2) {
-      return [visualizedMagnet, serologicCirro, liverBiopsi]
+      return [visualizedMagnet, serologicCirro, liverBiopsi];
     }
-  
-    return [serologicLessKnown, wilsons, liverBiopsi]
-    
+
+    return [serologicLessKnown, wilsons, liverBiopsi];
   }, [answers, rScore]);
 
   const additionalData = useMemo(() => {
-      return [hospitalizations, fda]
+    return [hospitalizations, fda];
   }, [answers, rScore]);
 
   return (
@@ -185,32 +194,38 @@ const HighProb = ({ onBack }: Props) => {
         <RValue>Значение {rScoreLabel}</RValue>
       </Info>
 
-      <DiagnosisHeading>Для подтверждения диагноза необходимо дообследование:</DiagnosisHeading>
+      <DiagnosisHeading>
+        Для подтверждения диагноза необходимо дообследование:
+      </DiagnosisHeading>
 
-      <DiagnosisTabs activeItem={activeTab} onSelect={setActiveTab} list={tabs}  />
+      <DiagnosisTabs
+        activeItem={activeTab}
+        onSelect={setActiveTab}
+        list={tabs}
+      />
 
       <Content>
-          {activeTab === 'Исследования 1-ой линии' && firstLineResearches?.map(el => (
+        {activeTab === 'Исследования 1-ой линии' &&
+          firstLineResearches?.map((el) => (
             <InterpretationItem key={el.title} item={el} />
           ))}
 
-          {activeTab === 'Исследования 2-ой линии' && secondLineResearches?.map(el => (
+        {activeTab === 'Исследования 2-ой линии' &&
+          secondLineResearches?.map((el) => (
             <InterpretationItem key={el.title} item={el} />
           ))}
 
-          <hr />
+        <hr />
 
-          {additionalData?.map(el => (
-            <InterpretationItem transparent key={el.title} item={el} />
-          ))}
+        {additionalData?.map((el) => (
+          <InterpretationItem transparent key={el.title} item={el} />
+        ))}
       </Content>
 
-      <Hepotoxicity />
+      {selectedMeds.length > 0 && <Hepotoxicity selectedMeds={selectedMeds} />}
 
       <Foot $align="flex-end">
-        <ButtonLink to="/">
-          Закончить прием
-        </ButtonLink>
+        <ButtonLink to="/">Закончить прием</ButtonLink>
       </Foot>
     </QuizWrap>
   );

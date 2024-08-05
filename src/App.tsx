@@ -12,6 +12,11 @@ import { SrkSecondary } from './views/srk/Secondary';
 import { SrkControl } from './views/srk/Control';
 import { Layout } from './components/Layout';
 import { LPPFirst } from './views/lpp/First';
+import { Rucam } from './views/lpp/Rucam';
+import { LPPSecondary } from './views/lpp/Secondary';
+import { LPPMedicaments } from './views/lpp/Medicaments';
+import { LPPTypeTool } from './views/lpp/LPPTypeTool';
+import { HepatoxicityTool } from './views/lpp/HepatoxicityTool';
 
 function App() {
   const location = useLocation();
@@ -42,8 +47,15 @@ function App() {
         <Route path="interactions" element={<SrkInteractions />} />
       </Route>
 
-      <Route path="/lpp"  element={<Layout type="srk" />}>
+      <Route path="/lpp" element={<Home />}></Route>
+
+      <Route path="/lpp"  element={<Layout type="lpp" />}>
         <Route path="first" element={<LPPFirst />} />
+        <Route path="secondary" element={<LPPSecondary />} />
+        <Route path="medicaments" element={<LPPMedicaments />} />
+        <Route path="rucam" element={<Rucam />} />
+        <Route path="type" element={<LPPTypeTool />} />
+        <Route path="hepatoxicity" element={<HepatoxicityTool />} />
       </Route>
     </Routes>
   );

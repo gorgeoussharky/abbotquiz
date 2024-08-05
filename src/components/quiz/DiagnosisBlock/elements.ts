@@ -11,4 +11,8 @@ export const DiagnosisCard = styled(BlueCard)`
 
 export const DiagnosisHeading = styled(Heading)`
   margin-bottom: 12px;
+
+  @media (max-width: 991px) {
+    font-size: 20px;
+  }
 `;

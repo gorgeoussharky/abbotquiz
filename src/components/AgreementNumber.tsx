@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import styled from 'styled-components';
 
 interface Props {
-  type: 'srk' | 'herb';
+  type: 'srk' | 'herb' | 'lpp';
 }
 
 export const Wrap = styled.div`
@@ -28,6 +28,8 @@ const AgreementNumber = ({ type }: Props) => {
         return 'RUS2299313-2 (v2.0)';
       case 'herb':
         return 'RUS2283099-5 (v5.0)';
+      case 'lpp':
+        return 'RUS2323679 (v1.0)';
       default:
         return '';
     }

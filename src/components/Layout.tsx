@@ -4,7 +4,7 @@ import { Container } from './elements';
 import { SourcesList } from './SourcesList';
 
 interface Props {
-  type: 'herb' | 'srk';
+  type: 'herb' | 'srk' | 'lpp';
 }
 
 const Layout = ({ type }: Props) => {
