@@ -55,11 +55,12 @@ const Title = styled.div`
   }
 `;
 
-const Helper = styled.div`
+const HelperToggle = styled.div`
   margin-bottom: 20px;
   font-size: 20px;
   color: var(--accent);
   text-decoration: underline;
+  cursor: pointer;
 
   @media (max-width: 768px) {
     font-size: 16px;
@@ -305,9 +306,9 @@ const LPPType = ({ onNext, onBack }: Props) => {
           значения печеночных проб пациента:
         </Title>
 
-        <Helper onClick={() => setShowHelper(true)} ref={setAnchor}>
+        <HelperToggle onClick={() => setShowHelper(true)} ref={setAnchor}>
           Посмотреть нормальные значения
-        </Helper>
+        </HelperToggle>
 
         {showHelper && anchor && (
           <Dropdown anchor={anchor} onClose={() => setShowHelper(false)}>

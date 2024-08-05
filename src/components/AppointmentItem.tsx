@@ -136,6 +136,7 @@ const RouteItem = styled(Link)`
   border-radius: 20px;
   padding: 20px 16px;
   display: flex;
+  color: #000;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
