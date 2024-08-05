@@ -60,6 +60,7 @@ const HelperToggle = styled.div`
   font-size: 20px;
   color: var(--accent);
   text-decoration: underline;
+  width: fit-content;
   cursor: pointer;
 
   @media (max-width: 768px) {
@@ -274,11 +275,11 @@ const LPPType = ({ onNext, onBack }: Props) => {
     const clone = structuredClone(localQuestions);
     const questionIndex = clone.findIndex((el) => el.id === id);
 
-    if (base) {
+    if (typeof base !== 'undefined') {
       clone[questionIndex].value_base = base;
     }
 
-    if (max) {
+    if (typeof max !== 'undefined') {
       clone[questionIndex].value_max = max;
     }
 
