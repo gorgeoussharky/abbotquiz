@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { SymptomsBlock } from '../../components/quiz/SymptomsBlock';
-import { SourcesList } from '../../components/SourcesList';
 import { GerdQ } from '../../components/quiz/GerdQ';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
 import { RecommendationsBlock } from '../../components/quiz/RecommendationsBlock';
@@ -115,10 +114,19 @@ const First = () => {
   };
 
   const handleBack = () => {
+    
+    // Clearing results on back navigation
+    switch (block) {
+      case 'symptoms':
+        dispatch(clearSelectedSymptoms());
+        break;
+      case 'gerdQ':
+        dispatch(resetAnswers());
+        break;
+    }
+
     if (block === 'symptoms') {
       navigate('/');
-      dispatch(resetAnswers());
-      dispatch(clearSelectedSymptoms());
       return;
     }
 
@@ -159,8 +167,6 @@ const First = () => {
         <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
       </QuizCard>
-
-      <SourcesList />
     </Container>
   );
 };

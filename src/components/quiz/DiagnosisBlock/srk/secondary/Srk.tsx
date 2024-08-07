@@ -16,6 +16,8 @@ import { DosageList } from '../../../../DosageList';
 import {
   DosageItem,
   RecommendationCardType,
+  Option,
+  QuestionEntry
 } from '../../../../../types/interfaces';
 
 import tube from '../../../../../assets/img/tube.png';
@@ -23,6 +25,7 @@ import kidney from '../../../../../assets/img/kidney.png';
 import stomach from '../../../../../assets/img/stomach.png';
 import egds from '../../../../../assets/img/egds.png';
 import schedule from '../../../../../assets/img/schedule.png';
+import doctor from '../../../../../assets/img/doctor.png';
 import { setMedsToCheck } from '../../../../../store/utilsSlice';
 import { InteractionsLinkBtn } from '../../../InteractionsLinkBtn';
 import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
@@ -76,43 +79,87 @@ const Srk = ({ onBack }: Props) => {
     }
   }, [bsfkAnswer]);
 
-  const recommendations = [
-    {
-      title: 'Лабораторные диагностические исследования:',
-      list: [
-        'Общий (клинический) анализ крови',
-        'Биохимический анализ крови',
-        'Анализ кала на скрытую кровь',
-      ],
-      icon: tube,
-    },
-    {
+  const recommendations = () => {
+    const list = [] as RecommendationCardType[]
+
+    const labResearches = questions.find(el => el.id === 'lab_researches')
+    const instumentalResearches = questions.find(el => el.id === 'instrumental_researches')
+    const additionalResearches = questions.find(el => el.id === 'additional_researches')
+
+    const findUnselected = (researches: QuestionEntry) => {
+      if (!researches.value?.value) return
+
+      // Find selected
+      const selected = JSON.parse(researches.value.value as string) as Option[]
+
+      // Find unselected
+      const notSelected = researches?.options?.filter((option) => {
+
+        // If selected not contains value from options = add it to unselected
+        if (!selected.some(selectedEl => option.value === selectedEl.value)) return true
+
+        return false
+      })
+
+      return notSelected
+    }
+
+    if (labResearches?.value?.value) {
+      list.push({
+        title:
+          'Лабораторные диагностические исследования',
+        list: findUnselected(labResearches)?.map(el => el.label) as string[],
+        icon: tube,
+      })
+    }
+
+    if (instumentalResearches?.value?.value) {
+      list.push({
+        title:
+          'Инструментальные диагностические исследования:',
+        list: findUnselected(instumentalResearches)?.map(el => el.label) as string[],
+        icon: kidney,
+      })
+    }
+
+    if (additionalResearches?.value?.value) {
+      list.push({
+        title:
+          'Дополнительные исследования',
+        list: findUnselected(additionalResearches)?.map(el => el.label) as string[],
+        icon: doctor,
+      })
+    }
+
+    list.push({
       title:
         'Проведение гистологического исследования образцов ткани толстой кишки для исключения диагноза “Микроскопический колит”',
       icon: kidney,
-    },
-  ] as RecommendationCardType[];
+    })
+
+    return list
+  }
 
   const usefulMaterials = [
     {
-      title: 'Памятки по подготовке к исследованиям:',
+      title: 'Памятки по подготовке к исследованиям',
       icon: stomach,
       expandable: true,
       unlist: true,
       list: [
-        'ЭГДС <a href="/cdss/pdf/egds.pdf">Скачать</a>',
-        'Манометрия высокого разрешения <a href="/cdss/pdf/manometry.pdf">Скачать</a>',
-        'Рентгеноскопия <a href="/cdss/pdf/rentgen.pdf">Скачать</a>',
+        'Колоноскопия <a href="/cdss/pdf/colono.pdf" target="_blank" rel="noopener">Скачать</a>',
+        'УЗИ <a href="/cdss/pdf/uzi.pdf" target="_blank" rel="noopener">Скачать</a>',
+        'Анализ кала <a href="/cdss/pdf/feces.pdf" target="_blank" rel="noopener">Скачать</a>',
       ],
     },
     {
-      title: 'Памятки по питанию и модификации образа жизни:',
+      title: 'Памятки по питанию и модификации образа жизни',
       icon: egds,
       expandable: true,
       unlist: true,
       list: [
-        'Дневник наблюдения <a href="">Скачать</a>',
-        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/lifestyle.pdf">Скачать</a>',
+        'Дневник наблюдения <a href="/cdss/pdf/diary.pdf" target="_blank" rel="noopener">Скачать</a>',
+        'Рекомендации по изменению образа жизни и пищевого поведения <a href="/cdss/pdf/diet.pdf" target="_blank" rel="noopener">Скачать</a>',
       ],
     },
   ];
@@ -138,7 +185,7 @@ const Srk = ({ onBack }: Props) => {
         },
         {
           title: 'Гиосцина бутилбромид',
-          dosage: `Внутрь: 10-20 мг 3-5 раз в день <br> Ректально: 10-20 мг 3-5 раз в день <br />
+          dosage: `Внутрь: 10-20 мг 3-5 раз в день <br>
           Ректально: 10-20 мг 3-5 раз в день`,
         },
         {
@@ -244,22 +291,27 @@ const Srk = ({ onBack }: Props) => {
 
           <DiagnosisHeading>Вероятный диагноз</DiagnosisHeading>
 
-          <DiagnosisCard style={{gap: 0}}>
-            <div style={{color: 'var(--accent)'}}>{diagnosis?.title}</div>
+          <DiagnosisCard style={{ gap: 0 }}>
+            <div style={{ color: 'var(--accent)' }}>{diagnosis?.title}</div>
             {diagnosis?.code}
           </DiagnosisCard>
 
           <DiagnosisHeading>Рекомендации</DiagnosisHeading>
 
-          <CardsList hasBorder list={recommendations} />
+          <CardsList blueNotifications hasBorder list={recommendations()} />
 
           <CardsList
+            blueNotifications
             hasBorder
             list={usefulMaterials}
             title="Полезные материалы"
           />
 
-          <CardsList title="Дополнительно" list={additional} />
+          <CardsList
+            blueNotifications
+            title="Дополнительно"
+            list={additional}
+          />
         </Column>
 
         <Column>
@@ -277,28 +329,33 @@ const Srk = ({ onBack }: Props) => {
           {diagnosis?.title !== 'СРК с запором' && (
             <>
               <div style={{ fontSize: 20, fontWeight: 700 }}>
-                Пробиотики, содержащие различные штаммы лакто- и бифидобактерий:
+                Пробиотики, содержащие различные штаммы <br /> лакто- и
+                бифидобактерий:
               </div>
-              <div style={{ color: 'var(--accent)', marginBottom: 12 }}>
+              <div
+                style={{
+                  color: 'var(--accent)',
+                  marginBottom: 12,
+                  fontSize: 16,
+                }}
+              >
                 Уровень рекомендаций А2
               </div>
               <List>
                 <Item>
-                  Должны содержать не менее миллиарда (10^9) бактериальных
-                  клеток в капсуле
+                  Должны содержать не менее миллиарда (10^9) бактериальных клеток в капсуле
                 </Item>
                 <Item>
-                  В виде капсул, покрытых кишечнорастворимой оболочкой, или в
-                  виде микрокапсулированных пробиотических препаратов
+                  В виде капсул, покрытых кишечнорастворимой оболочкой, или в виде микрокапсулированных пробиотических препаратов
                 </Item>
               </List>
             </>
           )}
 
-          <Notice style={{ marginBottom: 12 }}>
+          <Notice style={{ marginBottom: 12, fontSize: 20 }}>
             В клинических рекомендациях по лечению СРК также приведены
             гомеопатические препараты.
-            <a href="/" target="_blank">
+            <a rel='noreferrer nofollow' target="_blank" href="https://cr.minzdrav.gov.ru/schema/190_2">
               Подробнее
             </a>
           </Notice>
@@ -306,25 +363,27 @@ const Srk = ({ onBack }: Props) => {
           <Text>
             В рамках терапии абдоминального болевого синдрома важно подобрать
             препарат, который будет эффективно купировать боль и нормализовывать
-            моторику кишечника. Обоснованным выбором можно считать оригинальный{' '}
-            <a href="/" target="_blank">
+            моторику кишечника. Обоснованным выбором можно считать оригинальный
+            мебеверин. В рамках терапии абдоминального болевого синдрома важно
+            подобрать препарат, который будет эффективно купировать боль и
+            нормализовывать моторику кишечника. Обоснованным выбором можно
+            считать оригинальный{' '}
+            <a href="https://abbottpro.ru/academy/preparation/dyuspatalin" rel='noreferrer noopener' target="_blank">
               мебеверин
             </a>
-            , который за счет устранения широкого спектра симптомов (боль,
-            вздутие, нарушения стула), координирует работу гладкомышечных клеток
-            и восстанавливает моторику кишечника. Также, учитывая его метаболизм
-            без участия цитохромов печени, мебеверин может беспрепятственно
-            назначаться с большинством препаратов. Длительность приема препарата
-            не ограничена, что свидетельствует о высоком профиле его
-            безопасности.
+            . Препарат устраняет широкий спектр симптомов (боль, вздутие,
+            нарушения стула), за счет координации работы гладкомышечных клеток и
+            восстановления моторики кишечника. <br />
+            Учитывая его метаболизм без участия цитохромов печени, мебеверин
+            может беспрепятственно назначаться с большинством препаратов.
+            Длительность приема не ограничена, что свидетельствует о высоком
+            профиле безопасности.
           </Text>
 
-          <InteractionsLinkBtn />
+          <InteractionsLinkBtn routePrefix='/srk' />
 
           <Foot $align="flex-end">
-            <ButtonLink to="/">
-              Закончить прием
-            </ButtonLink>
+            <ButtonLink to="/">Закончить прием</ButtonLink>
           </Foot>
         </Column>
       </ColumnsWrap>

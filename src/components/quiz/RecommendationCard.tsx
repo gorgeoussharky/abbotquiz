@@ -14,7 +14,7 @@ const Wrap = styled.li<{ $hasIcon: boolean; $expandable?: boolean }>`
   border-radius: 4px;
   border: 1px solid #009cde;
   background: #fff;
-  padding: 16px;
+  padding: 12px 16px;
   display: grid;
   align-items: center;
   gap: 12px;

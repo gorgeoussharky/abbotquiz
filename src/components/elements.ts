@@ -64,11 +64,14 @@ export const Column = styled.div`
 
 export const Foot = styled.div<{ $align?: 'center' | 'flex-end' }>`
   margin-top: auto;
+  gap: 20px;
   display: flex;
   justify-content: ${(props) => props.$align || 'flex-start'};
 
   @media (max-width: 991px) {
+    flex-direction: column;
     margin-top: 36px;
+    gap: 10px;
     padding-top: 24px;
     border-top: 1px solid #d9d9d9;
   }
@@ -91,6 +94,7 @@ export const List = styled.ul`
   padding: 0;
   margin: 0;
   margin-bottom: 12px;
+  padding-left: 6px;
 `;
 
 export const MarkedList = styled.ol`
@@ -103,7 +107,7 @@ export const MarkedList = styled.ol`
   gap: 10px;
 `;
 
-export const Item = styled.li<{$unlist?: boolean}>`
+export const Item = styled.li<{ $unlist?: boolean }>`
   font-size: 20px;
   padding-left: 20px;
   position: relative;
@@ -132,7 +136,9 @@ export const Item = styled.li<{$unlist?: boolean}>`
     }
   }
 
-  ${props => props.$unlist && `
+  ${(props) =>
+    props.$unlist &&
+    `
     padding: 0;
     
     &::before {
@@ -157,7 +163,7 @@ export const MarkedItem = styled.li`
   }
 
   &::before {
-    content: counter(counter) ".";
+    content: counter(counter) '.';
     position: absolute;
     left: 0;
     top: 0;
@@ -175,24 +181,30 @@ export const Text = styled.p`
     margin-bottom: 24px;
   }
 
-  span, a {
+  span {
     text-decoration: none;
     font-weight: 700;
+    color: var(--accent);
+  }
+
+  a {
+    text-decoration: underline;
+    font-weight: 400;
     color: var(--accent);
   }
 `;
 
 export const Notice = styled.small`
-font-size: 16px;
+  font-size: 16px;
 
-a {
-  color: var(--accent);
-  display: block;
-  margin-top: 12px;;
-}
-`
+  a {
+    color: var(--accent);
+    display: block;
+    margin-top: 6px;
+  }
+`;
 
-export const Button = styled.button<{ $type?: 'light', $large?: boolean }>`
+export const Button = styled.button<{ $type?: 'light'; $large?: boolean }>`
   position: relative;
   line-height: 1;
   padding: 0 30px;

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { SourcesList } from '../../components/SourcesList';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
 import { RecommendationsBlock } from '../../components/quiz/RecommendationsBlock';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -10,6 +9,7 @@ import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
 import {
   addSelectedExaminationAnswer,
   clearSelectedExaminations,
+  removeSelectedExaminationAnswerByID,
   selectSelectedExaminations,
 } from '../../store/herb/examinationsSlice';
 import { getAnswer, getHerbQuestions, hasExamination } from '../../app/helpers';
@@ -329,9 +329,130 @@ const Secondary = () => {
   };
 
   const handleBack = () => {
+    // Clearing results on back navigation
+    switch (block) {
+      case 'examinations':
+        dispatch(clearSelectedExaminations());
+        break;
+      case 'egdsBasic':
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'ЭГДС',
+            id: 'has_damages',
+          })
+        );
+        break;
+      case 'egdsAdvanced':
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'ЭГДС',
+            id: 'has_strictures',
+          })
+        );
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'ЭГДС',
+            id: 'has_adenocarcinom',
+          })
+        );
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'ЭГДС',
+            id: 'has_barret',
+          })
+        );
+        break;
+      case 'egdsSuperAdvanced':
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'ЭГДС',
+            id: 'damage_locations',
+          })
+        );
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'ЭГДС',
+            id: 'has_hernia',
+          })
+        );
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'ЭГДС',
+            id: 'has_nights',
+          })
+        );
+        break;
+      case 'phBasic':
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'Суточная pH-импедансометрия',
+            id: 'large_ph_time',
+          })
+        );
+        break;
+      case 'phIndex':
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'Суточная pH-импедансометрия',
+            id: 'large_is',
+          })
+        );
+        break;
+      case 'phRefluxEpisodes':
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'Суточная pH-импедансометрия',
+            id: 'reflux_episodes',
+          })
+        );
+        break;
+      case 'egdsWarning':
+        const newAnswer = continueWithoutEgds?.map((item, index) => {
+          return {
+            ...item,
+            value: undefined,
+          };
+        });
+        SetContinueWithoutEgds(newAnswer);
+        break;
+      case 'rentgenBasic':
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle:
+              'Рентгеноскопия пищевода и желудка с сульфатом бария',
+            id: 'rentgenoscopy',
+          })
+        );
+        break;
+      case 'manometryBasic':
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'Манометрия высокого разрешения',
+            id: 'irp',
+          })
+        );
+        break;
+      case 'manometryPeristalic':
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'Манометрия высокого разрешения',
+            id: 'has_peristalic',
+          })
+        );
+        break;
+      case 'manometryPeristalicAdvanced':
+        dispatch(
+          removeSelectedExaminationAnswerByID({
+            examinationTitle: 'Манометрия высокого разрешения',
+            id: 'peristalic_score',
+          })
+        );
+        break;
+    }
+
     if (block === 'examinations') {
       navigate('/');
-      dispatch(clearSelectedExaminations());
+
       return;
     }
 
@@ -351,7 +472,7 @@ const Secondary = () => {
           <QuestionsBlock
             title="ЭГДС"
             questions={getHerbQuestions('ЭГДС').filter(
-              (el) => el.group === 'egds_basic'
+              (el) => el.group === 'egdsBasic'
             )}
             onBack={handleBack}
             onNext={handleNext}
@@ -479,13 +600,10 @@ const Secondary = () => {
             onNext={handleNext}
             onChange={(val) => {
               const newAnswer = continueWithoutEgds?.map((item, index) => {
-                if (index === 0) {
-                  return {
-                    ...item,
-                    value: val,
-                  };
-                }
-                return item;
+                return {
+                  ...item,
+                  value: val,
+                };
               });
 
               SetContinueWithoutEgds(newAnswer);
@@ -590,8 +708,6 @@ const Secondary = () => {
         <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
       </QuizCard>
-
-      <SourcesList />
     </Container>
   );
 };

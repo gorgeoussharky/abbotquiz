@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { SourcesList } from '../../components/SourcesList';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useNavigate } from 'react-router-dom';
 import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
-import { Container, Notice, QuizCard } from '../../components/elements';
+import { Button, Container, Notice, QuizCard } from '../../components/elements';
 import { ProgressBar } from '../../components/ProgressBar';
 import {
   addBlockHistory,
@@ -14,6 +13,7 @@ import {
 } from '../../store/utilsSlice';
 import {
   addSelectedSrkExaminationAnswer,
+  clearSrkExaminationByID,
   clearSrkExaminations,
   selectSrkExaminations,
 } from '../../store/srk/examinationsSlice';
@@ -93,10 +93,10 @@ const SrkSecondary = () => {
 
   const handleFamiliarize = () => {
     // clear data
-    dispatch(clearSrkExaminations())
+    dispatch(clearSrkExaminations());
 
-    setBlock('bsfk')
-  }
+    setBlock('bsfk');
+  };
 
   const handleNext = () => {
     dispatch(addBlockHistory(block));
@@ -154,9 +154,21 @@ const SrkSecondary = () => {
           break;
         }
 
+
         setBlock('diagnosis');
         setStep(3);
         break;
+
+      case 'colitis':
+        if (questions.find(el => el.id === 'colitis')?.value?.value === 0) {
+          setBlock('bsfk');
+          setStep(3);
+          break
+        }
+
+        setBlock('diagnosis');
+        setStep(3);
+        break
 
       default:
         setBlock('diagnosis');
@@ -166,9 +178,34 @@ const SrkSecondary = () => {
   };
 
   const handleBack = () => {
+
+    // Clearing results on back navigation
+    switch (block) {
+      case 'symptoms':
+        dispatch(clearSrkExaminations());
+        break;
+      case 'analysis':
+        dispatch(clearSrkExaminationByID({ id: 'feces_analysis' }));
+        dispatch(clearSrkExaminationByID({ id: 'blood_analysis' }));
+        dispatch(clearSrkExaminationByID({ id: 'instrumental_analysis' }));
+        dispatch(clearSrkExaminationByID({ id: 'additional_analysis' }));
+        break;
+      case 'damages':
+        dispatch(clearSrkExaminationByID({ id: 'intestine_damage' }));
+        break;
+      case 'colitis':
+        dispatch(clearSrkExaminationByID({ id: 'colitis' }));
+        break;
+      case 'feces_consistency':
+        dispatch(clearSrkExaminationByID({ id: 'feces_consistency' }));
+        break;
+      case 'bsfk':
+        dispatch(clearSrkExaminationByID({ id: 'bsfk' }));
+        break;
+    }
+
     if (block === 'examinations') {
-      navigate('/');
-      //dispatch(clearSelectedExaminations());
+      navigate('/srk');
       return;
     }
 
@@ -176,12 +213,13 @@ const SrkSecondary = () => {
       if (blockHistory[blockHistory.length - 1] === 'diagnosis') {
         setBlock(blockHistory[blockHistory.length - 2]);
         dispatch(removeLastBlockHistoryElement());
-        return
+        return;
       }
 
       setBlock(blockHistory[blockHistory.length - 1]);
       dispatch(removeLastBlockHistoryElement());
     }
+
   };
 
   const QuizBlock = () => {
@@ -194,6 +232,7 @@ const SrkSecondary = () => {
               questions={questions.filter((el) => el.group === 'examinations')}
               onBack={handleBack}
               onNext={handleNext}
+              hideBtn
               onChange={(val, id) =>
                 dispatch(
                   addSelectedSrkExaminationAnswer({
@@ -203,12 +242,24 @@ const SrkSecondary = () => {
                 )
               }
             />
-            <Notice style={{marginTop: 24}}>
+            <Notice style={{ marginTop: 24 }}>
               <div>*актуально только для пациентов с диареей</div>
               <div>
                 ** чаще применяется водородный дыхательный тест с лактулозой
               </div>
             </Notice>
+            <Button
+              onClick={handleNext}
+              style={{
+                marginTop: 32,
+                maxWidth: 310,
+                paddingLeft: 16,
+                paddingRight: 16,
+                marginLeft: 'auto',
+              }}
+            >
+              {isNoData ? 'Результаты исследований отсутствуют' : 'Продолжить'}
+            </Button>
           </>
         );
       case 'analysis':
@@ -249,12 +300,6 @@ const SrkSecondary = () => {
                 )
               }
             />
-            <Notice style={{marginTop: 24}}>
-              <div>*актуально только для пациентов с диареей</div>
-              <div>
-                ** чаще применяется водородный дыхательный тест с лактулозой
-              </div>
-            </Notice>
           </>
         );
       case 'damages':
@@ -322,7 +367,7 @@ const SrkSecondary = () => {
         return (
           <>
             <QuestionsBlock
-              title="Оценка стула с помощью Бристольской шкалы формы кала (БШФК)"
+              title="Оценка стула с помощью Бристольской шкалы форм кала (БШФК)"
               questions={questions.filter((el) => el.group === 'bsfk')}
               onBack={handleBack}
               onNext={handleNext}
@@ -339,7 +384,12 @@ const SrkSecondary = () => {
           </>
         );
       case 'diagnosis':
-        return <DiagnosisBlock onFamiliarize={handleFamiliarize} onBack={handleBack} />;
+        return (
+          <DiagnosisBlock
+            onFamiliarize={handleFamiliarize}
+            onBack={handleBack}
+          />
+        );
       default:
         return <></>;
     }
@@ -351,8 +401,6 @@ const SrkSecondary = () => {
         <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
       </QuizCard>
-
-      <SourcesList />
     </Container>
   );
 };

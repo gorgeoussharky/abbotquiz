@@ -4,6 +4,28 @@ import { RootState } from '../../app/store';
 
 import db from './data/db.json'
 
+const dbWithTypes = () => {
+  const types = new Set()
+
+  const typesDB = [] as DBEntry[]
+
+  db.forEach(entry => {
+    types.add(entry.type)
+  })
+
+  types.forEach(type => {
+    typesDB.push({
+      title: type as string,
+      type: type as string,
+      group: db.find(el => el.type === type)?.group || '',
+    })
+  })
+
+  console.log(types)
+
+  return typesDB.concat(db)
+}
+
 export interface SymptomsState {
   selected: DBEntry[];
   db: DBEntry[];
@@ -11,7 +33,7 @@ export interface SymptomsState {
 
 const initialState: SymptomsState = {
   selected: [],
-  db
+  db: dbWithTypes()
 };
 
 export const srkSymptomsSlice = createSlice({

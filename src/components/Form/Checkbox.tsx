@@ -6,6 +6,7 @@ interface Props {
   value: string;
   checked?: boolean;
   className?: string;
+  hideLabel?: boolean;
   onChange?: (checked: boolean) => void;
 }
 
@@ -19,13 +20,13 @@ const Control = styled.input`
         color: var(--dark);
         &::before {
           border-color: var(--primary-main);
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cg clip-path='url(%23clip0_1015_24844)'%3E%3Cpath d='M2.5 6L5 8.5L10 3.5' stroke='%23009CDE' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1015_24844'%3E%3Crect width='12' height='12' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cg clip-path='url(%23clip0_1015_24844)'%3E%3Cpath d='M2.5 6L5 8.5L10 3.5' stroke='%23009CDE' strokeWidth='2' strokeLinecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_1015_24844'%3E%3Crect width='12' height='12' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
         }
       }
     }
 `
 
-const Label = styled.label`
+const Label = styled.label<{ $hideLabel?: boolean }>`
     position: relative;
     user-select: none;
     font-size: 20px;
@@ -36,6 +37,11 @@ const Label = styled.label`
     color: #8C8C8C;
     transition: 500ms;
     display: flex;
+
+    ${props => props.$hideLabel && `
+      width: 20px;
+      height: 20px;
+    `}
 
     &:hover {
       color: var(--dark);
@@ -75,7 +81,7 @@ const Label = styled.label`
     }
 `
 
-const Checkbox = ({ label, value, checked, className, onChange }: Props) => {
+const Checkbox = ({ label, value, checked, className, onChange, hideLabel }: Props) => {
   const id = useId();
   return (
     <div className={className}>
@@ -87,8 +93,8 @@ const Checkbox = ({ label, value, checked, className, onChange }: Props) => {
           id={id}
           onChange={(e) => onChange && onChange(!checked || e.target.checked)}
         />
-        <Label htmlFor={id}>
-          {label}
+        <Label htmlFor={id} $hideLabel={hideLabel}>
+          {!hideLabel && <span>{label}</span>}
         </Label>
     </div>
   );

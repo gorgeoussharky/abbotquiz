@@ -56,7 +56,8 @@ const Progress= styled.div`
 
 const ProgressBar = ({step, totalSteps, title}: Props) => {
     const progress = () => {
-        return `${Math.round((step / totalSteps) * 100)}%`;
+      const percentage = Math.round((step / totalSteps) * 100);
+        return `${percentage > 100 ? 100 : percentage}%`;
       };
     
 

@@ -24,7 +24,7 @@ export const controlAppointmentSlice = createSlice({
         (el) => el.id === action.payload.id
       );
 
-      if (questionIndex < 0) return 
+      if (questionIndex < 0) return;
 
       state.list[questionIndex].value = action.payload.option;
     },
@@ -37,15 +37,23 @@ export const controlAppointmentSlice = createSlice({
         };
       });
     },
+
+    resetControlAnswerByID: (state, action: PayloadAction<{ id: string }>) => {
+      const questionIndex = state.list.findIndex(
+        (el) => el.id === action.payload.id
+      );
+
+      if (questionIndex < 0) return;
+
+      state.list[questionIndex].value = undefined;
+    },
   },
 });
 
-export const {
-  setControlAnswer,
-  resetControlAnswers,
-} = controlAppointmentSlice.actions;
+export const { setControlAnswer, resetControlAnswers, resetControlAnswerByID } =
+  controlAppointmentSlice.actions;
 
 export const selectControlQuestions = (state: RootState) =>
-  state.controlAppointment.list
+  state.controlAppointment.list;
 
 export default controlAppointmentSlice.reducer;

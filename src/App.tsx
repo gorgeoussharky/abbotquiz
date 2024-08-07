@@ -10,6 +10,13 @@ import { useEffect } from 'react';
 import { SrkInteractions } from './views/srk/Interactions';
 import { SrkSecondary } from './views/srk/Secondary';
 import { SrkControl } from './views/srk/Control';
+import { Layout } from './components/Layout';
+import { LPPFirst } from './views/lpp/First';
+import { Rucam } from './views/lpp/Rucam';
+import { LPPSecondary } from './views/lpp/Secondary';
+import { LPPMedicaments } from './views/lpp/Medicaments';
+import { LPPTypeTool } from './views/lpp/LPPTypeTool';
+import { HepatoxicityTool } from './views/lpp/HepatoxicityTool';
 
 function App() {
   const location = useLocation();
@@ -22,15 +29,34 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/first" element={<First />} />
-      <Route path="/secondary" element={<Secondary />} />
-      <Route path="/control" element={<Control />} />
-      <Route path="/interactions" element={<Interactions />} />
-      <Route path="/srk/first" element={<SrkFirst />} />
-      <Route path="/srk/secondary" element={<SrkSecondary />} />
-      <Route path="/srk/control" element={<SrkControl />} />
-      <Route path="/srk/interactions" element={<SrkInteractions />} />
+      <Route path="/" element={<Home />}></Route>
+
+      <Route path="/" element={<Layout type="herb" />}>
+        <Route path="first" element={<First />} />
+        <Route path="secondary" element={<Secondary />} />
+        <Route path="control" element={<Control />} />
+        <Route path="interactions" element={<Interactions />} />
+      </Route>
+
+      <Route path="/srk" element={<Home />}></Route>
+
+      <Route path="/srk"  element={<Layout type="srk" />}>
+        <Route path="first" element={<SrkFirst />} />
+        <Route path="secondary" element={<SrkSecondary />} />
+        <Route path="control" element={<SrkControl />} />
+        <Route path="interactions" element={<SrkInteractions />} />
+      </Route>
+
+      <Route path="/lpp" element={<Home />}></Route>
+
+      <Route path="/lpp"  element={<Layout type="lpp" />}>
+        <Route path="first" element={<LPPFirst />} />
+        <Route path="secondary" element={<LPPSecondary />} />
+        <Route path="medicaments" element={<LPPMedicaments />} />
+        <Route path="rucam" element={<Rucam />} />
+        <Route path="type" element={<LPPTypeTool />} />
+        <Route path="hepatoxicity" element={<HepatoxicityTool />} />
+      </Route>
     </Routes>
   );
 }

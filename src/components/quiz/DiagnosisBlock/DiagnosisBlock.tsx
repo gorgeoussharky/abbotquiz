@@ -8,12 +8,17 @@ import { useAppDispatch } from '../../../app/hooks';
 import { setHasLastDiagnosis } from '../../../store/utilsSlice';
 import { SecondarySrkDiagnosis } from './srk/SecondaryDiagnosis';
 import { ControlSrkDiagnosis } from './srk/ControlDiagnosis';
+import { FirstLPPDiagnosis } from './lpp/First';
+import { RucamDiagnosis } from './lpp/Rucam';
+import { SecondaryLPPDiagnosis } from './lpp/Secondary';
+import { LPPMedicamentsDiagnosis } from './lpp/Medicaments';
 interface Props {
   onBack: () => void;
   onFamiliarize?: () => void;
+  onReset?: () => void;
 }
 
-const DiagnosisBlock = ({ onBack, onFamiliarize }: Props) => {
+const DiagnosisBlock = ({ onBack, onFamiliarize, onReset }: Props) => {
   const location = useLocation();
   const dispatch = useAppDispatch()
 
@@ -46,6 +51,22 @@ const DiagnosisBlock = ({ onBack, onFamiliarize }: Props) => {
   
   if (location.pathname === '/srk/control') {
     return <ControlSrkDiagnosis onBack={onBack} />;
+  }
+
+  if (location.pathname === '/lpp/first' || location.pathname === '/lpp/type') {
+    return <FirstLPPDiagnosis onBack={onBack} />;
+  }
+
+  if (location.pathname === '/lpp/secondary') {
+    return <SecondaryLPPDiagnosis onBack={onBack} />;
+  }
+
+  if (location.pathname === '/lpp/rucam') {
+    return <RucamDiagnosis onBack={onBack} onReset={() => onReset && onReset()} />;
+  }
+
+  if (location.pathname === '/lpp/medicaments') {
+    return <LPPMedicamentsDiagnosis onBack={onBack}/>;
   }
 
   return <></>

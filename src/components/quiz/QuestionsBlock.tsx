@@ -10,7 +10,10 @@ interface Props {
   questions: Examination['questions'];
   children?: JSX.Element | JSX.Element[];
   cols?: number
+  hideBtn?: boolean;
+  alwaysShowBtn?: boolean
   onChange?: (val: Option, id: string) => void;
+  onGroupCheckboxChange?: (value: boolean, optionIndex: number, groupId: string, questionId: string, valueIndex: number) => void;
   onBack?: () => void;
   onNext?: () => void;
 }
@@ -35,7 +38,7 @@ const QuestionHeading = styled.div`
   }
 `;
 
-const QuestionsList = styled.div<{$cols?: number}>`
+const QuestionsList = styled.div<{ $cols?: number }>`
   display: grid;
   grid-template-columns: ${props => props.$cols ? `repeat(${props.$cols}, 1fr)` : '1fr'};
   gap: 32px;
@@ -97,7 +100,7 @@ const RadioLabelsWrap = styled.div<{ $cols: number }>`
   }
 `;
 
-const CheckboxList = styled.div<{$cols?: number}>`
+const CheckboxList = styled.div<{ $cols?: number }>`
   display: grid;
   gap: 10px 8px;
   grid-template-columns: ${props => props.$cols ? `repeat(${props.$cols}, 1fr)` : '1fr 1fr'};
@@ -116,16 +119,89 @@ const NextBtn = styled(Button)`
   }
 `;
 
+const Head = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+`
+
+const QuestionTableHeading = styled.div`
+  display: grid;
+  grid-template-columns: 140px 140px;
+  font-size: 16px;
+
+  @media (max-width: 991px) {
+    font-size: 12px;
+    grid-template-columns: 70px 70px;
+    gap: 20px;
+  }
+`
+
+const GroupTitle = styled.div`
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: var(--accent);
+
+  @media (max-width: 991px) {
+    font-size: 16px;
+  }
+`
+
+const GroupQuestion = styled.div`
+  display: flex;
+  position: relative;
+  width: 100%;
+  align-content: center;
+  justify-content: space-between;
+
+`
+
+const GroupInputs = styled.div`
+  display: grid;
+  grid-template-columns: 140px 140px;
+  gap: 10px;
+  align-items: center;
+
+  @media (max-width: 991px) {
+    grid-template-columns: 70px 70px;
+  }
+
+  > div {
+    display: flex;
+    justify-content: center;
+  }
+`
+
+const GroupContent = styled.div`
+  display: grid;
+  gap: 16px;
+  margin-bottom: 16px;
+`
+
+const GroupQuestionLabel = styled.div`
+    font-size: 20px;
+
+  @media (max-width: 991px) {
+    font-size: 14px;
+    padding-right: 20px;
+  }
+`
+
 const QuestionsBlock = ({
   title,
   questions,
   children,
   cols,
+  hideBtn,
+  alwaysShowBtn,
   onBack,
   onChange,
   onNext,
+  onGroupCheckboxChange
 }: Props) => {
   const isBtnActive = () => {
+    if (alwaysShowBtn) return true
+    if (hideBtn) return false
     return questions!.filter(el => !el.optional).every((el) => typeof el.value?.value !== 'undefined');
   };
 
@@ -141,13 +217,28 @@ const QuestionsBlock = ({
     return 4;
   };
 
-  const checkCondition = (condition?: { question: string, value: string | number}) => {
+  const checkCondition = (condition?: { question: string, value: string | number }) => {
     if (!condition) return true
 
     const conditionQuestion = questions?.find((el) => el.id === condition.question)
 
     return conditionQuestion?.value?.value === condition.value;
   };
+
+  const handleGroupCheckboxChange = (value: boolean, label: string, groupId: string, questionId: string, valueIndex: number) => {
+    const question = questions?.find((el) => el.id === questionId);
+    if (!question) return;
+
+    const group = question.groups?.find((el) => el.id === groupId);
+
+    if (!group) return;
+
+    const optionIndex = group.options.findIndex((el) => el.label === label);
+
+    if (optionIndex < 0) return;
+
+    onGroupCheckboxChange && onGroupCheckboxChange(value, optionIndex, groupId, questionId, valueIndex);
+  }
 
   const handleCheckboxChange = (val: Option, id: string) => {
     const question = questions?.find((el) => el.id === id);
@@ -174,6 +265,10 @@ const QuestionsBlock = ({
       value.push(val);
     }
 
+    if (question.type === 'singular_checkbox') {
+      value = [val]
+    }
+
     onChange &&
       onChange(
         {
@@ -193,7 +288,7 @@ const QuestionsBlock = ({
       <QuestionsList $cols={cols}>
         {questions?.map((question) => (
           <div key={question.id}>
-            {checkCondition(question.condition) && (           
+            {checkCondition(question.condition) && (
               <div>
                 {question.type === 'radio' && (
                   <>
@@ -219,20 +314,22 @@ const QuestionsBlock = ({
                   </>
                 )}
 
-                {question.type === 'checkbox' && (
+                {(question.type === 'checkbox' || question.type === 'singular_checkbox') && (
                   <>
                     <QuestionHeading
                       dangerouslySetInnerHTML={{ __html: question.title }}
                     />
+                    {question.subtitle && (
+                      <GroupTitle>{question.subtitle}</GroupTitle>
+                    )}
                     <CheckboxList $cols={question.cols}>
                       {question?.options?.map((option) => (
                         <Checkbox
                           key={option.label}
                           label={option.label}
                           value={option.label}
-                          checked={JSON.parse(
-                            (question.value?.value as string) || '[]'
-                          ).some((el: Option) => el.value === option.value)}
+                          checked={question.value ? JSON.parse((question.value?.value as string)
+                          ).some((el: Option) => el.value === option.value) : false}
                           onChange={() =>
                             handleCheckboxChange(option, question.id)
                           }
@@ -260,6 +357,55 @@ const QuestionsBlock = ({
                       />
                     ))}
                   </RadioListWrap>
+                )}
+
+                {question.type === 'variants_checkbox' && (
+                  <>
+                    <Head>
+                      <QuestionHeading
+                        dangerouslySetInnerHTML={{ __html: question.title }}
+                      />
+                      <QuestionTableHeading>
+                        <div>Результат отрицательный</div>
+                        <div>Не выполнено</div>
+                      </QuestionTableHeading>
+                    </Head>
+
+                    {question.groups?.map((group) => (
+                      <div key={group.id}>
+                        <GroupTitle>{group.title}</GroupTitle>
+                        <GroupContent>
+                        {group.options.map((option) => (
+                          <GroupQuestion key={option.label}>
+                            <GroupQuestionLabel>{option.label}</GroupQuestionLabel>
+                          
+                          <GroupInputs>
+                            <Checkbox
+
+                              label={option.label}
+                              hideLabel
+                              value={option.label}
+                              checked={option.value[0]}
+                              onChange={(checked) =>
+                                handleGroupCheckboxChange(checked, option.label, group.id, question.id, 0)
+                              }
+                            />
+                            <Checkbox
+                              hideLabel
+                              label={option.label}
+                              value={option.label}
+                              checked={option.value[1]}
+                              onChange={(checked) =>
+                                handleGroupCheckboxChange(checked, option.label, group.id, question.id, 1)
+                              }
+                            />
+                          </GroupInputs>
+                          </GroupQuestion>
+                        ))}
+                        </GroupContent>
+                      </div>
+                    ))}
+                  </>
                 )}
 
                 {question.warning &&

@@ -34,13 +34,21 @@ export const srkExaminationsSlice = createSlice({
           value: undefined
         }
       })
+    },
 
-      console.log(state.list)
-    }
+    clearSrkExaminationByID: (state, action: PayloadAction<{ id: string }>) => {
+      const questionIndex = state.list.findIndex(
+        (el) => el.id === action.payload.id
+      );
+
+      if (questionIndex < 0) return 
+
+      state.list[questionIndex].value = undefined;
+    },
   },
 });
 
-export const { addSelectedSrkExaminationAnswer, clearSrkExaminations } = srkExaminationsSlice.actions;
+export const { addSelectedSrkExaminationAnswer, clearSrkExaminations, clearSrkExaminationByID } = srkExaminationsSlice.actions;
 
 export const selectSrkExaminations = (state: RootState) => state.srkExaminations.list
 

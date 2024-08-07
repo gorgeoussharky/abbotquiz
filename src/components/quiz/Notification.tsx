@@ -3,9 +3,10 @@ import warningImg from '../../assets/img/warning.png';
 
 interface Props {
   content: string;
+  blue?: boolean
 }
 
-const Wrap = styled.div`
+const Wrap = styled.div<{$blue?: boolean}>`
   display: grid;
   grid-template-columns: 40px auto;
   gap: 24px;
@@ -16,6 +17,10 @@ const Wrap = styled.div`
   font-size: 20px;
   color: rgba(0, 0, 0, 0.8);
   line-height: 125%;
+
+  ${props => props.$blue && `
+    background: #E6F7FF;
+  `}
 
   @media (max-width: 991px) {
     gap: 20px;
@@ -46,9 +51,9 @@ const Text = styled.div`
   }
 `;
 
-const Notification = ({ content }: Props) => {
+const Notification = ({ content, blue }: Props) => {
   return (
-    <Wrap>
+    <Wrap $blue={blue}>
       <Icon>
         <img src={warningImg} alt="" />
       </Icon>

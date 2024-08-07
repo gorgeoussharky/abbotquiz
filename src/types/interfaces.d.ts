@@ -6,8 +6,27 @@ export interface DBEntry {
   showOnFront?: boolean;
 }
 
+export interface LPPTypeEntry {
+  title_base: string
+  value_base?: number,
+  title_max: string,
+  value_max?: number,
+  unit: string,
+  id: string
+}
+
+export interface LPPMedicamentEntry {
+  name: string
+  toxicity: string
+  mechanism: string
+  risk: string
+  outcomes: string
+  links: string
+}
+
 export interface QuestionEntry {
   title: string;
+  subtitle?: string
   type: string
   options?: Option[];
   value?: Option;
@@ -16,6 +35,15 @@ export interface QuestionEntry {
     condition: string | number;
   };
   group: string
+  groups?: {
+    title: string;
+    id: string
+    options: {
+      label: string;
+      id: string
+      value: boolean[]
+    }[]
+  }[]
   pill?: boolean
   cols?: number
   optional?: boolean;
@@ -25,7 +53,6 @@ export interface QuestionEntry {
     value: string | number;
   }
 }
-
 
 export interface Examination {
   title: string;
@@ -50,6 +77,7 @@ export interface RecommendationCardType {
 
 export interface Option {
   title?: string;
+  score?: number
   label: string;
   value: string | number | boolean;
   cols?: number
@@ -75,10 +103,11 @@ export interface InteractionDB {
 }
 
 export interface InterpretationItemType {
+  icon?: string
   title: string;
   code?: string;
   subtitle?: string
-  content: () => JSX.Element
+  content?: () => JSX.Element
 }
 
 export interface DosageItem {

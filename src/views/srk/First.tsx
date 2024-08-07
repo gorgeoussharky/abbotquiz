@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
 import { SymptomsBlock } from '../../components/quiz/SymptomsBlock';
-import { SourcesList } from '../../components/SourcesList';
-import { GerdQ } from '../../components/quiz/GerdQ';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
-import { RecommendationsBlock } from '../../components/quiz/RecommendationsBlock';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useNavigate } from 'react-router-dom';
 import { Container, QuizCard } from '../../components/elements';
 import { ProgressBar } from '../../components/ProgressBar';
-import { resetAnswers } from '../../store/herb/gerdQQuestionsSlice';
 import {
   addBlockHistory,
   removeLastBlockHistoryElement,
@@ -17,8 +13,14 @@ import {
 } from '../../store/utilsSlice';
 import { Option } from '../../types/interfaces';
 import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
-import { selectRim4Questions, setRim4Answer } from '../../store/srk/rim4Slice';
-import { selectSrkSelectedSymptoms, selectSrkSymptomsDB, addSrkSelectedSymptom, removeSrkSelectedSymptom, clearSrkSelectedSymptoms } from '../../store/srk/symptomsSlice';
+import { selectRim4Questions, setRim4Answer, resetRim4Answers } from '../../store/srk/rim4Slice';
+import {
+  selectSrkSelectedSymptoms,
+  selectSrkSymptomsDB,
+  addSrkSelectedSymptom,
+  removeSrkSelectedSymptom,
+  clearSrkSelectedSymptoms,
+} from '../../store/srk/symptomsSlice';
 
 const totalSteps = 3;
 
@@ -76,7 +78,6 @@ const SrkFirst = () => {
     switch (block) {
       case 'symptoms':
         if (isLowProb()) {
-          
           setStep(3);
           setBlock('diagnosis');
           return;
@@ -108,9 +109,18 @@ const SrkFirst = () => {
   };
 
   const handleBack = () => {
+    switch (block) {
+      case 'symptoms':
+        dispatch(clearSrkSelectedSymptoms());
+        break;
+      case 'rim4':
+        dispatch(resetRim4Answers());
+        break;
+    }
+
     if (block === 'symptoms') {
-      navigate('/');
-      dispatch(resetAnswers());
+      navigate('/srk');
+      dispatch(resetRim4Answers());
       dispatch(clearSrkSelectedSymptoms());
       return;
     }
@@ -138,21 +148,24 @@ const SrkFirst = () => {
       case 'rim4':
         return (
           <>
-          <QuestionsBlock
-            title="Опрос по критериям Рим IV"
-            questions={rim4Questions}
-            onBack={handleBack}
-            onNext={handleNext}
-            onChange={(val, id) =>
-              dispatch(
-                setRim4Answer({
-                  id: id,
-                  option: val,
-                })
-              )
-            }
-          />
-          <div>*ВЗК — воспалительные заболевания кишечника</div>
+            <QuestionsBlock
+              title="Опрос по критериям Рим IV"
+              questions={rim4Questions}
+              onBack={handleBack}
+              onNext={handleNext}
+              onChange={(val, id) =>
+                dispatch(
+                  setRim4Answer({
+                    id: id,
+                    option: val,
+                  })
+                )
+              }
+            />
+            {rim4Questions.find((el) => el.id === 'recid_stomach_ache')?.value
+              ?.value === 1 && (
+              <div>*ВЗК — воспалительные заболевания кишечника</div>
+            )}
           </>
         );
       case 'diagnosis':
@@ -168,8 +181,6 @@ const SrkFirst = () => {
         <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
       </QuizCard>
-
-      <SourcesList />
     </Container>
   );
 };

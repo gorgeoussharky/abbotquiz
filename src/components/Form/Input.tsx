@@ -104,7 +104,7 @@ const Input = ({
         id={id}
         type={type && type !== 'search' ? type : 'text'}
         min={0}
-        value={value}
+        value={type === 'number' ? Number(value).toString() : value}
         placeholder={placeholder || label}
         onFocus={() => onFocus && onFocus()}
         onBlur={() => onBlur && onBlur()}

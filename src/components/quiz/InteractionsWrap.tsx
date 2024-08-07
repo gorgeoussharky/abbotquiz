@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { SourcesList } from '../SourcesList';
 import { useNavigate } from 'react-router-dom';
 import { Container, QuizCard } from '../elements';
 import { ProgressBar } from '../ProgressBar';
@@ -11,12 +10,13 @@ const totalSteps = 2;
 
 interface Props {
   medicaments: string[];
+  text: string;
   interactions: {
     [key: string]: InteractionDBEntry[]
   };
 }
 
-const InteractionsWrap = ({ medicaments, interactions }: Props) => {
+const InteractionsWrap = ({ medicaments, interactions, text }: Props) => {
   const [step, setStep] = useState(1);
   const [block, setBlock] = useState('meds');
 
@@ -67,6 +67,7 @@ const InteractionsWrap = ({ medicaments, interactions }: Props) => {
         return (
           <MedicamentsBlock
             medicaments={medicaments}
+            text={text}
             onClear={() => setSelectedMedicaments([])}
             onRemove={(item) =>
               setSelectedMedicaments(
@@ -103,8 +104,6 @@ const InteractionsWrap = ({ medicaments, interactions }: Props) => {
         <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
       </QuizCard>
-
-      <SourcesList />
     </Container>
   );
 };

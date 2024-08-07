@@ -1,16 +1,26 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import sources from '../data/sourcesData.json';
 import styled from 'styled-components';
+
+import herbSources from '../store/herb/data/sources.json';
+import srkSources from '../store/srk/data/sources.json';
+import lppSources from '../store/lpp/data/sources.json';
+import { useLocation } from 'react-router-dom';
+
+interface Props {
+  type: 'srk' | 'herb' | 'lpp';
+}
 
 const Wrap = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 const Toggler = styled.button<{ $active: boolean }>`
   width: 100%;
+  max-width: 460px;
   position: relative;
   padding: 24px;
   border-radius: 4px;
@@ -41,6 +51,7 @@ const Toggler = styled.button<{ $active: boolean }>`
   ${(props) =>
     props.$active &&
     `
+      max-width: 100%;
       box-shadow: none;
       border-radius: 4px 4px 0 0;
     `}
@@ -64,18 +75,42 @@ const List = styled.ol`
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
+  counter-reset: count;
 `;
 
-const Item = styled.li``;
+const Item = styled.li`
+  list-style: none;
+  counter-increment: count;
+  position: relative;
 
-const SourcesList = () => {
+  &::before {
+    content: counter(count) '.';
+    position: absolute;
+    left: -45px;
+    text-align: right;
+    min-width: 40px;
+  }
+`
+
+const SourcesList = ({ type }: Props) => {
   const [expanded, setExpanded] = useState(false);
+
+  const sourcesList = useMemo(() => {
+    switch (type) {
+      case 'srk':
+        return srkSources;
+      case 'herb':
+        return herbSources;
+      case 'lpp':
+        return lppSources;
+      default:
+        return [];
+    }
+  }, [type]);
 
   return (
     <Wrap>
-      <Toggler $active={expanded}
-        onClick={() => setExpanded(!expanded)}
-      >
+      <Toggler $active={expanded} onClick={() => setExpanded(!expanded)}>
         Ключевые источники информации
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -96,8 +131,8 @@ const SourcesList = () => {
       {expanded && (
         <Content>
           <List>
-            {sources.map((item, index) => (
-              <Item key={index}>{item}</Item>
+            {sourcesList.map((item) => (
+              <Item key={item}>{item}</Item>
             ))}
           </List>
         </Content>

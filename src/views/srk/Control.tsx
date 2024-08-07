@@ -1,20 +1,27 @@
 import { useEffect, useState } from 'react';
-import { SourcesList } from '../../components/SourcesList';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useNavigate } from 'react-router-dom';
 import { Container, QuizCard } from '../../components/elements';
 import { ProgressBar } from '../../components/ProgressBar';
 import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
-import { addBlockHistory, removeLastBlockHistoryElement, selectPrevBlocksHistory } from '../../store/utilsSlice';
-import { selectSrkControlQuestions, setSrkControlAnswer } from '../../store/srk/controlAppointmentSlice';
+import {
+  addBlockHistory,
+  removeLastBlockHistoryElement,
+  selectPrevBlocksHistory,
+} from '../../store/utilsSlice';
+import {
+  resetSrkControlAnswerByID,
+  selectSrkControlQuestions,
+  setSrkControlAnswer,
+} from '../../store/srk/controlAppointmentSlice';
 
 const totalSteps = 3;
 
 const SrkControl = () => {
   const [step, setStep] = useState(1);
   const [block, setBlock] = useState('therapy_control');
-  const blockHistory = useAppSelector(selectPrevBlocksHistory)
+  const blockHistory = useAppSelector(selectPrevBlocksHistory);
 
   const dispatch = useAppDispatch();
 
@@ -22,18 +29,18 @@ const SrkControl = () => {
   const srkControlQuestions = useAppSelector(selectSrkControlQuestions);
 
   const checkAnswer = (id: string, answer: string | number) => {
-    const question = srkControlQuestions.find(el => el.id === id);
+    const question = srkControlQuestions.find((el) => el.id === id);
 
-    if (!question) return
+    if (!question) return;
 
-    return question.value?.value === answer
-  }
+    return question.value?.value === answer;
+  };
 
   useEffect(() => {
     window.scrollTo({
-      top: 0
+      top: 0,
     });
-  }, [block])
+  }, [block]);
 
   const stepTitle = () => {
     switch (step) {
@@ -48,32 +55,54 @@ const SrkControl = () => {
     }
   };
 
-
   const handleNext = () => {
     dispatch(addBlockHistory(block));
 
     switch (block) {
       case 'therapy_control':
         if (checkAnswer('therapy_length', 0)) {
-            setStep(3)
-            setBlock('diagnosis')
-            break
+          setStep(3);
+          setBlock('diagnosis');
+          break;
         }
 
-        setStep(2)
-        setBlock('therapy_improvement')
-        break
+        setStep(2);
+        setBlock('therapy_improvement');
+        break;
 
       case 'therapy_improvement':
-        setBlock('diagnosis')
-        setStep(3)
-        return
+        if (checkAnswer('has_improvments', 'Не улучшилось')) {
+          setBlock('srk_type');
+          break;
+        }
+
+        setBlock('diagnosis');
+        setStep(3);
+        return;
+
+      case 'srk_type':
+        setBlock('diagnosis');
+        setStep(3);
+        return;
     }
-  }
+  };
 
   const handleBack = () => {
+    // Clearing results on back navigation
+    switch (block) {
+      case 'therapy_control':
+        dispatch(resetSrkControlAnswerByID({ id: 'therapy_length' }));
+        break;
+      case 'therapy_improvement':
+        dispatch(resetSrkControlAnswerByID({ id: 'has_improvments' }));
+        break;
+      case 'srk_type':
+        dispatch(resetSrkControlAnswerByID({ id: 'srk_type' }));
+        break;
+    }
+
     if (block === 'therapy_control') {
-      navigate('/');
+      navigate('/srk');
       return;
     }
 
@@ -89,13 +118,15 @@ const SrkControl = () => {
         return (
           <QuestionsBlock
             title="Контроль терапии"
-            questions={srkControlQuestions.filter(el => el.group === 'therapy_control')}
+            questions={srkControlQuestions.filter(
+              (el) => el.group === 'therapy_control'
+            )}
             onBack={handleBack}
             onNext={handleNext}
             onChange={(val, id) =>
               dispatch(
                 setSrkControlAnswer({
-                    id: id,
+                  id: id,
                   option: val,
                 })
               )
@@ -106,14 +137,36 @@ const SrkControl = () => {
         return (
           <QuestionsBlock
             title="Наблюдается ли на фоне терапии улучшение состояния пациента?"
-            questions={srkControlQuestions.filter(el => el.group === 'therapy_improvement')}
+            questions={srkControlQuestions.filter(
+              (el) => el.group === 'therapy_improvement'
+            )}
             onBack={handleBack}
             onNext={handleNext}
             cols={1}
             onChange={(val, id) =>
               dispatch(
                 setSrkControlAnswer({
-                    id: id,
+                  id: id,
+                  option: val,
+                })
+              )
+            }
+          />
+        );
+      case 'srk_type':
+        return (
+          <QuestionsBlock
+            title="Выберите подтип СРК и/или сохраняющиеся симптомы:"
+            questions={srkControlQuestions.filter(
+              (el) => el.group === 'srk_type'
+            )}
+            onBack={handleBack}
+            onNext={handleNext}
+            cols={1}
+            onChange={(val, id) =>
+              dispatch(
+                setSrkControlAnswer({
+                  id: id,
                   option: val,
                 })
               )
@@ -133,8 +186,6 @@ const SrkControl = () => {
         <ProgressBar step={step} totalSteps={totalSteps} title={stepTitle()} />
         <QuizBlock />
       </QuizCard>
-
-      <SourcesList />
     </Container>
   );
 };
