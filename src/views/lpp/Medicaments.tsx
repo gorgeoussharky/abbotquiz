@@ -35,12 +35,6 @@ const LPPMedicaments = () => {
   const selectedMeds = useAppSelector(selectSelectedLPPMedicaments);
 
   useEffect(() => {
-    if (hasLastDiagosis) {
-      setBlock('diagnosis');
-    }
-  }, []);
-
-  useEffect(() => {
     window.scrollTo({
       top: 0,
     });

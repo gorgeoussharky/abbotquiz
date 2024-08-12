@@ -103,10 +103,6 @@ const Rucam = () => {
     } else {
       setListType();
     }
-
-    if (hasLastDiagosis) {
-      setBlock('diagnosis');
-    }
   }, []);
 
   useEffect(() => {

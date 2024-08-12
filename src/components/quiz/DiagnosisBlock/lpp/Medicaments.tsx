@@ -15,6 +15,7 @@ import {
 } from './researches';
 import { useMemo } from 'react';
 import { InterpretationItem } from '../../InterpretationItem';
+import { selectPrevBlocksHistory } from '../../../../store/utilsSlice';
 
 interface Props {
   onBack: () => void;
@@ -57,6 +58,9 @@ const List = styled.div`
 
 const LPPMedicamentsDiagnosis = ({ onBack }: Props) => {
   const selectedMeds = useAppSelector(selectSelectedLPPMedicaments);
+  const blockHistory = useAppSelector(selectPrevBlocksHistory);
+    
+  const isSingleTool = useMemo(() => blockHistory.length <= 1, [blockHistory])
 
   const diagnosisCards = useMemo(() => {
     const result = [];
@@ -112,6 +116,33 @@ const LPPMedicamentsDiagnosis = ({ onBack }: Props) => {
       </List>
 
       <Hepotoxicity selectedMeds={selectedMeds} />
+
+      {isSingleTool && (
+        <>
+          <Text>
+            В отсутствие специфических антидотов для лечения ЛПП используются
+            средства, способные либо уменьшить симптомы, либо воздействовать на
+            определенные патогенетические механизмы их развития. К таким
+            препаратам относятся: адеметионин, инозин + меглюмин + метионин +
+            никотинамид + янтарная кислота, эссенциальные фосфолипиды, бициклол,
+            УДХК и др. <sup>1,2</sup>
+          </Text>
+          <Text>
+            На сегодняшний день среди препаратов, используемых для коррекции
+            ЛПП, наибольшей доказательной базой обладает <b>адеметионин.</b>
+            <sup>3</sup>
+          </Text>
+          <Text>
+            Адеметионин – естественная аминокислота, способная повышать уровень
+            глутатиона в митохондриях и поддерживать их функциональную
+            активность, инактивировать CYP2E1, подавлять экспрессию ФНО-α. Всё
+            это легло в основу его широкого применения в клинической практике, в
+            том числе при ЛПП. Важную роль в этом аспекте играют
+            <b>антифибротические, антинейротоксические и антидепрессивные</b> свойства
+            адеметионина.<sup>1</sup>
+          </Text>
+        </>
+      )}
 
       <Foot $align="flex-end">
         <ButtonLink to="/">Закончить прием</ButtonLink>

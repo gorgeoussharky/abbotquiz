@@ -2,6 +2,7 @@ import { useAppSelector } from '../../../../app/hooks';
 import { LowProb } from './first/LowProb';
 import { selectLPPType } from '../../../../store/lpp/lppTypeSlice';
 import { HighProb } from './first/HighProb';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   onBack: () => void;
@@ -9,6 +10,7 @@ interface Props {
 
 const FirstLPPDiagnosis = ({ onBack }: Props) => {
   const answers = useAppSelector(selectLPPType);
+  const location = useLocation();
 
   const isLowProb = () => {
     // Проверка на превышение ГГТ
@@ -77,7 +79,7 @@ const FirstLPPDiagnosis = ({ onBack }: Props) => {
     return false
   }
 
-  if (isLowProb()) {
+  if (isLowProb() && location.pathname !== '/lpp/type') {
     return <LowProb onBack={onBack} />
   }
 
