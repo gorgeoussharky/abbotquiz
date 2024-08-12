@@ -17,7 +17,7 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/cdss'>
       <Provider store={store}>
         <GlobalStyle />
         <App />

@@ -230,6 +230,7 @@ const LPPFirst = () => {
       case 'medicaments':
         return <MedicamentsBlock
           medicaments={meds.map(el => el.name)}
+          heading='Оценка принимаемых лекарственных и растительных средств и биологически активных добавок'
           text="В поле ниже введите все лекарственные (по МНН) и растительные средства, а также БАДы, которые принимает пациент: "
           selected={selectedMeds}
           onRemove={(item) => dispatch(removeMedicament(item))}
