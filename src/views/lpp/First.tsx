@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SymptomsBlock } from '../../components/quiz/SymptomsBlock';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
 import { RecommendationsBlock } from '../../components/quiz/RecommendationsBlock';
@@ -69,7 +69,7 @@ const LPPFirst = () => {
     }
   };
 
-  const isLowProb = () => {
+  const isLowProb = useMemo(() => {
     const answers = lppTypeAnswers
 
     // Проверка на превышение ГГТ
@@ -141,7 +141,7 @@ const LPPFirst = () => {
     }
 
     return result()
-  }
+  }, [lppTypeAnswers])
 
   const handleNext = () => {
     dispatch(addBlockHistory(block));
@@ -153,7 +153,7 @@ const LPPFirst = () => {
         return;
 
       case 'lppType':
-        if (isLowProb()) {
+        if (isLowProb) {
           setStep(3);
           setBlock('diagnosis');
           return

@@ -1,5 +1,11 @@
 import { useMemo, useState } from 'react';
-import { BackLink, ButtonLink, Foot, QuizWrap } from '../../../../elements';
+import {
+  BackLink,
+  ButtonLink,
+  Foot,
+  QuizWrap,
+  Text,
+} from '../../../../elements';
 import { Tabs } from '../../../../Tabs';
 import { DiagnosisHeading, DiagnosisCard } from '../../elements';
 import { useAppSelector } from '../../../../../app/hooks';
@@ -21,6 +27,7 @@ import { InterpretationItem } from '../../../InterpretationItem';
 import styled from 'styled-components';
 import { Hepotoxicity } from '../../../LPP/Hepotoxicity';
 import { selectSelectedLPPMedicaments } from '../../../../../store/lpp/medicamentsSlice';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   onBack: () => void;
@@ -65,7 +72,7 @@ const InfoFoot = styled.div`
   }
 `;
 
-const RValue = styled.div`
+const RValue = styled.div<{ $staticPosition: boolean }>`
   position: absolute;
   right: 16px;
   top: 16px;
@@ -80,6 +87,13 @@ const RValue = styled.div`
     left: 16px;
     font-size: 16px;
   }
+
+  ${({ $staticPosition }) =>
+    $staticPosition &&
+    `
+    position: static;
+    width: fit-content;
+  `}
 `;
 
 const Content = styled.div`
@@ -103,6 +117,7 @@ const HighProb = ({ onBack }: Props) => {
   const tabs = ['Исследования 1-ой линии', 'Исследования 2-ой линии'];
   const answers = useAppSelector(selectLPPType);
   const selectedMeds = useAppSelector(selectSelectedLPPMedicaments);
+  const location = useLocation();
 
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
@@ -175,54 +190,103 @@ const HighProb = ({ onBack }: Props) => {
       <BackLink onClick={onBack}>Назад</BackLink>
 
       <Info>
-        <InfoTitle>
-          Уровень повышения биохимических показателей соотвествует критериям{' '}
-          <span>лекарственного поражения печени (ЛПП)</span>
-        </InfoTitle>
+        <RValue $staticPosition={location.pathname === '/lpp/type'}>
+          Значение {rScoreLabel}
+        </RValue>
 
-        <div>Код по МКБ-10: К71</div>
+        {location.pathname !== '/lpp/type' && (
+          <>
+            <InfoTitle>
+              Уровень повышения биохимических показателей соотвествует критериям{' '}
+              <span>лекарственного поражения печени (ЛПП)</span>
+            </InfoTitle>
+
+            <div>Код по МКБ-10: К71</div>
+          </>
+        )}
 
         <InfoFoot>
           <div>
             Тип поражения: <span>{type}</span>
           </div>
-          <div>
-            Закон Хая: <span>{hyLaw ? 'выполняется' : 'не выполняется'}</span>
-          </div>
+          {location.pathname !== '/lpp/type' && (
+            <div>
+              Закон Хая: <span>{hyLaw ? 'выполняется' : 'не выполняется'}</span>
+            </div>
+          )}
         </InfoFoot>
 
-        <RValue>Значение {rScoreLabel}</RValue>
+        {location.pathname === '/lpp/type' && (
+          <div>
+            <span> Для подтверждения диагноза необходимо дообследование</span>
+          </div>
+        )}
       </Info>
 
-      <DiagnosisHeading>
-        Для подтверждения диагноза необходимо дообследование:
-      </DiagnosisHeading>
+      {location.pathname !== '/lpp/type' && (
+        <>
+          <DiagnosisHeading>
+            Для подтверждения диагноза необходимо дообследование
+          </DiagnosisHeading>
 
-      <DiagnosisTabs
-        activeItem={activeTab}
-        onSelect={setActiveTab}
-        list={tabs}
-      />
+          <DiagnosisTabs
+            activeItem={activeTab}
+            onSelect={setActiveTab}
+            list={tabs}
+          />
 
-      <Content>
-        {activeTab === 'Исследования 1-ой линии' &&
-          firstLineResearches?.map((el) => (
-            <InterpretationItem key={el.title} item={el} />
-          ))}
+          <Content>
+            {activeTab === 'Исследования 1-ой линии' &&
+              firstLineResearches?.map((el) => (
+                <InterpretationItem key={el.title} item={el} />
+              ))}
 
-        {activeTab === 'Исследования 2-ой линии' &&
-          secondLineResearches?.map((el) => (
-            <InterpretationItem key={el.title} item={el} />
-          ))}
+            {activeTab === 'Исследования 2-ой линии' &&
+              secondLineResearches?.map((el) => (
+                <InterpretationItem key={el.title} item={el} />
+              ))}
 
-        <hr />
+            <hr />
 
-        {additionalData?.map((el) => (
-          <InterpretationItem transparent key={el.title} item={el} />
-        ))}
-      </Content>
+            {additionalData?.map((el) => (
+              <InterpretationItem transparent key={el.title} item={el} />
+            ))}
+          </Content>
 
-      {selectedMeds.length > 0 && <Hepotoxicity selectedMeds={selectedMeds} />}
+          {selectedMeds.length > 0 && (
+            <Hepotoxicity selectedMeds={selectedMeds} />
+          )}
+        </>
+      )}
+
+      {location.pathname === '/lpp/type' && (
+        <>
+          <Text>
+            В отсутствие специфических антидотов для лечения ЛПП используются
+            средства, способные либо уменьшить симптомы, либо воздействовать на
+            определенные патогенетические механизмы их развития. К таким
+            препаратам относятся: адеметионин, инозин + меглюмин + метионин +
+            никотинамид + янтарная кислота, эссенциальные фосфолипиды, бициклол,
+            УДХК и др. <sup>1,2</sup>
+          </Text>
+          <Text>
+            На сегодняшний день среди препаратов, используемых для коррекции
+            ЛПП, наибольшей доказательной базой обладает <b>адеметионин.</b>
+            <sup>3</sup>
+          </Text>
+          <Text>
+            Адеметионин – естественная аминокислота, способная повышать уровень
+            глутатиона в митохондриях и поддерживать их функциональную
+            активность, инактивировать CYP2E1, подавлять экспрессию ФНО-α. Всё
+            это легло в основу его широкого применения в клинической практике, в
+            том числе при ЛПП. Важную роль в этом аспекте играют
+            <b>
+              антифибротические, антинейротоксические и антидепрессивные
+            </b>{' '}
+            свойства адеметионина.<sup>1</sup>
+          </Text>
+        </>
+      )}
 
       <Foot $align="flex-end">
         <ButtonLink to="/">Закончить прием</ButtonLink>

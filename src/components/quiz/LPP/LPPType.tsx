@@ -13,6 +13,7 @@ import { Input } from '../../form/Input';
 import { useState } from 'react';
 import { LPPTypeEntry } from '../../../types/interfaces';
 import { Dropdown } from '../../Dropdown';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   onNext: () => void;
@@ -257,11 +258,19 @@ const helperValues = [
 const LPPType = ({ onNext, onBack }: Props) => {
   const questions = useAppSelector(selectLPPType);
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   const [showHelper, setShowHelper] = useState(false);
   const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
   const [localQuestions, setLocalQuestions] =
-    useState<LPPTypeEntry[]>(questions);
+    useState<LPPTypeEntry[]>(() => {
+      if (location.pathname === '/lpp/type') {
+          return questions.filter(el => el.id === 'alt' || el.id === 'shf'); 
+      }
+
+      return questions
+    });
+
 
   const isBtnActive = () => {
     return !localQuestions.some(

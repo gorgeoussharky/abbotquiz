@@ -6,6 +6,7 @@ import { selectRucamList } from '../../../../store/lpp/rucamSlice';
 import { useMemo } from 'react';
 import { QuizWrap, BackLink, Foot, ButtonLink, Text, Button } from '../../../elements';
 import { DiagnosisHeading, DiagnosisCard } from '../elements';
+import { selectPrevBlocksHistory } from '../../../../store/utilsSlice';
 
 interface Props {
   onBack: () => void;
@@ -14,6 +15,9 @@ interface Props {
 
 const RucamDiagnosis = ({ onBack, onReset }: Props) => {
     const rucamList = useAppSelector(selectRucamList)
+    const blockHistory = useAppSelector(selectPrevBlocksHistory);
+    
+    const isSingleTool = useMemo(() => blockHistory.length <= 1, [blockHistory])
 
     const rucamScore = useMemo(() => {
         return rucamList.reduce((acc, el) => {
@@ -53,9 +57,37 @@ const RucamDiagnosis = ({ onBack, onReset }: Props) => {
             <span>{diagnosis}</span>
           </DiagnosisCard>
 
-          <Text>Если в поражении печени подозреваются несколько препаратов, то шкалу RUCAM необходимо применять к каждому препарату отдельно</Text>
+          <Text>Если в поражении печени подозреваются несколько препаратов, то шкалу RUCAM необходимо применять <b>к каждому препарату отдельно</b></Text>
 
           <Text>Если это невозможно (например, при назначении комбинации противотуберкулезных средств все препараты могут быть причастны к развитию ЛПП), следует прибегать к мнению специалистов и ранжировать вероятность различных ЛС как причины ЛПП на основании фенотипа поражения и сопоставления с данными литературы</Text>
+
+          
+      {isSingleTool && (
+        <>
+          <Text>
+            В отсутствие специфических антидотов для лечения ЛПП используются
+            средства, способные либо уменьшить симптомы, либо воздействовать на
+            определенные патогенетические механизмы их развития. К таким
+            препаратам относятся: адеметионин, инозин + меглюмин + метионин +
+            никотинамид + янтарная кислота, эссенциальные фосфолипиды, бициклол,
+            УДХК и др. <sup>1,2</sup>
+          </Text>
+          <Text>
+            На сегодняшний день среди препаратов, используемых для коррекции
+            ЛПП, наибольшей доказательной базой обладает <b>адеметионин.</b>
+            <sup>3</sup>
+          </Text>
+          <Text>
+            Адеметионин – естественная аминокислота, способная повышать уровень
+            глутатиона в митохондриях и поддерживать их функциональную
+            активность, инактивировать CYP2E1, подавлять экспрессию ФНО-α. Всё
+            это легло в основу его широкого применения в клинической практике, в
+            том числе при ЛПП. Важную роль в этом аспекте играют
+            <b>антифибротические, антинейротоксические и антидепрессивные</b> свойства
+            адеметионина.<sup>1</sup>
+          </Text>
+        </>
+      )}
     
           <Foot $align="flex-end">
             <Button style={{maxWidth: 340}} onClick={onReset}>Оценить другой препарат по RUCAM</Button>

@@ -244,8 +244,8 @@ const SecondaryLPPDiagnosis = ({ onBack }: Props) => {
       </DiagnosisNotice>
 
       <Foot $align="flex-end">
-        <ButtonLink $type="light" to="/">
-          Закончить прием
+        <ButtonLink style={{maxWidth: 600}} $type="light" to="/lpp/medicaments">
+          Оценка принимаемых лекарственных и растительных средств и БАД
         </ButtonLink>
       </Foot>
     </QuizWrap>
