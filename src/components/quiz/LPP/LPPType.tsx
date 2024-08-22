@@ -10,7 +10,7 @@ import {
 import styled from 'styled-components';
 import { selectLPPType, updateList } from '../../../store/lpp/lppTypeSlice';
 import { Input } from '../../form/Input';
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { LPPTypeEntry } from '../../../types/interfaces';
 import { Dropdown } from '../../Dropdown';
 import { useLocation } from 'react-router-dom';
@@ -18,6 +18,7 @@ import { useLocation } from 'react-router-dom';
 interface Props {
   onNext: () => void;
   onBack: () => void;
+  onDataChange?: (data: LPPTypeEntry[]) => void;
 }
 
 const Subheading = styled.div`
@@ -255,22 +256,26 @@ const helperValues = [
   },
 ];
 
-const LPPType = ({ onNext, onBack }: Props) => {
+const LPPType = ({ onNext, onBack, onDataChange }: Props) => {
   const questions = useAppSelector(selectLPPType);
   const dispatch = useAppDispatch();
   const location = useLocation();
 
   const [showHelper, setShowHelper] = useState(false);
   const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
-  const [localQuestions, setLocalQuestions] =
-    useState<LPPTypeEntry[]>(() => {
-      if (location.pathname === '/lpp/type') {
-          return questions.filter(el => el.id === 'alt' || el.id === 'shf'); 
-      }
+  const [localQuestions, setLocalQuestions] = useState<LPPTypeEntry[]>([]);
 
-      return questions
-    });
+  const handleDataChange = useMemo(() => onDataChange, [onDataChange]);
 
+  useEffect(() => {
+    if (location.pathname === '/lpp/type') {
+      setLocalQuestions(
+        questions.filter((el) => el.id === 'alt' || el.id === 'shf')
+      );
+    }
+
+    setLocalQuestions(questions);
+  }, []);
 
   const isBtnActive = () => {
     return !localQuestions.some(
@@ -280,23 +285,25 @@ const LPPType = ({ onNext, onBack }: Props) => {
     );
   };
 
-  const setValue = (id: string, base?: number, max?: number) => {
+  const setValue = (id: string, base?: string, max?: string) => {
     const clone = structuredClone(localQuestions);
     const questionIndex = clone.findIndex((el) => el.id === id);
 
     if (typeof base !== 'undefined') {
-      clone[questionIndex].value_base = base;
+      clone[questionIndex].value_base = parseInt(base);
     }
 
     if (typeof max !== 'undefined') {
-      clone[questionIndex].value_max = max;
+      clone[questionIndex].value_max = parseInt(max);
     }
 
     setLocalQuestions(clone);
+    handleDataChange && handleDataChange(clone);
   };
 
   const handleNext = () => {
     dispatch(updateList({ list: localQuestions }));
+    handleDataChange && handleDataChange(localQuestions);
     onNext();
   };
 
@@ -375,7 +382,7 @@ const LPPType = ({ onNext, onBack }: Props) => {
                   value={el.value_base || 0}
                   type="number"
                   label={el.unit}
-                  onInput={(e) => setValue(el.id, e as number)}
+                  onInput={(e) => setValue(el.id, e as string)}
                 />
               </ValueInput>
 
@@ -386,7 +393,7 @@ const LPPType = ({ onNext, onBack }: Props) => {
                   value={el.value_max || 0}
                   type="number"
                   label={el.unit}
-                  onInput={(e) => setValue(el.id, undefined, e as number)}
+                  onInput={(e) => setValue(el.id, undefined, e as string)}
                 />
               </ValueInput>
             </ValueItem>
