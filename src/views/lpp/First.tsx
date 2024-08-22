@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { SymptomsBlock } from '../../components/quiz/SymptomsBlock';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
-import { RecommendationsBlock } from '../../components/quiz/RecommendationsBlock';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   addSelectedSymptom,
@@ -13,16 +12,15 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Container, QuizCard } from '../../components/elements';
 import { ProgressBar } from '../../components/ProgressBar';
-import { resetAnswers } from '../../store/herb/gerdQQuestionsSlice';
 import {
   addBlockHistory,
   removeLastBlockHistoryElement,
   selectHasLastDiagnosis,
   selectPrevBlocksHistory,
 } from '../../store/utilsSlice';
-import { Option } from '../../types/interfaces';
+import { LPPTypeEntry, Option } from '../../types/interfaces';
 import { LPPType } from '../../components/quiz/LPP/LPPType';
-import { resetValues, selectLPPType } from '../../store/lpp/lppTypeSlice';
+import { resetValues } from '../../store/lpp/lppTypeSlice';
 import { MedicamentsBlock } from '../../components/quiz/MedicamentsBlock';
 import { selectLPPMedicaments, selectSelectedLPPMedicaments, removeMedicament, addMedicament, clearMedicaments } from '../../store/lpp/medicamentsSlice';
 
@@ -35,7 +33,7 @@ const LPPFirst = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const selectedSymptoms = useAppSelector(selectSelectedSymptoms);
-  const lppTypeAnswers = useAppSelector(selectLPPType);
+  const lppTypeAnswers = useRef<LPPTypeEntry[]>([])
 
   const hasLastDiagosis = useAppSelector(selectHasLastDiagnosis);
   const blockHistory = useAppSelector(selectPrevBlocksHistory);
@@ -69,8 +67,8 @@ const LPPFirst = () => {
     }
   };
 
-  const isLowProb = useMemo(() => {
-    const answers = lppTypeAnswers
+  const isLowProb = () => {
+    const answers = lppTypeAnswers.current
 
     // Проверка на превышение ГГТ
     const isHightGGT = () => {
@@ -115,8 +113,6 @@ const LPPFirst = () => {
     const result = () => {
       const highBili = isHighBili() || isHighDirectBili()
 
-      console.log(isHightGGT() && !isHighALT() && !isHighAST() && !highBili)
-
       // Повышен ТОЛЬКО уровень ГГТ, остальное - без отклонений - ЛПП маловероятен
       if (isHightGGT() && !isHighALT() && !isHighAST() && !highBili) {
         return true;
@@ -141,7 +137,7 @@ const LPPFirst = () => {
     }
 
     return result()
-  }, [lppTypeAnswers])
+  }
 
   const handleNext = () => {
     dispatch(addBlockHistory(block));
@@ -153,7 +149,7 @@ const LPPFirst = () => {
         return;
 
       case 'lppType':
-        if (isLowProb) {
+        if (isLowProb()) {
           setStep(3);
           setBlock('diagnosis');
           return
@@ -224,7 +220,7 @@ const LPPFirst = () => {
           />
         );
       case 'lppType':
-        return <LPPType onBack={handleBack} onNext={handleNext} />;
+        return <LPPType onBack={handleBack} onNext={handleNext} onDataChange={(data) => lppTypeAnswers.current = data} />;
       case 'diagnosis':
         return <DiagnosisBlock onBack={handleBack} />;
       case 'medicaments':

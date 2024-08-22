@@ -98,8 +98,9 @@ const Rucam = () => {
   };
 
   useEffect(() => {
+    // Была ли пройдена проверка на тип
     if (!type) {
-      setBlock('lppType');
+      setBlock('lppType_rucam');
     } else {
       setListType();
     }
@@ -119,7 +120,7 @@ const Rucam = () => {
     dispatch(addBlockHistory(block));
 
     switch (block) {
-      case 'lppType':
+      case 'lppType_rucam':
         setStep(1);
         setListType();
         setBlock('group_1');
@@ -239,7 +240,7 @@ const Rucam = () => {
 
   const QuizBlock = () => {
     switch (block) {
-      case 'lppType':
+      case 'lppType_rucam':
         return (
           <QuestionsBlock
             title="Интерпретация обследований"

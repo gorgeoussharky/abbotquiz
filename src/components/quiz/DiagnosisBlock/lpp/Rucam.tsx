@@ -17,7 +17,9 @@ const RucamDiagnosis = ({ onBack, onReset }: Props) => {
     const rucamList = useAppSelector(selectRucamList)
     const blockHistory = useAppSelector(selectPrevBlocksHistory);
     
-    const isSingleTool = useMemo(() => blockHistory.length <= 1, [blockHistory])
+    const isSingleTool = useMemo(() => {
+      return blockHistory.length && blockHistory[0] === 'lppType_rucam'
+    }, [blockHistory])
 
     const rucamScore = useMemo(() => {
         return rucamList.reduce((acc, el) => {
