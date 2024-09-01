@@ -243,8 +243,10 @@ const SecondaryLPPDiagnosis = ({ onBack }: Props) => {
         рассматривается только ЛПП.
       </DiagnosisNotice>
 
+      <Text>Чтобы получить рекомендации по лечению пациента, пожалуйста, введите принимаемые пациентом препараты, которые могли спровоцировать ЛПП</Text>
+
       <Foot $align="flex-end">
-        <ButtonLink style={{maxWidth: 600}} $type="light" to="/lpp/medicaments">
+        <ButtonLink $large style={{maxWidth: 600, margin: 'auto'}} to="/lpp/medicaments">
           Оценка принимаемых лекарственных и растительных средств и БАД
         </ButtonLink>
       </Foot>

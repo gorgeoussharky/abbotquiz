@@ -6,6 +6,7 @@ import {
 } from '../../../store/lpp/medicamentsSlice';
 import { Button, ButtonLink, Heading, Text } from '../../elements';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   selectedMeds: string[]
@@ -164,6 +165,7 @@ const Hepotoxicity = ({selectedMeds}: Props) => {
     const meds = useAppSelector(selectLPPMedicaments);
     const [activeMed, setActiveMed] = useState<string>(selectedMeds[0]);
     const [expand, setExpand] = useState<boolean>(false);
+    const location = useLocation()
 
     const activeMedData = useMemo(() => {
         return meds.find((med) => med.name === activeMed);
@@ -190,6 +192,8 @@ const Hepotoxicity = ({selectedMeds}: Props) => {
             return '#00B140';
         }
     };
+
+    const btnText = location.pathname.includes('lpp/first') ? 'Предварительная оценка по RUCAM' : 'Окончательная оценка по RUCAM';
 
     return (
         <>
@@ -249,7 +253,7 @@ const Hepotoxicity = ({selectedMeds}: Props) => {
                     </svg>
                 </ExpandBtn>
 
-                <ButtonLink style={{maxWidth: 320}} to="/lpp/rucam">Окончательная оценка по шкале RUCAM</ButtonLink>
+                <ButtonLink style={{maxWidth: 320}} to="/lpp/rucam">{btnText}</ButtonLink>
                 </Foot>
             </Content>
         </>

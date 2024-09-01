@@ -21,7 +21,11 @@ import {
 } from '../../store/utilsSlice';
 import { QuestionsBlock } from '../../components/quiz/QuestionsBlock';
 import { DiagnosisBlock } from '../../components/quiz/DiagnosisBlock/DiagnosisBlock';
-import { selectLPPSecondaryAnswers, setLPPSecondaryAnswer } from '../../store/lpp/secondarySlice';
+import {
+  clearLPPSecondaryAnswer,
+  selectLPPSecondaryAnswers,
+  setLPPSecondaryAnswer,
+} from '../../store/lpp/secondarySlice';
 import { Option } from '../../types/interfaces';
 
 const totalSteps = 7;
@@ -29,6 +33,7 @@ const totalSteps = 7;
 const Rucam = () => {
   const [step, setStep] = useState(1);
   const [block, setBlock] = useState('group_1');
+  const [isSingular, setIsSingular] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -101,6 +106,7 @@ const Rucam = () => {
     // Была ли пройдена проверка на тип
     if (!type) {
       setBlock('lppType_rucam');
+      setIsSingular(true);
     } else {
       setListType();
     }
@@ -213,16 +219,26 @@ const Rucam = () => {
         break;
     }
 
-    if (block === 'lppType') {
+    if (block === 'lppType_rucam') {
+      if (isSingular) {
+        setIsSingular(false);
+        dispatch(clearLPPSecondaryAnswer({ id: 'lpp_type' }));
+      }
       navigate('/');
+
       return;
     }
 
     if (block === 'group_1') {
-      if (blockHistory[blockHistory.length - 1] === 'lppType') {
-        setBlock('lppType');
+      if (blockHistory[blockHistory.length - 1] === 'lppType_rucam') {
+        setBlock('lppType_rucam');
       } else {
-        navigate('/')
+        if (isSingular) {
+          setIsSingular(false);
+          dispatch(clearLPPSecondaryAnswer({ id: 'lpp_type' }));
+        }
+
+        navigate('/');
       }
     }
 
@@ -260,7 +276,7 @@ const Rucam = () => {
       case 'group_1':
         return (
           <QuestionsBlock
-            title="признаки гепатоцеллюлярного поражения печени:"
+            title=""
             questions={rucamList.filter((el) => el.group === 'group_1')}
             onBack={handleBack}
             onNext={handleNext}
@@ -277,7 +293,7 @@ const Rucam = () => {
       case 'group_2':
         return (
           <QuestionsBlock
-            title="признаки гепатоцеллюлярного поражения печени:"
+            title=""
             questions={rucamList.filter((el) => el.group === 'group_2')}
             onBack={handleBack}
             onNext={handleNext}
@@ -294,7 +310,7 @@ const Rucam = () => {
       case 'group_3':
         return (
           <QuestionsBlock
-            title="признаки гепатоцеллюлярного поражения печени:"
+            title=""
             questions={rucamList.filter((el) => el.group === 'group_3')}
             onBack={handleBack}
             onNext={handleNext}
@@ -311,7 +327,7 @@ const Rucam = () => {
       case 'group_4':
         return (
           <QuestionsBlock
-            title="признаки гепатоцеллюлярного поражения печени:"
+            title=""
             questions={rucamList.filter((el) => el.group === 'group_4')}
             onBack={handleBack}
             onNext={handleNext}
@@ -328,7 +344,7 @@ const Rucam = () => {
       case 'group_5':
         return (
           <QuestionsBlock
-            title="признаки гепатоцеллюлярного поражения печени:"
+            title=""
             questions={rucamList.filter((el) => el.group === 'group_5')}
             onBack={handleBack}
             onNext={handleNext}
@@ -355,7 +371,7 @@ const Rucam = () => {
       case 'group_5_1':
         return (
           <QuestionsBlock
-            title="признаки гепатоцеллюлярного поражения печени:"
+            title=""
             questions={rucamList.filter((el) => el.group === 'group_5_1')}
             onBack={handleBack}
             onNext={handleNext}
@@ -382,7 +398,7 @@ const Rucam = () => {
       case 'group_6':
         return (
           <QuestionsBlock
-            title="признаки гепатоцеллюлярного поражения печени:"
+            title=""
             questions={rucamList.filter((el) => el.group === 'group_6')}
             onBack={handleBack}
             onNext={handleNext}
@@ -399,7 +415,7 @@ const Rucam = () => {
       case 'group_7':
         return (
           <QuestionsBlock
-            title="признаки гепатоцеллюлярного поражения печени:"
+            title=""
             questions={rucamList.filter((el) => el.group === 'group_7')}
             onBack={handleBack}
             onNext={handleNext}
@@ -416,7 +432,7 @@ const Rucam = () => {
       case 'group_8':
         return (
           <QuestionsBlock
-            title="признаки гепатоцеллюлярного поражения печени:"
+            title=""
             questions={rucamList.filter((el) => el.group === 'group_8')}
             onBack={handleBack}
             onNext={handleNext}
